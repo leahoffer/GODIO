@@ -4,10 +4,12 @@ public class MovimientoCC {
 
 	private float monto;
 	private boolean signo;
+	private Factura facturaAplicada;
 	
 	public MovimientoCC(float monto, boolean signo) {
 		this.monto = monto;
 		this.signo = signo;
+		this.facturaAplicada = new Factura();
 	}
 
 	public float getMonto() {
