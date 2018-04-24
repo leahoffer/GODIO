@@ -10,6 +10,10 @@ public class Proveedor {
 		this.precio = precio;
 	}
 
+	public Proveedor() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getNombreProv() {
 		return nombreProv;
 	}

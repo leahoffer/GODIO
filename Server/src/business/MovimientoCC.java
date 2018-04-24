@@ -27,6 +27,14 @@ public class MovimientoCC {
 	public void setSigno(boolean signo) {
 		this.signo = signo;
 	}
+
+	public Factura getFacturaAplicada() {
+		return facturaAplicada;
+	}
+
+	public void setFacturaAplicada(Factura facturaAplicada) {
+		this.facturaAplicada = facturaAplicada;
+	}
 	
 	
 	
