@@ -7,6 +7,7 @@ public class Lote {
 	private String numero;
 	private Date vencimiento;
 	private Proveedor proveedor;
+	private float precioventa;
 	public Lote() {
 		this.vencimiento = new Date();
 		this.proveedor = new Proveedor();
@@ -28,6 +29,12 @@ public class Lote {
 	}
 	public void setProveedor(Proveedor proveedor) {
 		this.proveedor = proveedor;
+	}
+	public float getPrecioventa() {
+		return precioventa;
+	}
+	public void setPrecioventa(float precioventa) {
+		this.precioventa = precioventa;
 	}
 	
 	

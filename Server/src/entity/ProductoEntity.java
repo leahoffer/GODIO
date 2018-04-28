@@ -13,14 +13,17 @@ public class ProductoEntity {
 	private String codBarras;
 	private String marca;
 	private String descripcion;
+	@Enumerated(EnumType.STRING)
 	private EstadoProducto estado;
 	private float tamaño;
 	private int unidad;
 	private float precio;
 	private int cantPosicion;
+	@Enumerated(EnumType.STRING)
 	private Presentacion presentacion;
 	private LoteEntity lote;
 	private int cantAComprar;
+	@OneToMany(cascade=CascadeType.ALL)
 	private List<UbicacionEntity> ubicaciones;
 	
 	public ProductoEntity() {

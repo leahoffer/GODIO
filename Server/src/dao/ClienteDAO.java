@@ -29,7 +29,7 @@ public class ClienteDAO {
 	private ClienteDAO(){}
 	
 	
-	public void create (Cliente c)
+	public void createOrUpdate (Cliente c)
 	{
 		ClienteEntity ce = clienteToEntity(c);
 		try 
@@ -38,7 +38,7 @@ public class ClienteDAO {
 			Session s = sf.openSession();
 			s.beginTransaction();
 			System.out.println("Guardando Cliente...");
-			s.save(ce);
+			s.saveOrUpdate(ce);
 			s.getTransaction().commit();
 			System.out.println("Cliente guardado!");
 			s.flush();
