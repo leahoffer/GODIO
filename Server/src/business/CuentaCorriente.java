@@ -47,6 +47,11 @@ public class CuentaCorriente {
 	public void setCondiciones(List<Condicion> condiciones) {
 		this.condiciones = condiciones;
 	}
+
+	public void agregarMovimiento(float monto, boolean signo) {
+		MovimientoCC mcc = new MovimientoCC(monto, signo);
+		this.movimientos.add(mcc);
+	}
 	
 	
 	
