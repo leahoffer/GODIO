@@ -15,14 +15,20 @@ public class test {
 
         entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner
 		
-		if (entradaTeclado.equals('1'))
+		if (entradaTeclado.equals("1"))
 		{
 			//Empezar generacion de pedido
-			
+			//listar
 		}
 		else
-			System.out.println("Error, numero mal ingresado");
+			System.out.println("Error, numero mal ingresado"); 
 		
+	}
+
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		return super.equals(arg0);
 	}
 
 }

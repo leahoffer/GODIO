@@ -1,5 +1,10 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import business.Producto;
+import enumeration.EstadoProducto;
 
 public class Controller {
 
@@ -25,5 +30,43 @@ public class Controller {
 		 */
 		
 	}
+	
+	public ArrayList<Producto> listarProductos()
+	{
+		ArrayList<Producto> prods = new ArrayList<Producto>();
+		
+		Producto p = new Producto();
+		p.setCodBarras("12345678");
+		p.setDescripcion("Producto 1");
+		p.setPrecio(100);
+		p.setEstado(EstadoProducto.Activo);
+			
+		prods.add(p);
+
+		p.setCodBarras("12345678");
+		p.setDescripcion("Producto 2");
+		p.setPrecio(100);
+		p.setCantPosicion(100);
+		p.setCantAComprar(100);
+		p.setEstado(EstadoProducto.Activo);
+				
+		prods.add(p);
+		
+		p.setCodBarras("12345678");
+		p.setDescripcion("Producto 3");
+		p.setPrecio(100);
+		p.setCantPosicion(100);
+		p.setCantAComprar(100);
+		p.setEstado(EstadoProducto.Activo);
+				
+		prods.add(p);
+		
+		return prods;
+		
+		//aca habria que llamar al a bd para trear los producgtos que esten activos.
+		
+		
+	}
+			
 
 }
