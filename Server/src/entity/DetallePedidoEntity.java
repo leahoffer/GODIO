@@ -1,14 +1,22 @@
-package business;
+package entity;
 
-public class DetallePedido {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+@Entity
+public class DetallePedidoEntity {
+
 	
+	@Id
 	private  float subtotal;
 	private int  cantidad;
-	private Producto producto;
+	@OneToOne
+	private ProductoEntity producto;
 
-	public DetallePedido() {
+	public DetallePedidoEntity() {
 		super();
-		// TODO Auto-generated constructor stub
+	
 	}
 	public float getSubtotal() {
 		return subtotal;
@@ -22,10 +30,10 @@ public class DetallePedido {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	public Producto getProducto() {
+	public ProductoEntity getProducto() {
 		return producto;
 	}
-	public void setProducto(Producto producto) {
+	public void setProducto(ProductoEntity producto) {
 		this.producto = producto;
 	}
 

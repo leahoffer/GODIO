@@ -4,17 +4,18 @@ import java.util.List;
 import javax.persistence.*;
 
 
-@Entity
+
+@MappedSuperclass
 public class CuentaCorrienteEntity {
 
 	@Id
-	private String id;
-	private float saldo;
-	private float limite;
-	//@OneToMany era cuando UNA de la Entity que estoy tocando tiene MUCHAS de las que están abajo de esto?
-	private List<MovimientoCCEntity> movimientos;
-	//Mismo comment que arriba :)
-	private List<CondicionEntity> condiciones;
+	protected String id;
+	protected float saldo;
+	protected float limite;
+	@OneToMany 
+	protected List<MovimientoCCEntity> movimientos;
+	@OneToMany
+	protected List<CondicionEntity> condiciones;
 	
 	
 	

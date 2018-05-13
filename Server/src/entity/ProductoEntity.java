@@ -10,6 +10,7 @@ import enumeration.Presentacion;
 @Entity
 public class ProductoEntity {
 
+	@Id
 	private String codBarras;
 	private String marca;
 	private String descripcion;
