@@ -2,7 +2,6 @@ package entity;
 
 import javax.persistence.*;
 
-import business.CuentaCorriente;
 
 @Entity
 @Table(name="Clientes")

@@ -4,28 +4,27 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import enumeration.EstadoProducto;
-import enumeration.Presentacion;
 
 @Entity
+@Table(name="Productos")
 public class ProductoEntity {
 
 	@Id
 	private String codBarras;
 	private String marca;
 	private String descripcion;
-	@Enumerated(EnumType.STRING)
-	private EstadoProducto estado;
+	private String estado;
 	private float tamaño;
 	private int unidad;
 	private float precio;
 	private int cantPosicion;
-	@Enumerated(EnumType.STRING)
-	private Presentacion presentacion;
+	@OneToMany
+	protected List<UbicacionEntity> ubicaciones;
+	private String presentacion;
+	@OneToOne
 	private LoteEntity lote;
 	private int cantAComprar;
-	@OneToMany(cascade=CascadeType.ALL)
-	private List<UbicacionEntity> ubicaciones;
+
 	
 	public ProductoEntity() {
 		super();
@@ -49,10 +48,10 @@ public class ProductoEntity {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public EstadoProducto getEstado() {
+	public String getEstado() {
 		return estado;
 	}
-	public void setEstado(EstadoProducto estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 	public float getTamaño() {
@@ -79,10 +78,10 @@ public class ProductoEntity {
 	public void setCantPosicion(int cantPosicion) {
 		this.cantPosicion = cantPosicion;
 	}
-	public Presentacion getPresentacion() {
+	public String getPresentacion() {
 		return presentacion;
 	}
-	public void setPresentacion(Presentacion presentacion) {
+	public void setPresentacion(String presentacion) {
 		this.presentacion = presentacion;
 	}
 	public LoteEntity getLote() {

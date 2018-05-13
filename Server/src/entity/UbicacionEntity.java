@@ -3,6 +3,7 @@ package entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name="Ubicaciones")
 public class UbicacionEntity {
 
 	@EmbeddedId

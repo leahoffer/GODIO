@@ -1,16 +1,16 @@
 package entity;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
-import org.hibernate.annotations.Entity;
 	
-
-
 @Entity
-public class CondicionEntity extends CuentaCorrienteEntity{
+@Table(name="Condiciones")
+public class CondicionEntity{
 
-@Id
-private  String descripcion;
+	@Id
+	@GeneratedValue
+	private int nro;
+	private String descripcion;
 
 
 	public CondicionEntity ()

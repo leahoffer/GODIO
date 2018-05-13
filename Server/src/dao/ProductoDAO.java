@@ -60,11 +60,11 @@ public class ProductoDAO {
 		pe.setCantPosicion(p.getCantPosicion());
 		pe.setCodBarras(p.getCodBarras());
 		pe.setDescripcion(p.getDescripcion());
-		pe.setEstado(p.getEstado());
+		pe.setEstado(p.getEstado().toString());
 		pe.setLote(loteToEntity(p.getLote()));
 		pe.setMarca(p.getMarca());
 		pe.setPrecio(p.getPrecio());
-		pe.setPresentacion(p.getPresentacion());
+		pe.setPresentacion(p.getPresentacion().toString());
 		pe.setTamaño(p.getTamaño());
 		pe.setUnidad(p.getUnidad());
 		

@@ -3,10 +3,15 @@ package entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name="Movimientos_CC")
 public class MovimientoCCEntity {
 
+	@Id
+	@GeneratedValue
+	private int nro;
 	private float monto;
 	private boolean signo;
+	@OneToOne
 	private FacturaEntity facturaAplicada;
 	
 	public MovimientoCCEntity() {

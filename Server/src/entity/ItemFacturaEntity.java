@@ -1,14 +1,26 @@
-package business;
+package entity;
 
-public class ItemFactura {
+import javax.persistence.*;
 
+@Entity
+@Table(name="Items_Factura")
+public class ItemFacturaEntity {
+
+	@Id
+	@GeneratedValue
+	private int id;
 	private float subtotal;
 	private int cantidad;
-	private Producto producto;
 	
-	public void calcularSubtotal()
-	{
-		subtotal=producto.getPrecio()*cantidad;
+	@OneToOne
+	private ProductoEntity producto;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public float getSubtotal() {
@@ -27,11 +39,11 @@ public class ItemFactura {
 		this.cantidad = cantidad;
 	}
 
-	public Producto getProducto() {
+	public ProductoEntity getProducto() {
 		return producto;
 	}
 
-	public void setProducto(Producto producto) {
+	public void setProducto(ProductoEntity producto) {
 		this.producto = producto;
 	}
 	
