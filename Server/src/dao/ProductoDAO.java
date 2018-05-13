@@ -46,7 +46,7 @@ public class ProductoDAO {
 		}
 		catch (Exception e)
 		{
-			System.out.println("Error al crear producto");
+			System.out.println("Error al crear producto"); //CREAR EXCEPTIONS 
 			e.printStackTrace();
 		}
 	}

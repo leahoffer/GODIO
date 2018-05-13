@@ -101,7 +101,7 @@ public class Cliente {
 	}
 
 	public void updateMe() {
-		ClienteDAO.getInstance().
+		ClienteDAO.getInstance().update(this);
 	}
 	
 }
