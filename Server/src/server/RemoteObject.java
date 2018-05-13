@@ -7,6 +7,7 @@ import java.util.List;
 
 import business.Producto;
 import controller.Controller;
+import dto.ProductoDTO;
 import tda.TDABusiness;
 
 public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
@@ -25,16 +26,18 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		controlador.crearCliente(cuit, razon_social, telefono, direccion, r_inscripto, notas);
 	}
 	
-	public ArrayList<Producto> listarProductosDisponibles(){
+	public List<ProductoDTO> listarProductosDisponibles(){
 		
 		return controlador.listarProductos();
 	}
 
 	@Override
-	public void crearPedido(String cuit, List<Producto> productos) {
+	public void crearPedido(String cuit, List<ProductoDTO> productos) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 	
 
 }

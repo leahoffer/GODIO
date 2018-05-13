@@ -3,6 +3,7 @@ package server;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
+import hibernate.HibernateUtil;
 import tda.TDABusiness;
 
 public class Server {
@@ -23,6 +24,7 @@ public class Server {
 			LocateRegistry.createRegistry(1099);
 			RO = new RemoteObject();
 			Naming.rebind("//localhost/RemoteObject", RO);
+			HibernateUtil.getSessionFactory().openSession();
 			System.out.println("Remote Object successfully published!");
 		}
 		catch (Exception e)

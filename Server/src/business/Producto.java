@@ -6,7 +6,8 @@ import java.util.List;
 import enumeration.EstadoProducto;
 import enumeration.Presentacion;
 
-public class Producto {
+public class Producto{
+
 
 	private String codBarras;
 	private String marca;

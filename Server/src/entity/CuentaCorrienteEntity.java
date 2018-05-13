@@ -5,7 +5,8 @@ import javax.persistence.*;
 
 
 
-@MappedSuperclass
+@Entity
+@Table(name="Cuentas_Corrientes")
 public class CuentaCorrienteEntity {
 
 	@Id

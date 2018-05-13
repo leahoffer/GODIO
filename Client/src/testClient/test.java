@@ -1,10 +1,16 @@
 package testClient;
 
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import bsinessdelegate.BusinessDelegate;
+import dto.ProductoDTO;
 
 public class test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws RemoteException {
 		// TODO Auto-generated method stub
 
 		
@@ -18,7 +24,20 @@ public class test {
 		if (entradaTeclado.equals("1"))
 		{
 			//Empezar generacion de pedido
-			//listar
+			List<ProductoDTO> prods = new ArrayList<ProductoDTO>();			
+			prods = BusinessDelegate.getInstance().listarProductosDisponibles();
+			
+			for (ProductoDTO p : prods)
+			{
+				System.out.println("Producto:" + p.getDescripcion() + " Cantidad:" + p.getCantPosicion());
+				System.out.println();
+				System.out.println("Se va a hacer un pedido con estos materiales y cantidad 5");
+				
+				BusinessDelegate.getInstance().crearPedido("20366543598", prods);
+			}
+			
+			
+			
 		}
 		else
 			System.out.println("Error, numero mal ingresado"); 

@@ -5,9 +5,12 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
+@Table(name="Lotes")
 public class LoteEntity {
+	
 	@Id
 	private String numero;
+	
 	private Date vencimiento;
 	private String proveedor;
 	private float precioventa;
