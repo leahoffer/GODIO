@@ -81,14 +81,16 @@ public class Controller {
 		List<ProductoDTO> prods = new ArrayList<ProductoDTO>();
 		
 		ProductoDTO p = new ProductoDTO();
-		p.setCodBarras("12345678");
+		
+		p.setCodBarras("1000001");
 		p.setDescripcion("Producto 1");
 		p.setPrecio(100);
+		p.setCantAComprar(100);
 		p.setEstado(EstadoProducto.Activo);
 			
 		prods.add(p);
-
-		p.setCodBarras("12345678");
+		
+		p.setCodBarras("1000002");
 		p.setDescripcion("Producto 2");
 		p.setPrecio(100);
 		p.setCantPosicion(100);
@@ -97,7 +99,7 @@ public class Controller {
 				
 		prods.add(p);
 		
-		p.setCodBarras("12345678");
+		p.setCodBarras("1000003");
 		p.setDescripcion("Producto 3");
 		p.setPrecio(100);
 		p.setCantPosicion(100);

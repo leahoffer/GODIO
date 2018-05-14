@@ -1,18 +1,24 @@
-package business;
+package dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Lote {
+import business.Proveedor;
 
+public class LoteDTO implements Serializable{
+
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1311167639007322785L;
 	private String numero;
 	private Date vencimiento;
-	private Proveedor proveedor;
+	private ProveedorDTO proveedor;
 	private float precioventa;
 	
-	public Lote() {
-		this.vencimiento = new Date();
-		this.proveedor = new Proveedor();
-	}
+	
 	public String getNumero() {
 		return numero;
 	}
@@ -25,10 +31,10 @@ public class Lote {
 	public void setVencimiento(Date vencimiento) {
 		this.vencimiento = vencimiento;
 	}
-	public Proveedor getProveedor() {
+	public ProveedorDTO getProveedor() {
 		return proveedor;
 	}
-	public void setProveedor(Proveedor proveedor) {
+	public void setProveedor(ProveedorDTO proveedor) {
 		this.proveedor = proveedor;
 	}
 	public float getPrecioventa() {
@@ -37,7 +43,6 @@ public class Lote {
 	public void setPrecioventa(float precioventa) {
 		this.precioventa = precioventa;
 	}
-	
 	
 	
 }

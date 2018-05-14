@@ -23,16 +23,15 @@ public class ProductoDTO implements Serializable {
 	private float precio;
 	private int cantPosicion;
 	private Presentacion presentacion;
-	private Lote lote;
+	private LoteDTO lote;
 	private int cantAComprar;
-	private List<Ubicacion> ubicaciones;
+	private List<UbicacionDTO> ubicaciones;
 	
 	
 	public ProductoDTO()
 	{
 		
 	}
-
 
 	public String getCodBarras() {
 		return codBarras;
@@ -124,12 +123,12 @@ public class ProductoDTO implements Serializable {
 	}
 
 
-	public Lote getLote() {
+	public LoteDTO getLote() {
 		return lote;
 	}
 
 
-	public void setLote(Lote lote) {
+	public void setLote(LoteDTO lote) {
 		this.lote = lote;
 	}
 
@@ -144,12 +143,12 @@ public class ProductoDTO implements Serializable {
 	}
 
 
-	public List<Ubicacion> getUbicaciones() {
+	public List<UbicacionDTO> getUbicaciones() {
 		return ubicaciones;
 	}
 
 
-	public void setUbicaciones(List<Ubicacion> ubicaciones) {
+	public void setUbicaciones(List<UbicacionDTO> ubicaciones) {
 		this.ubicaciones = ubicaciones;
 	}
 	

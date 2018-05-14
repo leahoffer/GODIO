@@ -31,12 +31,12 @@ public class test {
 			{
 				System.out.println("Producto:" + p.getDescripcion() + " Cantidad:" + p.getCantPosicion());
 				System.out.println();
-				System.out.println("Se va a hacer un pedido con estos materiales y cantidad 5");
 				
-				BusinessDelegate.getInstance().crearPedido("20366543598", prods);
+				
+				
 			}
-			
-			
+			System.out.println("Se va a hacer un pedido con estos materiales y cantidad 5");
+			BusinessDelegate.getInstance().crearPedido("20366543598", prods);
 			
 		}
 		else
