@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import business.Lote;
 import business.Producto;
 import business.Ubicacion;
+import dto.ProductoDTO;
 import entity.LoteEntity;
 import entity.ProductoEntity;
 import entity.UbicacionEntity;
@@ -98,6 +99,26 @@ public class ProductoDAO {
 		le.setProveedor(lote.getProveedor().getNombreProv());
 		le.setPrecioventa(lote.getProveedor().getPrecio());
 		return le;
+	}
+
+	public List<ProductoEntity> findAll() {
+		// TODO Auto-generated method stub
+		
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			List<ProductoEntity> lista = (List<ProductoEntity>)s.createQuery("from ProductoEntity").list();
+			s.close();
+			return lista;
+		}
+		catch (Exception e)
+		{
+			System.out.println("Error al traer los productos"); //CREAR EXCEPTIONS 
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

@@ -30,7 +30,7 @@ public class PedidoDAO {
 
 	private PedidoEntity toEntity(Pedido ped) {
 		// TODO Auto-generated method stub
-		PedidoEntity pedido = new PedidoEntity(ped.getNroPedido(), null, null, null, ped.getTotal_bruto(), ped.getEstado());
+		PedidoEntity pedido = new PedidoEntity();
 		
 		
 		return pedido;

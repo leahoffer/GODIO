@@ -1,14 +1,15 @@
 package entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name="Detalles_Pedido")
 public class DetallePedidoEntity {
 
 	
 	@Id
+	@GeneratedValue
+	private int id;
 	private  float subtotal;
 	private int  cantidad;
 	@OneToOne

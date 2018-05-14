@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import business.*;
+import dao.ProductoDAO;
 import dto.ClienteDTO;
 import dto.ProductoDTO;
+import entity.ProductoEntity;
 import enumeration.EstadoProducto;
 
 public class Controller {
@@ -65,7 +67,6 @@ public class Controller {
 	     p.setCodBarras(producto.getCodBarras());
 	     p.setDescripcion(producto.getDescripcion());
 	     p.setPrecio(producto.getPrecio());
-	     p.setEstado(producto.getEstado());
 	     
 	    subtotal = 5 * producto.getPrecio(); 
 	     
@@ -89,37 +90,22 @@ public class Controller {
 	
 	public List<ProductoDTO> listarProductos()
 	{
-		List<ProductoDTO> prods = new ArrayList<ProductoDTO>();
+		List<ProductoEntity> prods = new ArrayList<ProductoEntity>();
+		prods=ProductoDAO.getInstance().findAll();
 		
-		ProductoDTO p = new ProductoDTO();
+		List <ProductoDTO> prodsvo = new ArrayList<ProductoDTO>();
 		
-		p.setCodBarras("1000001");
-		p.setDescripcion("Producto 1");
-		p.setPrecio(100);
-		p.setCantAComprar(100);
-		p.setEstado(EstadoProducto.Activo);
-			
-		prods.add(p);
+		for (ProductoEntity pe : prods)
+		{ 
+			ProductoDTO p= new ProductoDTO();
+			p.setCodBarras(pe.getCodBarras());
+			p.setMarca(pe.getMarca());
+			p.setDescripcion(pe.getDescripcion());
+			p.setEstado(pe.getEstado());
+			prodsvo.add(p);
+		}
 		
-		p.setCodBarras("1000002");
-		p.setDescripcion("Producto 2");
-		p.setPrecio(100);
-		p.setCantPosicion(100);
-		p.setCantAComprar(100);
-		p.setEstado(EstadoProducto.Activo);
-				
-		prods.add(p);
-		
-		p.setCodBarras("1000003");
-		p.setDescripcion("Producto 3");
-		p.setPrecio(100);
-		p.setCantPosicion(100);
-		p.setCantAComprar(100);
-		p.setEstado(EstadoProducto.Activo);
-				
-		prods.add(p);
-		
-		return prods;
+		return prodsvo;
 		
 		//aca habria que llamar a la funcion que trae datos.
 		//List<Producto> prods = ProductoDAO.getInstance.findAll()

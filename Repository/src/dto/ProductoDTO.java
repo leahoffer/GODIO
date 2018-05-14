@@ -17,7 +17,7 @@ public class ProductoDTO implements Serializable {
 	private String codBarras;
 	private String marca;
 	private String descripcion;
-	private EstadoProducto estado;
+	private String estado;
 	private float tamaño;
 	private int unidad;
 	private float precio;
@@ -63,12 +63,12 @@ public class ProductoDTO implements Serializable {
 	}
 
 
-	public EstadoProducto getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
 
-	public void setEstado(EstadoProducto estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 

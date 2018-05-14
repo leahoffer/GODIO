@@ -2,12 +2,15 @@ package testClient;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import businessdelegate.BusinessDelegate;
 import dto.ClienteDTO;
 import dto.CuentaCorrienteDTO;
+import dto.DetallePedidoDTO;
+import dto.PedidoDTO;
 import dto.ProductoDTO;
 
 public class test {
@@ -19,6 +22,7 @@ public class test {
 		System.out.println("Presione 0 para Test de RMI");
 		System.out.println("Presione 1 para Ingresar Cliente");
 		System.out.println("Presione 2 para Ingresar Pedido");
+		System.out.println("Presione 3 para Traer Productos");
 		String entradaTeclado = "";
 
         Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
@@ -35,7 +39,7 @@ public class test {
 		{
 			ClienteDTO cliente=new ClienteDTO();
 			cliente.setCuentaCorriente(new CuentaCorrienteDTO());
-			cliente.setCuit("Cuit");
+			cliente.setCuit("Cuit1");
 			cliente.setDireccion("Direccion");
 			cliente.setR_inscripto(true);
 			cliente.setRazon_social("Razon Social");
@@ -48,9 +52,74 @@ public class test {
 			System.out.println("Cliente Creado Con Éxito!");
 		}
 		
+        if (entradaTeclado.equals("3"))
+        {
+        	
+        	List<ProductoDTO> productos= BusinessDelegate.getInstance().listarProductosDisponibles();
+        	
+        	for (ProductoDTO p: productos)
+        	{
+        		System.out.println(p.getCodBarras()+" "+p.getMarca()+" "+p.getDescripcion()+" "+p.getEstado());
+        	}
+        }
+        
 		if (entradaTeclado.equals("2"))
 		{
-			//Empezar generacion de pedido
+			ClienteDTO cliente=new ClienteDTO();
+			cliente.setCuit("Cuit1");
+			
+			PedidoDTO pedido=new PedidoDTO();
+			pedido.setAclaracionEspecial("Aclaracion Especial");
+			pedido.setCliente(cliente);
+			pedido.setDespachable(false);
+			pedido.setDir_entrega("Dir Entrega");
+			pedido.setEstado("Incompleto");
+			pedido.setFecha(new Date());
+			pedido.setFecha_despacho(new Date());
+			pedido.setMotivoEstado("Motivo Estado");
+			pedido.setTotal_bruto(0);
+			
+			ProductoDTO producto=new ProductoDTO();
+			producto.setCodBarras("CodBarras1");
+			ProductoDTO producto2=new ProductoDTO();
+			producto.setCodBarras("CodBarras2");
+			ProductoDTO producto3=new ProductoDTO();
+			producto.setCodBarras("CodBarras3");
+			ProductoDTO producto4=new ProductoDTO();
+			producto.setCodBarras("CodBarras4");
+
+			
+			DetallePedidoDTO detalle= new DetallePedidoDTO();
+			detalle.setCantidad(100);
+			detalle.setSubtotal(0);
+			detalle.setProducto(producto);
+			
+			DetallePedidoDTO detalle2= new DetallePedidoDTO();
+			detalle.setCantidad(100);
+			detalle.setSubtotal(0);
+			detalle.setProducto(producto2);
+			
+			DetallePedidoDTO detalle3= new DetallePedidoDTO();
+			detalle.setCantidad(100);
+			detalle.setSubtotal(0);
+			detalle.setProducto(producto3);
+			
+			DetallePedidoDTO detalle4= new DetallePedidoDTO();
+			detalle.setCantidad(100);
+			detalle.setSubtotal(0);
+			detalle.setProducto(producto4);
+			
+			List<DetallePedidoDTO> detalles = new ArrayList<DetallePedidoDTO>();
+			detalles.add(detalle);
+			detalles.add(detalle2);
+			detalles.add(detalle3);
+			detalles.add(detalle4);
+			
+			
+			
+			
+			
+			/*Empezar generacion de pedido
 			List<ProductoDTO> prods = new ArrayList<ProductoDTO>();			
 			prods = BusinessDelegate.getInstance().listarProductosDisponibles();
 			
@@ -59,11 +128,9 @@ public class test {
 				System.out.println("Producto:" + p.getDescripcion() + " Cantidad:" + p.getCantPosicion());
 				System.out.println();
 				
-				
-				
 			}
 			System.out.println("Se va a hacer un pedido con estos materiales y cantidad 5");
-			BusinessDelegate.getInstance().crearPedido("20366543598", prods);
+			BusinessDelegate.getInstance().crearPedido("20366543598", prods);*/
 			
 		}
 		
