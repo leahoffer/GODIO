@@ -34,6 +34,21 @@ public class PedidoEntity {
 	public PedidoEntity() {
 		
 	}
+	
+	
+
+	public PedidoEntity(int nroPedido, ClienteEntity cliente, Date fecha, Date fecha_despacho, float total_bruto,
+			EstadoPedido estado) {
+		super();
+		this.nroPedido = nroPedido;
+		this.cliente = cliente;
+		this.fecha = fecha;
+		this.fecha_despacho = fecha_despacho;
+		this.total_bruto = total_bruto;
+		this.estado = estado;
+	}
+
+
 
 	public int getNroPedido() {
 		return nroPedido;
