@@ -8,5 +8,11 @@ public class Bonificacion extends Condicion {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	public float getMonto() {
+		return monto;
+	}
+	public void setMonto(float monto) {
+		this.monto = monto;
+	}
 
 }

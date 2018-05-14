@@ -3,10 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import business.Cliente;
-import business.DetallePedido;
-import business.Pedido;
-import business.Producto;
+import business.*;
+import dto.ClienteDTO;
 import dto.ProductoDTO;
 import enumeration.EstadoProducto;
 
@@ -27,12 +25,25 @@ public class Controller {
 		 */
 	}
 
-	public void crearCliente(String cuit, String razon_social, String telefono, String direccion, boolean r_inscripto,
-			String notas) {
+	public void crearCliente(ClienteDTO c) {
 		/**
 		 * Creo un método para que me deje crear el RO y esas otras cosas
 		 */
+		Cliente cliente=new Cliente();
+		CuentaCorriente cc= new CuentaCorriente();
+		cc.setId(c.getCuentaCorriente().getId());
+		cc.setLimite(c.getCuentaCorriente().getLimite());
+		cc.setSaldo(c.getCuentaCorriente().getSaldo());
 		
+		cliente.setCondicionEsp(c.getCondicionEsp());
+		cliente.setCuentaCorriente(cc);
+		cliente.setCuit(c.getCuit());
+		cliente.setDireccion(c.getDireccion());
+		cliente.setR_inscripto(c.isR_inscripto());
+		cliente.setRazon_social(c.getRazon_social());
+		cliente.setTelefono(c.getTelefono());
+		
+		cliente.saveOrUpdate();
 	}
 	
 	public void crearPedido (String cuit , ArrayList<ProductoDTO> prod)

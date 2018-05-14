@@ -13,11 +13,11 @@ public class FacturaEntity {
 	private String nro;
 	private String tipo;
 		
-	@OneToOne
+	@OneToOne (cascade=CascadeType.ALL)
 	private ClienteEntity cliente;
 	
 	private float total;
-	@OneToMany
+	@OneToMany (cascade=CascadeType.ALL)
 	protected List<ItemFacturaEntity> items;
 	private float cancelado;
 	public String getNro() {

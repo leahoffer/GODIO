@@ -11,7 +11,7 @@ public class MovimientoCCEntity {
 	private int nro;
 	private float monto;
 	private boolean signo;
-	@OneToOne
+	@OneToOne (cascade=CascadeType.ALL)
 	private FacturaEntity facturaAplicada;
 	
 	public MovimientoCCEntity() {

@@ -7,6 +7,7 @@ import java.util.List;
 
 import business.Producto;
 import controller.Controller;
+import dto.ClienteDTO;
 import dto.ProductoDTO;
 import tda.TDABusiness;
 
@@ -20,10 +21,9 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		controlador= Controller.getInstance();
 	}
 
-	public void crearCliente(String cuit, String razon_social, String telefono, String direccion, boolean r_inscripto,
-			String notas) 
+	public void crearCliente(ClienteDTO cliente) 
 	{
-		controlador.crearCliente(cuit, razon_social, telefono, direccion, r_inscripto, notas);
+		controlador.crearCliente(cliente);
 	}
 	
 	public List<ProductoDTO> listarProductosDisponibles(){

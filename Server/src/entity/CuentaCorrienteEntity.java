@@ -13,9 +13,9 @@ public class CuentaCorrienteEntity {
 	protected String id;
 	protected float saldo;
 	protected float limite;
-	@OneToMany 
+	@OneToMany (cascade=CascadeType.ALL)
 	protected List<MovimientoCCEntity> movimientos;
-	@OneToMany
+	@OneToMany (cascade=CascadeType.ALL)
 	protected List<CondicionEntity> condiciones;
 	
 	

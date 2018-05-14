@@ -3,7 +3,7 @@ package dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import business.Proveedor;
+
 
 public class LoteDTO implements Serializable{
 

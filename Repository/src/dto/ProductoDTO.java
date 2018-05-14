@@ -1,10 +1,10 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import business.Lote;
-import business.Ubicacion;
+
 import enumeration.EstadoProducto;
 import enumeration.Presentacion;
 
@@ -30,7 +30,7 @@ public class ProductoDTO implements Serializable {
 	
 	public ProductoDTO()
 	{
-		
+		ubicaciones= new ArrayList<UbicacionDTO>();
 	}
 
 	public String getCodBarras() {

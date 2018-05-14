@@ -13,7 +13,7 @@ public class ClienteEntity {
 	private String telefono;
 	private String Direccion;
 	private boolean r_inscripto;
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private CuentaCorrienteEntity cuentaCorriente;
 	private String condicionEsp;
 	
