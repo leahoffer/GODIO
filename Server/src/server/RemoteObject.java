@@ -2,13 +2,13 @@ package server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.List;
 
-import business.Producto;
 import controller.Controller;
 import dto.ClienteDTO;
+import dto.DetallePedidoDTO;
 import dto.ProductoDTO;
+import exception.ProductoException;
 import tda.TDABusiness;
 
 public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
@@ -26,13 +26,13 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		controlador.crearCliente(cliente);
 	}
 	
-	public List<ProductoDTO> listarProductosDisponibles(){
+	public List<ProductoDTO> listarProductosDisponibles() throws ProductoException{
 		
 		return controlador.listarProductos();
 	}
 
 	@Override
-	public void crearPedido(String cuit, List<ProductoDTO> productos) throws RemoteException {
+	public void crearPedido(String cuit, List<DetallePedidoDTO> detalle) throws RemoteException {
 		// TODO Auto-generated method stub
 		
 	}

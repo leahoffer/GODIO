@@ -3,16 +3,29 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import business.*;
+import business.Cliente;
+import business.CuentaCorriente;
+import business.DetallePedido;
+import business.Pedido;
+import business.Producto;
+import dao.ClienteDAO;
+import dao.PedidoDAO;
 import dao.ProductoDAO;
 import dto.ClienteDTO;
+import dto.CondicionDTO;
+import dto.CuentaCorrienteDTO;
 import dto.ProductoDTO;
+import entity.ClienteEntity;
+import entity.CondicionEntity;
 import entity.ProductoEntity;
-import enumeration.EstadoProducto;
+import exception.ClienteException;
+import exception.ProductoException;
 
 public class Controller {
 
 	private static Controller instance;
+	private List<ClienteDTO> clientes;
+	
 	
 	public static Controller getInstance() {
 		if (instance==null)
@@ -48,47 +61,27 @@ public class Controller {
 		cliente.saveOrUpdate();
 	}
 	
-	public void crearPedido (String cuit , ArrayList<ProductoDTO> prod)
+	public void crearPedido (String cuit , ArrayList<DetallePedido> ped) throws ClienteException, ProductoException
 	{
-		//Como va a hacer muestra le hardcodeo la cantidad del pedido 
-		//Buscar Cliente con el cuit ingresado
-		Cliente cli = new Cliente();
-		cli.setCuit(cuit);
-		cli.setRazon_social("Mcampero");
 		
-		List <DetallePedido> detalles = new ArrayList<DetallePedido>();
-		DetallePedido dp = new DetallePedido();
+		buscarCliente(cuit);
+		listarProductos(); // ver como pasar los productos para que los pueda elegir.
+		
 		float subtotal = 0;
 		float totalbruto = 0;
-		for (ProductoDTO producto: prod)
-		{
-			
-	     Producto p = new Producto();
-	     p.setCodBarras(producto.getCodBarras());
-	     p.setDescripcion(producto.getDescripcion());
-	     p.setPrecio(producto.getPrecio());
-	     
-	    subtotal = 5 * producto.getPrecio(); 
-	     
-		dp.setCantidad(5);
-		dp.setSubtotal(subtotal);
-		dp.setProducto(p);
-		detalles.add(dp);
 		
+		for (DetallePedido pedido: ped)
+		{
+	     
+	     subtotal = pedido.getCantidad() *  pedido.getProducto().getPrecio();;
+	     pedido.setSubtotal(subtotal);
+	     totalbruto = totalbruto + subtotal;
 		}
 	
-		Pedido ped = new Pedido();
-		ped.setCliente(cli);
-		ped.setNroPedido(1);
-		for (DetallePedido dp2 : detalles)
-		{
-			totalbruto = dp2.getSubtotal() + totalbruto;
-		}
-		ped.setTotal_bruto(totalbruto);
 		
 	}
 	
-	public List<ProductoDTO> listarProductos()
+	public List<ProductoDTO> listarProductos() throws ProductoException
 	{
 		List<ProductoEntity> prods = new ArrayList<ProductoEntity>();
 		prods=ProductoDAO.getInstance().findAll();
@@ -106,11 +99,55 @@ public class Controller {
 		}
 		
 		return prodsvo;
+	
+	}
+	
+	public ClienteDTO buscarCliente (String cuit) throws ClienteException
+	{
 		
-		//aca habria que llamar a la funcion que trae datos.
-		//List<Producto> prods = ProductoDAO.getInstance.findAll()
+		
+	
+			for (ClienteDTO clie : clientes)
+			{
+				if (clie.getCuit().equals(cuit));
+					return clie; //Busqueda en memoria.
+			}
+		
+		ClienteEntity cliente = new ClienteEntity();
+		cliente = ClienteDAO.getInstance().findByCuit(cuit);
+		
+		ClienteDTO cli = new ClienteDTO();
+		CuentaCorrienteDTO cta = new CuentaCorrienteDTO();
+		List<CondicionDTO> conds = new ArrayList<CondicionDTO>(); 
+		CondicionDTO con = new CondicionDTO();
+		
+		for (CondicionEntity ce :cliente.getCuentaCorriente().getCondiciones())
+		{
+			con.setCondicion(ce.getDescripcion());
+			conds.add(con);
+		}
+			
+		cta.setCondiciones(conds);
+		cli.setCondicionEsp(cliente.getCondicionEsp());
+		cli.setCuentaCorriente(cta);
+		cli.setCuit(cliente.getCuit());
+		cli.setDireccion(cliente.getDireccion());
+		cli.setR_inscripto(cli.isR_inscripto()); 
+		cli.setRazon_social(cli.getRazon_social());
+		cli.setTelefono(cli.getTelefono());
+		
+		
+		clientes.add(cli);
+		return cli;
 		
 	}
-			
 
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return super.equals(obj);
+	}
+
+	
+	
 }

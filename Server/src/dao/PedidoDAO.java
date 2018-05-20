@@ -2,8 +2,11 @@ package dao;
 
 import java.util.Date;
 
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 
+import business.Cliente;
 import business.Pedido;
 import entity.ClienteEntity;
 import entity.PedidoEntity;
@@ -20,20 +23,35 @@ public class PedidoDAO {
 		return instancia;
 	}
 	
-	public void save(Pedido ped){
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
-		session.save(this.toEntity(ped));
-		session.getTransaction().commit();
-		session.close();
-	}
-
-	private PedidoEntity toEntity(Pedido ped) {
-		// TODO Auto-generated method stub
-		PedidoEntity pedido = new PedidoEntity();
+	public void createOrUpdate(Pedido ped){
 		
-		
-		return pedido;
+		try {
+			PedidoEntity pe = pedidoToEntity(ped);
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			System.out.println("Guardando Pedido...");
+			s.saveOrUpdate(pe);
+			s.getTransaction().commit();
+			System.out.println("Pedido guardado!");
+			s.flush();
+			s.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error al guardar el Cliente");
+			e.printStackTrace();
+		}
 	}
 	
+	
+
+	private PedidoEntity pedidoToEntity(Pedido ped) {
+		// TODO Auto-generated method stub
+
+		ClienteEntity cliente = new ClienteEntity();
+		return null;
+	
+	}
+	
+
 }

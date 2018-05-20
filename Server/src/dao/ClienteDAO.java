@@ -10,10 +10,13 @@ import business.Cliente;
 import business.Condicion;
 import business.CuentaCorriente;
 import business.MovimientoCC;
+import dto.ClienteDTO;
 import entity.ClienteEntity;
 import entity.CondicionEntity;
 import entity.CuentaCorrienteEntity;
 import entity.MovimientoCCEntity;
+import entity.ProductoEntity;
+import exception.ClienteException;
 import hibernate.HibernateUtil;
 
 public class ClienteDAO {
@@ -110,4 +113,25 @@ public class ClienteDAO {
 		cce.setMovimientos(mcces);
 		return cce;	
 	}
+
+	public ClienteEntity findByCuit(String cuit) throws ClienteException {
+		// TODO Auto-generated method stub
+		
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			ClienteEntity cliente = (ClienteEntity)s.createQuery("from ClienteEntity where cuit = ?").setString(0, cuit).uniqueResult();
+			s.close();
+			return cliente;
+		}
+		catch (Exception e)
+		{
+			throw new ClienteException("Error al traer los Clientes");
+		
+		}
+	}
+	
+
 }

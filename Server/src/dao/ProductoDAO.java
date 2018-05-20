@@ -14,6 +14,7 @@ import entity.LoteEntity;
 import entity.ProductoEntity;
 import entity.UbicacionEntity;
 import entity.UbicacionId;
+import exception.ProductoException;
 import hibernate.HibernateUtil;
 
 public class ProductoDAO {
@@ -101,7 +102,7 @@ public class ProductoDAO {
 		return le;
 	}
 
-	public List<ProductoEntity> findAll() {
+	public List<ProductoEntity> findAll() throws ProductoException {
 		// TODO Auto-generated method stub
 		
 		try
@@ -115,10 +116,10 @@ public class ProductoDAO {
 		}
 		catch (Exception e)
 		{
-			System.out.println("Error al traer los productos"); //CREAR EXCEPTIONS 
-			e.printStackTrace();
+			throw new ProductoException("Error al traer los Productos");
+			
 		}
-		return null;
+	
 	}
 	
 }

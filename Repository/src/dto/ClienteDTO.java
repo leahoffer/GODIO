@@ -61,6 +61,7 @@ public class ClienteDTO implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
 	public ClienteDTO() {
 		super();
 		// TODO Auto-generated constructor stub

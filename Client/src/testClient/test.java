@@ -12,10 +12,11 @@ import dto.CuentaCorrienteDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
+import exception.ProductoException;
 
 public class test {
 
-	public static void main(String[] args) throws RemoteException {
+	public static void main(String[] args) throws RemoteException, ProductoException {
 		// TODO Auto-generated method stub
 
 		
@@ -82,11 +83,11 @@ public class test {
 			ProductoDTO producto=new ProductoDTO();
 			producto.setCodBarras("CodBarras1");
 			ProductoDTO producto2=new ProductoDTO();
-			producto.setCodBarras("CodBarras2");
+			producto2.setCodBarras("CodBarras2");
 			ProductoDTO producto3=new ProductoDTO();
-			producto.setCodBarras("CodBarras3");
+			producto3.setCodBarras("CodBarras3");
 			ProductoDTO producto4=new ProductoDTO();
-			producto.setCodBarras("CodBarras4");
+			producto4.setCodBarras("CodBarras4");
 
 			
 			DetallePedidoDTO detalle= new DetallePedidoDTO();
@@ -95,19 +96,19 @@ public class test {
 			detalle.setProducto(producto);
 			
 			DetallePedidoDTO detalle2= new DetallePedidoDTO();
-			detalle.setCantidad(100);
-			detalle.setSubtotal(0);
-			detalle.setProducto(producto2);
+			detalle2.setCantidad(100);
+			detalle2.setSubtotal(0);
+			detalle2.setProducto(producto2);
 			
 			DetallePedidoDTO detalle3= new DetallePedidoDTO();
-			detalle.setCantidad(100);
-			detalle.setSubtotal(0);
-			detalle.setProducto(producto3);
+			detalle3.setCantidad(100);
+			detalle3.setSubtotal(0);
+			detalle3.setProducto(producto3);
 			
 			DetallePedidoDTO detalle4= new DetallePedidoDTO();
-			detalle.setCantidad(100);
-			detalle.setSubtotal(0);
-			detalle.setProducto(producto4);
+			detalle4.setCantidad(100);
+			detalle4.setSubtotal(0);
+			detalle4.setProducto(producto4);
 			
 			List<DetallePedidoDTO> detalles = new ArrayList<DetallePedidoDTO>();
 			detalles.add(detalle);
@@ -116,7 +117,7 @@ public class test {
 			detalles.add(detalle4);
 			
 			
-			
+			BusinessDelegate.getInstance().crearPedido("20366543598", detalles);
 			
 			
 			/*Empezar generacion de pedido
@@ -130,7 +131,7 @@ public class test {
 				
 			}
 			System.out.println("Se va a hacer un pedido con estos materiales y cantidad 5");
-			BusinessDelegate.getInstance().crearPedido("20366543598", prods);*/
+			*/
 			
 		}
 		

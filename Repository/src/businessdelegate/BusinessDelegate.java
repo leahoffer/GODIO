@@ -2,11 +2,12 @@ package businessdelegate;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 import dto.ClienteDTO;
+import dto.DetallePedidoDTO;
 import dto.ProductoDTO;
+import exception.ProductoException;
 import tda.TDABusiness;
 
 public class BusinessDelegate implements TDABusiness {
@@ -43,15 +44,20 @@ public class BusinessDelegate implements TDABusiness {
 	}
 
 	@Override
-	public void crearPedido(String cuit, List<ProductoDTO> productos) throws RemoteException {
+	public void crearPedido(String cuit, List<DetallePedidoDTO> detalles) throws RemoteException {
 		// TODO Auto-generated method stub
-		RemoteObject.crearPedido(cuit, productos);
+		RemoteObject.crearPedido(cuit, detalles);
 	}
 
 	@Override
-	public List<ProductoDTO> listarProductosDisponibles() throws RemoteException {
+	public List<ProductoDTO> listarProductosDisponibles() throws RemoteException, ProductoException {
 		
-		return RemoteObject.listarProductosDisponibles();
+		try {
+			return RemoteObject.listarProductosDisponibles();
+		} catch (ProductoException e) {
+			throw new  ProductoException("Error al buscar Productos");
+			
+		}
 	}
 
 }
