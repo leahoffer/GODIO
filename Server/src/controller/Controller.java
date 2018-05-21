@@ -243,34 +243,79 @@ public class Controller {
 		for (DetallePedido dp : p.getDetalle())
 		{
 			int sd = calcularStockDisponible(dp.getProducto());
+			//Si tengo Stock disponible, reservo y listo
 			if (sd>dp.getCantidad())
 			{
 				Almacen.getInstance().crearReserva(p, dp, dp.getCantidad());
 			}
+			//Sino...
 			else
 			{
+				//Si no puedo completar, pero el stock disponible es mayor a 0, primero reservo lo que queda y después creo OP nueva
 				if (sd > 0)
 				{
 					Almacen.getInstance().crearReserva(p, dp, sd);
-					OrdenPedido op = buscarOPConDisponibilidad(dp.getProducto());
-					if (op.calcularDisponible(dp.getCantidad()-sd))
+					OrdenPedido op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+					//Todo esto mientras haya una OP con disponibilidad. Sino voy a tener que hacer una nueva de 0 y reservarle el 100%
+					if (op != null)
 					{
-						op.agregarMovimientoReserva(dp.getCantidad()-sd, p);
+						//Si tiene disponible el total de lo que falta, que lo reserve de ahí.
+						if (op.calcularDisponible(dp.getCantidad()-sd))
+						{
+							op.agregarMovimientoReserva(dp.getCantidad()-sd, p);
+						}
+						//Sino, reservo de esa OP lo que le quede y le digo al Almacén que cree una nueva por el restante
+						else
+						{
+							int reservadoOP = op.disponible();
+							op.agregarMovimientoReserva(reservadoOP, p);
+							op.setEstado(EstadoOP.Reservada);
+							Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad()-sd-reservadoOP);
+						}
 					}
-					else
+					//Tengo stock, aunque no suficiente, pero no tenog OPs con disponibilidad para reservar
+					else 
 					{
-												
+						//VOLVER A VER. Creo que el CrearOrdenPedido debería crearla e instantaneamente crearle un movimientoreserva. VER VER VER
+						Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad());
 					}
 				}
+				//Si no puedo completar, y aparte no hay NADA de stock, voy directamente a ver si tengo para reservarle a una OP
+				else if (sd == 0)
+				{
+					OrdenPedido op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+					//Si hay una OP con disponibilidad...
+					if (op != null)
+					{
+						//Si la OP tiene disponible para reservarle el total, de lujo
+						if (op.calcularDisponible(dp.getCantidad()))
+						{
+							op.agregarMovimientoReserva(dp.getCantidad(), p);
+						}
+						//Sino, le reservo lo que le quede y aparte creo una nueva
+						else
+						{
+							int reservadoOP = op.disponible();
+							op.agregarMovimientoReserva(reservadoOP, p);
+							op.setEstado(EstadoOP.Reservada);
+							Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad()-reservadoOP);
+						}
+					}
+					//No solo no tengo nada de stock sino que no tengo OP con disponibilidad. Caso más horrible.
+					else
+					{
+						
+					}
+				}
+				resultado = false;
 			}
-		}
 		return resultado;
+		}
 	}
 
-	private OrdenPedido buscarOPConDisponibilidad(Producto producto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
+	
 
 	private int calcularStockDisponible(Producto producto) {
 		// TODO Auto-generated method stub

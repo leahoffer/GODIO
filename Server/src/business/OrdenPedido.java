@@ -85,6 +85,16 @@ public class OrdenPedido {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public int disponible() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public void saveMe() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
