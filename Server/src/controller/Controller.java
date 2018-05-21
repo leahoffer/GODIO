@@ -54,8 +54,8 @@ public class Controller {
 		try {
 			if(ClienteDAO.getInstance().findByCuit(c.getCuit()) == null)
 			{
-				Cliente cliente=new Cliente();
-				CuentaCorriente cc= new CuentaCorriente();
+				Cliente cliente = new Cliente();
+				CuentaCorriente cc = new CuentaCorriente();
 				cc.setId(c.getCuentaCorriente().getId());
 				cc.setLimite(c.getCuentaCorriente().getLimite());
 				cc.setSaldo(c.getCuentaCorriente().getSaldo());

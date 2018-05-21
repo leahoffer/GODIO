@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CuentaCorriente {
 
-	private String id;
+	private int id;
 	private float saldo;
 	private float limite;
 	private List<MovimientoCC> movimientos;
@@ -17,10 +17,10 @@ public class CuentaCorriente {
 		this.condiciones = new ArrayList<Condicion>();
 	}
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public float getSaldo() {

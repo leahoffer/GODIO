@@ -11,15 +11,15 @@ public class CuentaCorrienteDTO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1626370027886861904L;
-	private String id;
+	private int id;
 	private float saldo;
 	private float limite;
 	private List<MovimientoCCDTO> movimientos;
 	private List<CondicionDTO> condiciones;
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public float getSaldo() {

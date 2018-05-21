@@ -56,7 +56,7 @@ public class PedidoDAO {
 	
 	
 
-	private PedidoEntity pedidoToEntity(Pedido ped) {
+	public PedidoEntity pedidoToEntity(Pedido ped) {
 		ClienteEntity ce = ClienteDAO.getInstance().clienteToEntity(ped.getCliente());
 		PedidoEntity pe = new PedidoEntity();
 		pe.setAclaracionEspecial(ped.getAclaracionEspecial());

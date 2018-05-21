@@ -45,7 +45,7 @@ public class test {
 			cliente.setR_inscripto(true);
 			cliente.setRazon_social("Razon Social");
 			cliente.setTelefono("Telefono");
-			cliente.getCuentaCorriente().setId("001");
+		//	cliente.getCuentaCorriente().setId("001");
 			cliente.getCuentaCorriente().setLimite(10000);
 			cliente.getCuentaCorriente().setSaldo(0);
 			cliente.setCondicionEsp("Condicion Especial");
