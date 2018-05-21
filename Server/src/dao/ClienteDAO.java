@@ -6,14 +6,19 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import business.Bonificacion;
 import business.Cliente;
 import business.Condicion;
 import business.CuentaCorriente;
+import business.Descuento;
+import business.Factura;
 import business.MovimientoCC;
 import dto.ClienteDTO;
+import entity.BonificacionEntity;
 import entity.ClienteEntity;
 import entity.CondicionEntity;
 import entity.CuentaCorrienteEntity;
+import entity.DescuentoEntity;
 import entity.MovimientoCCEntity;
 import entity.ProductoEntity;
 import exception.ClienteException;
@@ -115,7 +120,6 @@ public class ClienteDAO {
 	}
 
 	public Cliente findByCuit(String cuit) throws ClienteException {
-		Cliente c = new Cliente();
 		try
 		{
 			SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -135,7 +139,49 @@ public class ClienteDAO {
 	public Cliente clienteToNegocio(ClienteEntity ce)
 	{
 		Cliente c = new Cliente();
-		
+		CuentaCorriente cc = new CuentaCorriente();
+		List<MovimientoCC> mccs = new ArrayList<MovimientoCC>();
+		List<Condicion> cs = new ArrayList<Condicion>();
+		c.setCondicionEsp(ce.getCondicionEsp());
+		c.setCuit(ce.getCuit());
+		c.setDireccion(ce.getDireccion());
+		c.setR_inscripto(ce.isR_inscripto());
+		c.setRazon_social(ce.getRazon_social());
+		c.setTelefono(ce.getTelefono());
+		cc.setLimite(ce.getCuentaCorriente().getLimite());
+		cc.setSaldo(ce.getCuentaCorriente().getSaldo());
+		for (CondicionEntity conde : ce.getCuentaCorriente().getCondiciones())
+		{
+			if (conde instanceof BonificacionEntity)
+			{
+				Bonificacion b = new Bonificacion();
+				b.setCondicion(conde.getDescripcion());
+				b.setMonto(((BonificacionEntity) conde).getMonto());
+				cs.add(b);
+			}
+			else if (conde instanceof DescuentoEntity)
+			{
+				Descuento d = new Descuento();
+				d.setCondicion(conde.getDescripcion());
+				d.setPorcentaje(((DescuentoEntity) conde).getPorcentaje());
+				cs.add(d);
+			}
+		}
+		for(MovimientoCCEntity mcce : ce.getCuentaCorriente().getMovimientos())
+		{
+			//Esto en realidad es horrible, pero en el peor de los casos, del cliente en la factura no nos va a importar los movimientos de la CC.. o si?
+			MovimientoCC mcc = new MovimientoCC(mcce.getMonto(), mcce.isSigno());
+			if (mcce.getFacturaAplicada() != null)
+			{
+				Factura f = new Factura();
+				f.setCancelado(mcce.getFacturaAplicada().getCancelado());
+				f.setCliente(c);
+			}
+			mccs.add(mcc);
+		}
+		cc.setCondiciones(cs);
+		cc.setMovimientos(mccs);
+		c.setCuentaCorriente(cc);
 		return c;
 	}
 
