@@ -277,7 +277,7 @@ public class Controller {
 					else 
 					{
 						//VOLVER A VER. Creo que el CrearOrdenPedido debería crearla e instantaneamente crearle un movimientoreserva. VER VER VER
-						Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad());
+						Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad()-sd);
 					}
 				}
 				//Si no puedo completar, y aparte no hay NADA de stock, voy directamente a ver si tengo para reservarle a una OP
