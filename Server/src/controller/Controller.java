@@ -243,7 +243,7 @@ public class Controller {
 		for (DetallePedido dp : p.getDetalle())
 		{
 			int sd = calcularStockDisponible(dp.getProducto());
-			//Si tengo Stock disponible, reservo y listo
+			//Si tengo Stock disponible, reservo y listo. Almacén se encarga de updatear el stock y eso.
 			if (sd>dp.getCantidad())
 			{
 				Almacen.getInstance().crearReserva(p, dp, dp.getCantidad());
@@ -276,8 +276,10 @@ public class Controller {
 					//Tengo stock, aunque no suficiente, pero no tenog OPs con disponibilidad para reservar
 					else 
 					{
-						//VOLVER A VER. Creo que el CrearOrdenPedido debería crearla e instantaneamente crearle un movimientoreserva. VER VER VER
+						//Creo que esto está bien... que el crearOrdenPedido no genere el movimientoReserva.
 						Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad()-sd);
+						op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+						op.agregarMovimientoReserva(dp.getCantidad(), p);
 					}
 				}
 				//Si no puedo completar, y aparte no hay NADA de stock, voy directamente a ver si tengo para reservarle a una OP
@@ -304,13 +306,15 @@ public class Controller {
 					//No solo no tengo nada de stock sino que no tengo OP con disponibilidad. Caso más horrible.
 					else
 					{
-						
+						Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad()-sd);
+						op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+						op.agregarMovimientoReserva(dp.getCantidad(), p);
 					}
 				}
 				resultado = false;
 			}
-		return resultado;
 		}
+		return resultado;
 	}
 
 
