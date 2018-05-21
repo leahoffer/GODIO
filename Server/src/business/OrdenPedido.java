@@ -75,6 +75,16 @@ public class OrdenPedido {
 	public void setMovReserva(List<MovimientoReserva> movReserva) {
 		this.movReserva = movReserva;
 	}
+
+	public boolean calcularDisponible(int i) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void agregarMovimientoReserva(int i, Pedido p) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

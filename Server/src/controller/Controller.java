@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import business.Bonificacion;
@@ -9,8 +10,10 @@ import business.Condicion;
 import business.CuentaCorriente;
 import business.Descuento;
 import business.DetallePedido;
+import business.OrdenPedido;
 import business.Pedido;
 import business.Producto;
+import business.Reserva;
 import dao.ClienteDAO;
 import dao.PedidoDAO;
 import dao.ProductoDAO;
@@ -19,10 +22,15 @@ import dto.ClienteDTO;
 import dto.CondicionDTO;
 import dto.CuentaCorrienteDTO;
 import dto.DescuentoDTO;
+import dto.DetallePedidoDTO;
+import dto.LoteDTO;
+import dto.PedidoDTO;
 import dto.ProductoDTO;
 import entity.ClienteEntity;
 import entity.CondicionEntity;
 import entity.ProductoEntity;
+import enumeration.EstadoOP;
+import enumeration.EstadoPedido;
 import exception.ClienteException;
 import exception.ProductoException;
 
@@ -161,13 +169,114 @@ public class Controller {
 		return cli;
 		
 	}
-
+	//Qué es esto? Jajaja
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
 		return super.equals(obj);
 	}
 
+	public List<PedidoDTO> listarPedidosPendientes ()
+	{
+		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
+		List<Pedido> ps = PedidoDAO.getInstance().traerPedidosPendientes();
+		for (Pedido p : ps)
+		{
+			PedidoDTO pdto = new PedidoDTO();
+			List<DetallePedidoDTO> dpdtos = new ArrayList<DetallePedidoDTO>();
+			pdto.setAclaracionEspecial(p.getAclaracionEspecial());
+			pdto.setDespachable(p.isDespachable());
+			pdto.setDir_entrega(p.getDir_entrega());
+			pdto.setEstado(p.getEstado().toString());
+			pdto.setFecha(p.getFecha());
+			pdto.setFecha_despacho(p.getFecha_despacho());
+			pdto.setMotivoEstado(p.getMotivoEstado());
+			pdto.setNroPedido(p.getNroPedido());
+			pdto.setTotal_bruto(p.getTotal_bruto());
+			for (DetallePedido dp : p.getDetalle())
+			{
+				DetallePedidoDTO dpdto = new DetallePedidoDTO();
+				ProductoDTO prdto = new ProductoDTO();
+				dpdto.setCantidad(dp.getCantidad());
+				dpdto.setSubtotal(dp.getSubtotal());
+				prdto.setCantAComprar(dp.getProducto().getCantAComprar());
+				prdto.setCantPosicion(dp.getProducto().getCantPosicion());
+				prdto.setCodBarras(dp.getProducto().getCodBarras());
+				prdto.setDescripcion(dp.getProducto().getDescripcion());
+				prdto.setEstado(dp.getProducto().getEstado().toString());
+				prdto.setPresentacion(dp.getProducto().getPresentacion().toString());
+				dpdto.setProducto(prdto);
+				dpdtos.add(dpdto);
+			}
+			pdto.setDetalle(dpdtos);
+			pdtos.add(pdto);
+		}
+		return pdtos;
+	}
+	
+	public boolean validarCreditoCliente(ClienteDTO cdto, PedidoDTO pdto) throws ClienteException
+	{
+		Cliente c = ClienteDAO.getInstance().findByCuit(cdto.getCuit());
+		if (c.excedeLimite(pdto.getTotal_bruto()))
+			return false;
+		return true;
+	}
+	
+	public void autorizarPedido (int nro)
+	{
+		Pedido p = PedidoDAO.getInstance().findByNro(nro);
+		if (validarCompletarPedido(p))
+		{
+			p.setEstado(EstadoPedido.PendienteDespacho);
+			p.update();
+		}
+		else
+		{
+			p.setEstado(EstadoPedido.PendienteOrdenCompra);
+			p.update();
+		}
+	}
+
+	//FALTA COMPLETAAAAARRRRRR
+	private boolean validarCompletarPedido(Pedido p) {
+		boolean resultado = true;
+		for (DetallePedido dp : p.getDetalle())
+		{
+			int sd = calcularStockDisponible(dp.getProducto());
+			if (sd>dp.getCantidad())
+			{
+				Almacen.getInstance().crearReserva(p, dp, dp.getCantidad());
+			}
+			else
+			{
+				if (sd > 0)
+				{
+					Almacen.getInstance().crearReserva(p, dp, sd);
+					OrdenPedido op = buscarOPConDisponibilidad(dp.getProducto());
+					if (op.calcularDisponible(dp.getCantidad()-sd))
+					{
+						op.agregarMovimientoReserva(dp.getCantidad()-sd, p);
+					}
+					else
+					{
+												
+					}
+				}
+			}
+		}
+		return resultado;
+	}
+
+	private OrdenPedido buscarOPConDisponibilidad(Producto producto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private int calcularStockDisponible(Producto producto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 	
 	
 }

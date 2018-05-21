@@ -8,12 +8,15 @@ import org.hibernate.SessionFactory;
 
 import business.Lote;
 import business.Producto;
+import business.Proveedor;
 import business.Ubicacion;
 import dto.ProductoDTO;
 import entity.LoteEntity;
 import entity.ProductoEntity;
 import entity.UbicacionEntity;
 import entity.UbicacionId;
+import enumeration.EstadoProducto;
+import enumeration.Presentacion;
 import exception.ProductoException;
 import hibernate.HibernateUtil;
 
@@ -120,6 +123,40 @@ public class ProductoDAO {
 			
 		}
 	
+	}
+
+	public Producto productoToNegocio(ProductoEntity pe) {
+		Producto p = new Producto();
+		Lote l = new Lote();
+		List<Ubicacion> us = new ArrayList<Ubicacion>();
+		p.setCantAComprar(pe.getCantAComprar());
+		p.setCantPosicion(pe.getCantPosicion());
+		p.setCodBarras(pe.getCodBarras());
+		p.setDescripcion(pe.getDescripcion());
+		p.setEstado(EstadoProducto.valueOf(pe.getEstado()));
+		p.setMarca(pe.getMarca());
+		p.setPrecio(pe.getPrecio());
+		p.setPresentacion(Presentacion.valueOf(pe.getPresentacion()));
+		p.setTamaño(pe.getTamaño());
+		p.setUnidad(pe.getUnidad());
+		l.setNumero(pe.getLote().getNumero());
+		l.setPrecioventa(pe.getLote().getPrecioventa());
+		l.setProveedor(new Proveedor(pe.getLote().getProveedor(), pe.getLote().getPrecioventa()));
+		l.setVencimiento(pe.getLote().getVencimiento());
+		for(UbicacionEntity ue : pe.getUbicaciones())
+		{
+			Ubicacion u = new Ubicacion();
+			u.setBloque(ue.getIdUbicacion().getBloque());
+			u.setCalle(ue.getIdUbicacion().getCalle());
+			u.setCantidadActual(ue.getIdUbicacion().getCantidadActual());
+			u.setEstante(ue.getIdUbicacion().getEstante());
+			u.setEstanteria(ue.getIdUbicacion().getEstanteria());
+			u.setPosicion(ue.getIdUbicacion().getPosicion());
+			us.add(u);
+		}
+		p.setLote(l);
+		p.setUbicaciones(us);
+		return p;
 	}
 	
 }

@@ -3,7 +3,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.DetallePedido;
 import business.MovimientoStock;
+import business.Pedido;
 import business.Reserva;
 import business.Ubicacion;
 
@@ -24,6 +26,11 @@ public class Almacen {
 		this.ubicaciones = new ArrayList<Ubicacion>();
 		this.reservas = new ArrayList<Reserva>();
 		this.movimientos = new ArrayList<MovimientoStock>();
+	}
+
+	public void crearReserva(Pedido p, DetallePedido dp, int cantidad) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dao.PedidoDAO;
 import enumeration.EstadoPedido;
 
 public class Pedido {
@@ -133,6 +134,11 @@ public class Pedido {
 	public void setCondicionesAplicadas(List<Condicion> condicionesAplicadas) {
 		this.condicionesAplicadas = condicionesAplicadas;
 	}
+
+	public void update() {
+		PedidoDAO.getInstance().update(this);
+	}
+
 	
 	
 	

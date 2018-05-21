@@ -22,7 +22,7 @@ public class ProductoDTO implements Serializable {
 	private int unidad;
 	private float precio;
 	private int cantPosicion;
-	private Presentacion presentacion;
+	private String presentacion;
 	private LoteDTO lote;
 	private int cantAComprar;
 	private List<UbicacionDTO> ubicaciones;
@@ -113,12 +113,12 @@ public class ProductoDTO implements Serializable {
 	}
 
 
-	public Presentacion getPresentacion() {
+	public String getPresentacion() {
 		return presentacion;
 	}
 
 
-	public void setPresentacion(Presentacion presentacion) {
+	public void setPresentacion(String presentacion) {
 		this.presentacion = presentacion;
 	}
 
