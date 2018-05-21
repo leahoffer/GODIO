@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import business.Cliente;
+import business.Condicion;
 import business.CuentaCorriente;
 import business.DetallePedido;
 import business.Pedido;
@@ -104,29 +105,26 @@ public class Controller {
 	
 	public ClienteDTO buscarCliente (String cuit) throws ClienteException
 	{
+		for (ClienteDTO clie : clientes)
+		{
+			if (clie.getCuit().equals(cuit));
+				return clie; //Busqueda en memoria.
+		}
 		
-		
-	
-			for (ClienteDTO clie : clientes)
-			{
-				if (clie.getCuit().equals(cuit));
-					return clie; //Busqueda en memoria.
-			}
-		
-		ClienteEntity cliente = new ClienteEntity();
-		cliente = ClienteDAO.getInstance().findByCuit(cuit);
+		//Los DAO reciben y devuelven objetos de negocio
+		Cliente cliente = ClienteDAO.getInstance().findByCuit(cuit);
 		
 		ClienteDTO cli = new ClienteDTO();
 		CuentaCorrienteDTO cta = new CuentaCorrienteDTO();
 		List<CondicionDTO> conds = new ArrayList<CondicionDTO>(); 
 		CondicionDTO con = new CondicionDTO();
-		
-		for (CondicionEntity ce :cliente.getCuentaCorriente().getCondiciones())
+		/** Comento esto para que no putee por ahora, porque solo falta ver la herencia. Después se puede descomentar
+		for (Condicion ce :cliente.getCuentaCorriente().getCondiciones())
 		{
 			con.setCondicion(ce.getDescripcion());
 			conds.add(con);
 		}
-			
+		**/	
 		cta.setCondiciones(conds);
 		cli.setCondicionEsp(cliente.getCondicionEsp());
 		cli.setCuentaCorriente(cta);

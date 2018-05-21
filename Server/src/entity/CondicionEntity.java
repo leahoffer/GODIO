@@ -5,6 +5,7 @@ import javax.persistence.*;
 	
 @Entity
 @Table(name="Condiciones")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class CondicionEntity{
 
 	@Id

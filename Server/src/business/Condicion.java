@@ -6,4 +6,12 @@ public abstract class Condicion {
 	//Como se escribian los metodos de cosos abstractos para que los hijos lo implementen??
 	public abstract float calcularMonto(int montoInicial);
 	
+	public String getCondicion() {
+		return condicion;
+	}
+	public void setCondicion(String condicion) {
+		this.condicion = condicion;
+	}
+	
+	
 }

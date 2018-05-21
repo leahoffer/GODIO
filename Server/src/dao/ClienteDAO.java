@@ -114,9 +114,8 @@ public class ClienteDAO {
 		return cce;	
 	}
 
-	public ClienteEntity findByCuit(String cuit) throws ClienteException {
-		// TODO Auto-generated method stub
-		
+	public Cliente findByCuit(String cuit) throws ClienteException {
+		Cliente c = new Cliente();
 		try
 		{
 			SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -124,7 +123,7 @@ public class ClienteDAO {
 			s.beginTransaction();
 			ClienteEntity cliente = (ClienteEntity)s.createQuery("from ClienteEntity where cuit = ?").setString(0, cuit).uniqueResult();
 			s.close();
-			return cliente;
+			return clienteToNegocio(cliente);
 		}
 		catch (Exception e)
 		{
@@ -133,5 +132,11 @@ public class ClienteDAO {
 		}
 	}
 	
+	public Cliente clienteToNegocio(ClienteEntity ce)
+	{
+		Cliente c = new Cliente();
+		
+		return c;
+	}
 
 }
