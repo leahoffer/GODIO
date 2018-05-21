@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import business.Bonificacion;
@@ -12,8 +11,6 @@ import business.Descuento;
 import business.DetallePedido;
 import business.OrdenPedido;
 import business.Pedido;
-import business.Producto;
-import business.Reserva;
 import dao.ClienteDAO;
 import dao.PedidoDAO;
 import dao.ProductoDAO;
@@ -23,11 +20,8 @@ import dto.CondicionDTO;
 import dto.CuentaCorrienteDTO;
 import dto.DescuentoDTO;
 import dto.DetallePedidoDTO;
-import dto.LoteDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
-import entity.ClienteEntity;
-import entity.CondicionEntity;
 import entity.ProductoEntity;
 import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
@@ -238,11 +232,12 @@ public class Controller {
 	}
 
 	//FALTA COMPLETAAAAARRRRRR
-	private boolean validarCompletarPedido(Pedido p) {
+	private boolean validarCompletarPedido(Pedido p) 
+	{
 		boolean resultado = true;
 		for (DetallePedido dp : p.getDetalle())
 		{
-			int sd = calcularStockDisponible(dp.getProducto());
+			int sd = Almacen.getInstance().calcularStockDisponible(dp.getProducto());
 			//Si tengo Stock disponible, reservo y listo. Almacén se encarga de updatear el stock y eso.
 			if (sd>dp.getCantidad())
 			{
@@ -318,13 +313,6 @@ public class Controller {
 	}
 
 
-
-	
-
-	private int calcularStockDisponible(Producto producto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	
 	

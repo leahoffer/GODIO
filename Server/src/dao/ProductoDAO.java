@@ -10,7 +10,6 @@ import business.Lote;
 import business.Producto;
 import business.Proveedor;
 import business.Ubicacion;
-import dto.ProductoDTO;
 import entity.LoteEntity;
 import entity.ProductoEntity;
 import entity.UbicacionEntity;

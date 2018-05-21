@@ -13,14 +13,12 @@ import business.CuentaCorriente;
 import business.Descuento;
 import business.Factura;
 import business.MovimientoCC;
-import dto.ClienteDTO;
 import entity.BonificacionEntity;
 import entity.ClienteEntity;
 import entity.CondicionEntity;
 import entity.CuentaCorrienteEntity;
 import entity.DescuentoEntity;
 import entity.MovimientoCCEntity;
-import entity.ProductoEntity;
 import exception.ClienteException;
 import hibernate.HibernateUtil;
 
@@ -110,9 +108,20 @@ public class ClienteDAO {
 		}
 		for (Condicion c : cc.getCondiciones())
 		{
-			CondicionEntity ce = new CondicionEntity();
-			//Crear bien la condicionEntity. No me acuerdo herencias :(
-			ces.add(ce);
+			if (c instanceof Bonificacion)
+			{
+				BonificacionEntity be = new BonificacionEntity();
+				be.setDescripcion(c.getCondicion());
+				be.setMonto(((Bonificacion) c).getMonto());
+				ces.add(be);
+			}
+			else if (c instanceof Descuento)
+			{
+				DescuentoEntity de = new DescuentoEntity();
+				de.setDescripcion(c.getCondicion());
+				de.setPorcentaje(((Descuento) c).getPorcentaje());
+				ces.add(de);
+			}
 		}
 		cce.setCondiciones(ces);
 		cce.setMovimientos(mcces);

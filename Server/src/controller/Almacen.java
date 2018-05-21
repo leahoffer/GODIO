@@ -50,6 +50,11 @@ public class Almacen {
 		
 	}
 
+	public int calcularStockDisponible(Producto producto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	
 	
 	

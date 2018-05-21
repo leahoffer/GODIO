@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import enumeration.EstadoProducto;
-import enumeration.Presentacion;
-
 public class ProductoDTO implements Serializable {
 
 	/**
