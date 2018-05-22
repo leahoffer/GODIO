@@ -7,7 +7,7 @@ import enumeration.EstadoOP;
 
 public class OrdenPedido {
 
-	private String nro;
+	private int nro;
 	private EstadoOP estado;
 	private Pedido pedidoOrigen;
 	private Producto producto;
@@ -20,11 +20,11 @@ public class OrdenPedido {
 		this.movReserva = new ArrayList<MovimientoReserva>();
 	}
 
-	public String getNro() {
+	public int getNro() {
 		return nro;
 	}
 
-	public void setNro(String nro) {
+	public void setNro(int nro) {
 		this.nro = nro;
 	}
 

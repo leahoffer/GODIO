@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import business.DetallePedido;
@@ -10,6 +11,8 @@ import business.Pedido;
 import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
+import dao.AlmacenDAO;
+import dao.ComprasDAO;
 
 public class Almacen {
 
@@ -31,12 +34,17 @@ public class Almacen {
 	}
 
 	public void crearReserva(Pedido p, DetallePedido dp, int cantidad) {
-		// TODO Auto-generated method stub
-		
+		Reserva r = new Reserva();
+		r.setCantidad(cantidad);
+		r.setCompleta(false);
+		r.setFecha(new Date());
+		r.setPedido(p);
+		r.setProducto(dp.getProducto());
+		r.saveMe();
 	}
 
 	public OrdenPedido buscarOPConDisponibilidad(Producto producto) {
-		// TODO Auto-generated method stub
+		//return ComprasDAO.getInstance().buscarOPConDisponibilidad();
 		return null;
 	}
 

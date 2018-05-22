@@ -54,11 +54,13 @@ public class Controller {
 		
 			if(ClienteDAO.getInstance().findByCuit(c.getCuit()) == null)
 			{
+
 				Cliente cliente=new Cliente();
 				CuentaCorriente cc= new CuentaCorriente();
 				Bonificacion boni  = new Bonificacion();
 				Bonificacion boni2 = new Bonificacion();
 				
+
 				cc.setId(c.getCuentaCorriente().getId());
 				cc.setLimite(c.getCuentaCorriente().getLimite());
 				cc.setSaldo(c.getCuentaCorriente().getSaldo());

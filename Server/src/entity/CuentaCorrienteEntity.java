@@ -10,7 +10,8 @@ import javax.persistence.*;
 public class CuentaCorrienteEntity {
 
 	@Id
-	protected String id;
+	@GeneratedValue
+	protected int id;
 	protected float saldo;
 	protected float limite;
 	@OneToMany (cascade=CascadeType.ALL)
@@ -26,11 +27,13 @@ public class CuentaCorrienteEntity {
 		super();
 	}
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String string) {
-		this.id = string;
+
+	public void setId(int id) {
+		this.id = id;
+
 	}
 	public float getSaldo() {
 		return saldo;

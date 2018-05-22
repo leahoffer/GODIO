@@ -1,21 +1,28 @@
-package business;
+package entity;
 
 import java.util.Date;
 
-import dao.AlmacenDAO;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Reserva {
 
+@Entity
+@Table(name="Reservas")
+public class ReservaEntity {
+
+	@Id
+	@GeneratedValue
 	private int numero;
-	private Producto producto;
+	private ProductoEntity producto;
 	private int cantidad;
-	private Pedido pedido;
+	private PedidoEntity pedido;
 	private boolean completa;
 	private Date fecha;
-	public Reserva() {
-		this.producto = new Producto();
-		this.pedido = new Pedido();
-		this.fecha = new Date();
+	public ReservaEntity() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	public int getNumero() {
 		return numero;
@@ -23,10 +30,10 @@ public class Reserva {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	public Producto getProducto() {
+	public ProductoEntity getProducto() {
 		return producto;
 	}
-	public void setProducto(Producto producto) {
+	public void setProducto(ProductoEntity producto) {
 		this.producto = producto;
 	}
 	public int getCantidad() {
@@ -35,10 +42,10 @@ public class Reserva {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	public Pedido getPedido() {
+	public PedidoEntity getPedido() {
 		return pedido;
 	}
-	public void setPedido(Pedido pedido) {
+	public void setPedido(PedidoEntity pedido) {
 		this.pedido = pedido;
 	}
 	public boolean isCompleta() {
@@ -53,13 +60,6 @@ public class Reserva {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	public void saveMe() {
-		AlmacenDAO.getInstance().create(this);
-		
-	}
-	
-	
-	
 	
 	
 }
