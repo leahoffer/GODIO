@@ -8,10 +8,12 @@ import java.util.Scanner;
 
 import businessdelegate.BusinessDelegate;
 import dto.ClienteDTO;
+import dto.CondicionDTO;
 import dto.CuentaCorrienteDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
+import exception.ClienteException;
 import exception.ProductoException;
 
 public class test {
@@ -19,7 +21,8 @@ public class test {
 	public static void main(String[] args) throws RemoteException, ProductoException {
 		// TODO Auto-generated method stub
 
-		
+	    
+	    
 		System.out.println("Presione 0 para Test de RMI");
 		System.out.println("Presione 1 para Ingresar Cliente");
 		System.out.println("Presione 2 para Ingresar Pedido");
@@ -49,8 +52,19 @@ public class test {
 			cliente.getCuentaCorriente().setLimite(10000);
 			cliente.getCuentaCorriente().setSaldo(0);
 			cliente.setCondicionEsp("Condicion Especial");
-			BusinessDelegate.getInstance().crearCliente(cliente);
-			System.out.println("Cliente Creado Con Éxito!");
+			
+			
+		
+			
+			
+			try {
+				BusinessDelegate.getInstance().crearCliente(cliente);
+				System.out.println("Cliente Creado Con Éxito!");
+			} catch (ClienteException e) {
+				// TODO Auto-generated catch block
+				System.out.println(	e.getMessage());
+			}
+			
 		}
 		
         if (entradaTeclado.equals("3"))
@@ -67,7 +81,7 @@ public class test {
 		if (entradaTeclado.equals("2"))
 		{
 			ClienteDTO cliente=new ClienteDTO();
-			cliente.setCuit("Cuit1");
+			cliente.setCuit("Cuit2");
 			
 			PedidoDTO pedido=new PedidoDTO();
 			pedido.setAclaracionEspecial("Aclaracion Especial");
@@ -116,12 +130,13 @@ public class test {
 			detalles.add(detalle3);
 			detalles.add(detalle4);
 			
-			
+			//BusinessDelegate.getInstance().listarProductosDisponibles();
+			//aca se elijen los items y la cantidad y se crean los detalles
 			BusinessDelegate.getInstance().crearPedido("20366543598", detalles);
 			
 			
 			/*Empezar generacion de pedido
-			List<ProductoDTO> prods = new ArrayList<ProductoDTO>();			
+			List<ProductoDTO>2 prods = new ArrayList<ProductoDTO>();			
 			prods = BusinessDelegate.getInstance().listarProductosDisponibles();
 			
 			for (ProductoDTO p : prods)

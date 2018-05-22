@@ -7,6 +7,7 @@ import java.util.List;
 import dto.ClienteDTO;
 import dto.DetallePedidoDTO;
 import dto.ProductoDTO;
+import exception.ClienteException;
 import exception.ProductoException;
 import tda.TDABusiness;
 
@@ -38,7 +39,7 @@ public class BusinessDelegate implements TDABusiness {
 	
 	public void test() {}
 	@Override
-	public void crearCliente(ClienteDTO cliente) throws RemoteException {
+	public void crearCliente(ClienteDTO cliente) throws RemoteException, ClienteException {
 		RemoteObject.crearCliente(cliente);
 
 	}

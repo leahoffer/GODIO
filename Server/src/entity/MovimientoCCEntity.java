@@ -8,6 +8,7 @@ public class MovimientoCCEntity {
 
 	@Id
 	@GeneratedValue
+	@Column (name = "nroMov")
 	private int nro;
 	private float monto;
 	private boolean signo;

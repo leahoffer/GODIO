@@ -49,7 +49,7 @@ public class PedidoDAO {
 			s.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("Error al guardar el Cliente");
+			System.out.println("Error al guardar el Pedido");
 			e.printStackTrace();
 		}
 	}

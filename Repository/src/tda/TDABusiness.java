@@ -7,11 +7,12 @@ import java.util.List;
 import dto.ClienteDTO;
 import dto.DetallePedidoDTO;
 import dto.ProductoDTO;
+import exception.ClienteException;
 import exception.ProductoException;
 
 public interface TDABusiness extends Remote {
 
-	public abstract void crearCliente(ClienteDTO cliente) throws RemoteException;
+	public abstract void crearCliente(ClienteDTO cliente) throws RemoteException, ClienteException;
 	
 	public abstract void crearPedido(String cuit, List<DetallePedidoDTO> detalle) throws RemoteException;
 	

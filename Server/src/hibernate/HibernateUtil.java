@@ -24,6 +24,8 @@ public class HibernateUtil
              config.addAnnotatedClass(ProductoEntity.class);
              config.addAnnotatedClass(UbicacionEntity.class);
              config.addAnnotatedClass(UbicacionId.class);
+             config.addAnnotatedClass(BonificacionEntity.class);
+             config.addAnnotatedClass(DescuentoEntity.class);
              config.addAnnotatedClass(LoteEntity.class);
             
              sessionFactory = config.buildSessionFactory();

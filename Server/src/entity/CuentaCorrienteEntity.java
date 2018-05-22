@@ -14,8 +14,10 @@ public class CuentaCorrienteEntity {
 	protected float saldo;
 	protected float limite;
 	@OneToMany (cascade=CascadeType.ALL)
+	@JoinColumn (name = "nroCC")
 	protected List<MovimientoCCEntity> movimientos;
 	@OneToMany (cascade=CascadeType.ALL)
+	@JoinColumn (name = "nroCC")
 	protected List<CondicionEntity> condiciones;
 	
 	
@@ -27,8 +29,8 @@ public class CuentaCorrienteEntity {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String string) {
+		this.id = string;
 	}
 	public float getSaldo() {
 		return saldo;

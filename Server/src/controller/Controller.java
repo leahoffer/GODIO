@@ -1,37 +1,36 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import business.Bonificacion;
 import business.Cliente;
 import business.Condicion;
 import business.CuentaCorriente;
-import business.Descuento;
 import business.DetallePedido;
 import business.OrdenPedido;
 import business.Pedido;
+import business.Producto;
 import dao.ClienteDAO;
 import dao.PedidoDAO;
 import dao.ProductoDAO;
-import dto.BonificacionDTO;
 import dto.ClienteDTO;
-import dto.CondicionDTO;
-import dto.CuentaCorrienteDTO;
-import dto.DescuentoDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
 import entity.ProductoEntity;
 import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
+import enumeration.EstadoProducto;
+import enumeration.Presentacion;
 import exception.ClienteException;
 import exception.ProductoException;
 
 public class Controller {
 
 	private static Controller instance;
-	private List<ClienteDTO> clientes;
+	private List<Cliente> clientes;
 	
 	
 	public static Controller getInstance() {
@@ -45,17 +44,21 @@ public class Controller {
 		 * Ver si no tenemos ganas de crearlo con algo particular, o lo creamos así vacío sin nada.
 		 * Pero es Singleton así que sale constructor privado
 		 */
+		clientes = new ArrayList<Cliente>();
 	}
 
-	public void crearCliente(ClienteDTO c) {
+	public void crearCliente(ClienteDTO c) throws ClienteException  {
 		/**
 		 * Creo un método para que me deje crear el RO y esas otras cosas
 		 */
-		try {
+		
 			if(ClienteDAO.getInstance().findByCuit(c.getCuit()) == null)
 			{
 				Cliente cliente=new Cliente();
 				CuentaCorriente cc= new CuentaCorriente();
+				Bonificacion boni  = new Bonificacion();
+				Bonificacion boni2 = new Bonificacion();
+				
 				cc.setId(c.getCuentaCorriente().getId());
 				cc.setLimite(c.getCuentaCorriente().getLimite());
 				cc.setSaldo(c.getCuentaCorriente().getSaldo());
@@ -67,33 +70,81 @@ public class Controller {
 				cliente.setR_inscripto(c.isR_inscripto());
 				cliente.setRazon_social(c.getRazon_social());
 				cliente.setTelefono(c.getTelefono());
+			
+				boni.setCondicion("Condicion 1");
+				boni.setMonto(150);
+				
+				boni2.setCondicion("Condicion 2");
+				boni2.setMonto(200);
+				
+				List<Condicion> condi = new ArrayList<Condicion>();
+				condi.add(boni);
+				condi.add(boni2);
+				
+				cliente.getCuentaCorriente().setCondiciones(condi);
+				
 				
 				cliente.saveOrUpdate();
 			}
-		} catch (ClienteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			else
+				throw new ClienteException("Cliente ya creado");
+		
 		
 	}
 	
-	public void crearPedido (String cuit , ArrayList<DetallePedido> ped) throws ClienteException, ProductoException
+	public void crearPedido (String cuit , List<DetallePedidoDTO> ped, String dir, String motivo) throws ClienteException, ProductoException
 	{
+		Calendar  hoy = Calendar.getInstance();
 		
-		buscarCliente(cuit);
-		listarProductos(); // ver como pasar los productos para que los pueda elegir.
+		Cliente cliente = buscarCliente(cuit);
 		
+		   DetallePedido pedc = new DetallePedido();
+		    List<DetallePedido> pedcs = new ArrayList<DetallePedido>();
+		    Producto prod = new Producto();
+		    prod.setCantAComprar(100);
+		    prod.setCantPosicion(100);
+		    prod.setCodBarras("12345678");
+		    prod.setDescripcion("Prod 1");
+		    prod.setEstado(EstadoProducto.Activo);
+		    prod.setMarca("Marca");
+		    prod.setPrecio(100);
+		    prod.setPresentacion(Presentacion.Bolsa);
+		    prod.setTamaño(100);
+		    prod.setUnidad(10);
+		    
 		float subtotal = 0;
 		float totalbruto = 0;
 		
-		for (DetallePedido pedido: ped)
+		for (DetallePedidoDTO pedido: ped)
 		{
 	     
 	     subtotal = pedido.getCantidad() *  pedido.getProducto().getPrecio();;
 	     pedido.setSubtotal(subtotal);
 	     totalbruto = totalbruto + subtotal;
+	     
+	     pedc.setCantidad(pedido.getCantidad());
+	     pedc.setProducto(prod);
+	     pedc.setSubtotal(pedido.getSubtotal());
+	     
+	     pedcs.add(pedc);
 		}
 	
+	 
+	    
+	    
+		Pedido p = new Pedido();
+		
+		p.setCliente(cliente);
+		p.setAclaracionEspecial("TEST");
+		p.setDespachable(false);
+		p.setDetalle(pedcs);
+		p.setDir_entrega(dir);
+		p.setEstado(EstadoPedido.PendienteAutorizacion);
+		p.setFecha(hoy.getTime());	
+		hoy.add(Calendar.DATE, 7); // Añade 7 dias para el despacho.
+		p.setFecha_despacho(hoy.getTime());
+		p.setMotivoEstado(motivo);
+		p.setTotal_bruto(totalbruto);
 		
 	}
 	
@@ -118,9 +169,9 @@ public class Controller {
 	
 	}
 	
-	public ClienteDTO buscarCliente (String cuit) throws ClienteException
+	private Cliente buscarCliente (String cuit) throws ClienteException
 	{
-		for (ClienteDTO clie : clientes)
+		for (Cliente clie : clientes)
 		{
 			if (clie.getCuit().equals(cuit));
 				return clie; //Busqueda en memoria.
@@ -129,10 +180,10 @@ public class Controller {
 		//Los DAO reciben y devuelven objetos de negocio
 		Cliente cliente = ClienteDAO.getInstance().findByCuit(cuit);
 		
-		ClienteDTO cli = new ClienteDTO();
+	/*	ClienteDTO cli = new ClienteDTO();
 		CuentaCorrienteDTO cta = new CuentaCorrienteDTO();
 		List<CondicionDTO> conds = new ArrayList<CondicionDTO>(); 
-		/** Comento esto para que no putee por ahora, porque solo falta ver la herencia. Después se puede descomentar**/
+		*//** Comento esto para que no putee por ahora, porque solo falta ver la herencia. Después se puede descomentar**//*
 		for (Condicion c :cliente.getCuentaCorriente().getCondiciones())
 		{
 			if (c instanceof Bonificacion)
@@ -161,12 +212,16 @@ public class Controller {
 		cli.setTelefono(cli.getTelefono());
 		clientes.add(cli);
 		return cli;
+	*/	
 		
+		clientes.add(cliente);
+		return cliente;
 	}
-	//Qué es esto? Jajaja
+	
 	@Override
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
+		
 		return super.equals(obj);
 	}
 

@@ -140,8 +140,8 @@ public class ClienteDAO {
 		}
 		catch (Exception e)
 		{
-			throw new ClienteException("Error al traer los Clientes");
-		
+			//throw new ClienteException("Error al traer los Clientes");
+		return null;
 		}
 	}
 	

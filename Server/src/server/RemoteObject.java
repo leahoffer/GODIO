@@ -8,6 +8,7 @@ import controller.Controller;
 import dto.ClienteDTO;
 import dto.DetallePedidoDTO;
 import dto.ProductoDTO;
+import exception.ClienteException;
 import exception.ProductoException;
 import tda.TDABusiness;
 
@@ -21,7 +22,7 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		controlador= Controller.getInstance();
 	}
 
-	public void crearCliente(ClienteDTO cliente) 
+	public void crearCliente(ClienteDTO cliente) throws ClienteException 
 	{
 		controlador.crearCliente(cliente);
 	}

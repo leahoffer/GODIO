@@ -1,8 +1,10 @@
 package entity;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
+@DiscriminatorValue (value = "Bonificacion")
 public class BonificacionEntity extends CondicionEntity {
 
 	private float monto;
