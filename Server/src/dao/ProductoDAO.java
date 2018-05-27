@@ -10,6 +10,7 @@ import business.Lote;
 import business.Producto;
 import business.Proveedor;
 import business.Ubicacion;
+import entity.ClienteEntity;
 import entity.LoteEntity;
 import entity.ProductoEntity;
 import entity.UbicacionEntity;
@@ -158,4 +159,20 @@ public class ProductoDAO {
 		return p;
 	}
 	
+	public Producto findById(String cod) {
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			ProductoEntity pe = (ProductoEntity)s.createQuery("from ProductoEntity where codBarras = ?").setString(0, cod).uniqueResult();
+			s.close();
+			return productoToNegocio(pe);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
