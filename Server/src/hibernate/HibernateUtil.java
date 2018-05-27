@@ -27,6 +27,11 @@ public class HibernateUtil
              config.addAnnotatedClass(BonificacionEntity.class);
              config.addAnnotatedClass(DescuentoEntity.class);
              config.addAnnotatedClass(LoteEntity.class);
+             config.addAnnotatedClass(ItemRemitoEntity.class);
+             config.addAnnotatedClass(MovimientoReservaEntity.class);
+             config.addAnnotatedClass(MovimientoStockEntity.class);
+             config.addAnnotatedClass(OrdenPedidoEntity.class);
+             config.addAnnotatedClass(ReservaEntity.class);
             
              sessionFactory = config.buildSessionFactory();
         }
