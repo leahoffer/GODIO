@@ -1,5 +1,6 @@
 package business;
 
+import controller.Almacen;
 import enumeration.TipoMovimientoStock;
 
 public class MovimientoStock {
@@ -52,6 +53,10 @@ public class MovimientoStock {
 
 	public void setMotivo(String motivo) {
 		this.motivo = motivo;
+	}
+
+	public void save() {
+		Almacen.getInstance().saveMocimientoStock(this);
 	}
 	
 	

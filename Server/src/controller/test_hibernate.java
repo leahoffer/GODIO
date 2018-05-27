@@ -47,7 +47,7 @@ public class test_hibernate {
 		}
 		System.out.println("Cliente Creado Con Éxito!");*/
 		
-		ClienteDTO cliente=new ClienteDTO();
+		/*ClienteDTO cliente=new ClienteDTO();
 		cliente.setCuit("Cuit2");
 		
 		PedidoDTO pedido=new PedidoDTO();
@@ -100,7 +100,7 @@ public class test_hibernate {
 		//BusinessDelegate.getInstance().listarProductosDisponibles();
 		//aca se elijen los items y la cantidad y se crean los detalles
 		Controller.getInstance().crearPedido("Cuit1", detalles, "Albarellos", "Mercaderia");
-
+*/
 	}
 
 }
