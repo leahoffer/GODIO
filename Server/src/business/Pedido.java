@@ -138,6 +138,15 @@ public class Pedido {
 	public void update() {
 		PedidoDAO.getInstance().update(this);
 	}
+	
+	public float calcularTotal() {
+		float resultado = 0;
+		for (DetallePedido dp : this.getDetalle())
+		{
+			resultado = resultado+dp.getSubtotal();
+		}
+		return resultado;
+	}
 
 	
 	

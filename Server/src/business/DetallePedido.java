@@ -29,4 +29,7 @@ public class DetallePedido {
 		this.producto = producto;
 	}
 
+	public float calcularSubTotal(){
+		return this.cantidad*this.getProducto().getPrecio();
+	}
 }
