@@ -64,7 +64,8 @@ public class PedidoDAO {
 		pe.setDespachable(ped.isDespachable());
 		pe.setDir_entrega(ped.getDir_entrega());
 		pe.setEstado(ped.getEstado().toString());
-		pe.setFactura(facturaToEntity(ped.getFactura()));
+		if (pe.getFactura() != null)
+			pe.setFactura(facturaToEntity(ped.getFactura()));
 		pe.setFecha(ped.getFecha());
 		pe.setFecha_despacho(ped.getFecha_despacho());
 		pe.setMotivoEstado(ped.getMotivoEstado());

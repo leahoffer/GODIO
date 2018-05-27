@@ -16,6 +16,8 @@ import entity.MovimientoReservaEntity;
 import entity.MovimientoStockEntity;
 import entity.OrdenPedidoEntity;
 import entity.ReservaEntity;
+import entity.UbicacionEntity;
+import entity.UbicacionId;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
 import hibernate.HibernateUtil;
@@ -221,6 +223,23 @@ public class AlmacenDAO {
 		}
 		ope.setMovReserva(mres);
 		return ope;
+	}
+	public void crearUbicacion(UbicacionEntity ue) {
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			s.save(ue);
+			s.getTransaction().commit();
+			s.flush();
+			s.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 
