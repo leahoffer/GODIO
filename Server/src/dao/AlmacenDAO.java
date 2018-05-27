@@ -51,7 +51,7 @@ public class AlmacenDAO {
 		ReservaEntity re = new ReservaEntity();
 		re.setCantidad(r.getCantidad());
 		re.setCompleta(r.isCompleta());
-		java.sql.Date sqlDate = new java.sql.Date(r.getFecha().getTime());
+		java.sql.Date sqlDate = new java.sql.Date(re.getFecha().getTime());
 		re.setFecha(sqlDate);
 		re.setPedido(PedidoDAO.getInstance().pedidoToEntity(r.getPedido()));
 		re.setProducto(ProductoDAO.getInstance().productoToEntity(r.getProducto()));
@@ -62,7 +62,8 @@ public class AlmacenDAO {
 		Reserva r = new Reserva();
 		r.setCantidad(re.getCantidad());
 		r.setCompleta(re.isCompleta());
-		r.setFecha(re.getFecha());
+		java.util.Date utilDate = new java.util.Date(re.getFecha().getTime());
+		r.setFecha(utilDate);
 		r.setNumero(re.getNumero());
 		r.setPedido(PedidoDAO.getInstance().pedidoToNegocio(re.getPedido()));
 		r.setProducto(ProductoDAO.getInstance().productoToNegocio(re.getProducto()));
@@ -139,9 +140,10 @@ public class AlmacenDAO {
 					for (MovimientoReservaEntity mre : ope.getMovReserva())
 					{
 						MovimientoReserva mr = new MovimientoReserva();
+						java.util.Date utilDate = new java.util.Date(mre.getFecha().getTime());
 						mr.setCantidad(mre.getCantidad());
 						mr.setCompleta(mre.isCompleta());
-						mr.setFecha(mre.getFecha());
+						mr.setFecha(utilDate);
 						mr.setNro(mre.getNro());
 						mr.setPedido(PedidoDAO.getInstance().pedidoToNegocio(mre.getPedido()));
 						op.getMovReserva().add(mr);
@@ -208,9 +210,10 @@ public class AlmacenDAO {
 		for (MovimientoReserva mr : op.getMovReserva())
 		{
 			MovimientoReservaEntity mre = new MovimientoReservaEntity();
+			java.sql.Date sqlDate = new java.sql.Date(mr.getFecha().getTime());
 			mre.setCantidad(mr.getCantidad());
 			mre.setCompleta(mr.isCompleta());
-			mre.setFecha(mr.getFecha());
+			mre.setFecha(sqlDate);
 			mre.setPedido(PedidoDAO.getInstance().pedidoToEntity(mr.getPedido()));
 			if (mr.getNro() != 0)
 				mre.setNro(mr.getNro());
