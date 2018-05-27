@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 import businessdelegate.BusinessDelegate;
 import dto.ClienteDTO;
-import dto.CondicionDTO;
 import dto.CuentaCorrienteDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;

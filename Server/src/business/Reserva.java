@@ -53,8 +53,8 @@ public class Reserva {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	public void saveMe() {
-		AlmacenDAO.getInstance().create(this);
+	public void createMe() {
+		AlmacenDAO.getInstance().createReserva(this);
 		
 	}
 	

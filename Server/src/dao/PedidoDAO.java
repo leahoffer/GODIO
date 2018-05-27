@@ -143,7 +143,7 @@ public class PedidoDAO {
 		}
 	}
 
-	private Pedido pedidoToNegocio(PedidoEntity pe) {
+	public Pedido pedidoToNegocio(PedidoEntity pe) {
 		Pedido p = new Pedido();
 		List<Condicion> conds = new ArrayList<Condicion>();
 		List<DetallePedido> ds = new ArrayList<DetallePedido>();

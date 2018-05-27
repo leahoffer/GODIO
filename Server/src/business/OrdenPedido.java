@@ -1,8 +1,11 @@
 package business;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import controller.Almacen;
+import dao.AlmacenDAO;
 import enumeration.EstadoOP;
 
 public class OrdenPedido {
@@ -77,12 +80,28 @@ public class OrdenPedido {
 	}
 
 	public boolean calcularDisponible(int i) {
-		// TODO Auto-generated method stub
+		int reservas = 0;
+		for (MovimientoReserva mr : this.getMovReserva())
+		{
+			reservas = reservas + mr.getCantidad();
+		}
+		if (i >= (this.getCantidadPedida()-reservas))
+			return true;
 		return false;
 	}
 
 	public void agregarMovimientoReserva(int i, Pedido p) {
-		// TODO Auto-generated method stub
+		MovimientoReserva mr = new MovimientoReserva();
+		mr.setCantidad(i);
+		mr.setCompleta(false);
+		mr.setFecha(new Date());
+		mr.setPedido(p);
+		updateMe();
+		
+	}
+
+	public void updateMe() {
+		Almacen.getInstance().updateOP(this);
 		
 	}
 
@@ -91,9 +110,8 @@ public class OrdenPedido {
 		return 0;
 	}
 
-	public void saveMe() {
-		// TODO Auto-generated method stub
-		
+	public void createMe() {
+		Almacen.getInstance().createOP(this);		
 	}
 	
 	

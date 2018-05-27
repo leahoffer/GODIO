@@ -1,14 +1,23 @@
 package dao;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import business.MovimientoReserva;
+import business.MovimientoStock;
 import business.OrdenPedido;
 import business.Producto;
 import business.Reserva;
-import entity.ProductoEntity;
+import entity.MovimientoReservaEntity;
+import entity.MovimientoStockEntity;
+import entity.OrdenPedidoEntity;
 import entity.ReservaEntity;
+import enumeration.EstadoOP;
+import enumeration.TipoMovimientoStock;
 import hibernate.HibernateUtil;
 
 public class AlmacenDAO {
@@ -21,7 +30,7 @@ public class AlmacenDAO {
 		return instance;
 	}
 	private AlmacenDAO() {}
-	public void create(Reserva reserva) {
+	public void createReserva(Reserva reserva) {
 		try 
 		{
 			SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -38,7 +47,7 @@ public class AlmacenDAO {
 		}
 	}
 	//NO ASIGNA NUMERO POR LAS DUDAS PORQUE CUANDO CREO NO TIENE NUMERO AAAA
-	private ReservaEntity reservaToEntity(Reserva r) {
+	public ReservaEntity reservaToEntity(Reserva r) {
 		ReservaEntity re = new ReservaEntity();
 		re.setCantidad(r.getCantidad());
 		re.setCompleta(r.isCompleta());
@@ -47,6 +56,170 @@ public class AlmacenDAO {
 		re.setProducto(ProductoDAO.getInstance().productoToEntity(r.getProducto()));
 		return re;
 	}
+	
+	public Reserva reservaToNegocio(ReservaEntity re){
+		Reserva r = new Reserva();
+		r.setCantidad(re.getCantidad());
+		r.setCompleta(re.isCompleta());
+		r.setFecha(re.getFecha());
+		r.setNumero(re.getNumero());
+		r.setPedido(PedidoDAO.getInstance().pedidoToNegocio(re.getPedido()));
+		r.setProducto(ProductoDAO.getInstance().productoToNegocio(re.getProducto()));
+		return r;
+	}
+	
+	public List<MovimientoStock> movimientosStockProducto(Producto p) {
+		List<MovimientoStock> mss = new ArrayList<MovimientoStock>();
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			List<MovimientoStockEntity> mses = (List<MovimientoStockEntity>)s.createQuery("from MovimientoStockEntity mse where mse.producto.codBarras = p.codBarras").list();
+			for (MovimientoStockEntity mse : mses)
+			{
+				MovimientoStock ms = new MovimientoStock();
+				ms.setCantidad(mse.getCantidad());
+				ms.setMotivo(mse.getMotivo());
+				ms.setProducto(ProductoDAO.getInstance().productoToNegocio(mse.getProducto()));
+				ms.setResponsable(mse.getResponsable());
+				ms.setTipo(TipoMovimientoStock.valueOf(mse.getTipo()));
+				mss.add(ms);
+			}
+			s.close();
+			return mss;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return mss;
+		}
+	}
+	public List<Reserva> reservasProducto(Producto p) {
+		List<Reserva> rs = new ArrayList<Reserva>();
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			List <ReservaEntity> res = (List<ReservaEntity>) s.createQuery("from ReservaEntity re where producto.codBarras = p.codBarras").list();
+			for (ReservaEntity re : res)
+			{
+				Reserva r = reservaToNegocio(re);
+				rs.add(r);
+			}
+			s.close();
+			return rs;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return rs;
+		}
+	}
+	public OrdenPedido buscarOPConDisponibilidad(Producto p) {
+		OrdenPedido op = new OrdenPedido();
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			OrdenPedidoEntity ope = (OrdenPedidoEntity) s.createQuery("from OrdenPedidoEntity ope where ope.producto.codBarras = p.codBarras AND ope.estado = 'Pendiente'").uniqueResult();
+			if (ope!=null)
+			{
+				List<MovimientoReserva> mrs = new ArrayList<MovimientoReserva>();
+				op.setCantidadPedida(ope.getCantidadPedida());
+				op.setEstado(EstadoOP.valueOf(ope.getEstado()));
+				op.setNro(ope.getNro());
+				op.setPedidoOrigen(PedidoDAO.getInstance().pedidoToNegocio(ope.getPedidoOrigen()));
+				op.setProducto(ProductoDAO.getInstance().productoToNegocio(ope.getProducto()));
+				if (!ope.getMovReserva().isEmpty())
+				{
+					for (MovimientoReservaEntity mre : ope.getMovReserva())
+					{
+						MovimientoReserva mr = new MovimientoReserva();
+						mr.setCantidad(mre.getCantidad());
+						mr.setCompleta(mre.isCompleta());
+						mr.setFecha(mre.getFecha());
+						mr.setNro(mre.getNro());
+						mr.setPedido(PedidoDAO.getInstance().pedidoToNegocio(mre.getPedido()));
+						op.getMovReserva().add(mr);
+					}
+				}
+			}
+			return op;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return op;
+		}
+	}
+	
+	public void createOP(OrdenPedido op) {
+		try
+		{
+			OrdenPedidoEntity ope = new OrdenPedidoEntity();
+			ope.setCantidadPedida(op.getCantidadPedida());
+			ope.setEstado(op.getEstado().toString());
+			ope.setPedidoOrigen(PedidoDAO.getInstance().pedidoToEntity(op.getPedidoOrigen()));
+			ope.setProducto(ProductoDAO.getInstance().productoToEntity(op.getProducto()));
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			s.save(ope);
+			s.getTransaction().commit();
+			s.flush();
+			s.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	public void updateOP(OrdenPedido op) {
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			s.update(ordenPedidoToEntity(op));
+			s.getTransaction().commit();
+			s.flush();
+			s.close();
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	private OrdenPedidoEntity ordenPedidoToEntity(OrdenPedido op) {
+		OrdenPedidoEntity ope = new OrdenPedidoEntity();
+		List<MovimientoReservaEntity> mres = new ArrayList<MovimientoReservaEntity>();
+		ope.setCantidadPedida(op.getCantidadPedida());
+		ope.setEstado(op.getEstado().toString());
+		ope.setNro(op.getNro());
+		ope.setPedidoOrigen(PedidoDAO.getInstance().pedidoToEntity(op.getPedidoOrigen()));
+		ope.setProducto(ProductoDAO.getInstance().productoToEntity(op.getProducto()));
+		for (MovimientoReserva mr : op.getMovReserva())
+		{
+			MovimientoReservaEntity mre = new MovimientoReservaEntity();
+			mre.setCantidad(mr.getCantidad());
+			mre.setCompleta(mr.isCompleta());
+			mre.setFecha(mr.getFecha());
+			mre.setPedido(PedidoDAO.getInstance().pedidoToEntity(mr.getPedido()));
+			if (mr.getNro() != 0)
+				mre.setNro(mr.getNro());
+			mres.add(mre);
+		}
+		ope.setMovReserva(mres);
+		return ope;
+	}
+
+
 
 	
 	

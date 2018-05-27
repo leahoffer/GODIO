@@ -294,11 +294,11 @@ public class Controller {
 		boolean resultado = true;
 		for (DetallePedido dp : p.getDetalle())
 		{
-			int sd = Almacen.getInstance().calcularStockDisponible(dp.getProducto());
+			int sd = Almacen.getInstance().devolverStockProducto(dp.getProducto());
 			//Si tengo Stock disponible, reservo y listo. Almacén se encarga de updatear el stock y eso.
 			if (sd>dp.getCantidad())
 			{
-				Almacen.getInstance().crearReserva(p, dp, dp.getCantidad());
+				Almacen.getInstance().createReserva(p, dp, dp.getCantidad());
 			}
 			//Sino...
 			else
@@ -306,7 +306,7 @@ public class Controller {
 				//Si no puedo completar, pero el stock disponible es mayor a 0, primero reservo lo que queda y después creo OP nueva
 				if (sd > 0)
 				{
-					Almacen.getInstance().crearReserva(p, dp, sd);
+					Almacen.getInstance().createReserva(p, dp, sd);
 					OrdenPedido op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
 					//Todo esto mientras haya una OP con disponibilidad. Sino voy a tener que hacer una nueva de 0 y reservarle el 100%
 					if (op != null)

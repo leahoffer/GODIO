@@ -12,7 +12,8 @@ import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
-import dao.ComprasDAO;
+import enumeration.EstadoOP;
+import enumeration.TipoMovimientoStock;
 
 public class Almacen {
 
@@ -33,34 +34,74 @@ public class Almacen {
 		this.movimientos = new ArrayList<MovimientoStock>();
 	}
 
-	public void crearReserva(Pedido p, DetallePedido dp, int cantidad) {
+	public void createReserva(Pedido p, DetallePedido dp, int cantidad) {
 		Reserva r = new Reserva();
 		r.setCantidad(cantidad);
 		r.setCompleta(false);
 		r.setFecha(new Date());
 		r.setPedido(p);
 		r.setProducto(dp.getProducto());
-		r.saveMe();
+		r.createMe();
 	}
 
-	public OrdenPedido buscarOPConDisponibilidad(Producto producto) {
-		//return ComprasDAO.getInstance().buscarOPConDisponibilidad();
-		return null;
+	public OrdenPedido buscarOPConDisponibilidad(Producto p) {
+		OrdenPedido op = AlmacenDAO.getInstance().buscarOPConDisponibilidad(p);
+		return op;
 	}
 
-	public void crearOrdenPedidoSinReservas() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void crearOrdenPedido(Pedido p, DetallePedido dp, int i) {
-		// TODO Auto-generated method stub
+		OrdenPedido op = new OrdenPedido();
+		op.setEstado(EstadoOP.Pendiente);
+		op.setPedidoOrigen(p);
+		op.setProducto(dp.getProducto());
+		op.setCantidadPedida(calcularCantidadAPedir(i, dp.getProducto()));
+		op.createMe();
+	}
+
+	private int calcularCantidadAPedir(int i, Producto producto) {
+		int cantidad = 0;
+		while (cantidad < i)
+		{
+			cantidad = cantidad + producto.getCantAComprar();
+		}
+		return cantidad;
+	}
+
+	public int devolverStockProducto(Producto producto) {
+		List<MovimientoStock> movimientos = AlmacenDAO.getInstance().movimientosStockProducto(producto);
+		List<Reserva> reservas = AlmacenDAO.getInstance().reservasProducto(producto);
+		int cantidadStock = 0;
+		for (MovimientoStock ms : movimientos)
+		{
+			if (ms.getMotivo().toString().equals(TipoMovimientoStock.Compra.toString()) || ms.getMotivo().toString().equals(TipoMovimientoStock.AjustePos.toString()))
+			{
+				cantidadStock = cantidadStock + ms.getCantidad();
+			}
+			else
+			{
+				cantidadStock = cantidadStock - ms.getCantidad();
+			}
+		}
+		for (Reserva r : reservas)
+		{
+			if (!r.isCompleta())
+			{
+				cantidadStock = cantidadStock - r.getCantidad();
+			}
+		}
+		return cantidadStock;
 		
 	}
 
-	public int calcularStockDisponible(Producto producto) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void updateOP(OrdenPedido op) {
+		AlmacenDAO.getInstance().updateOP(op);
+		
+	}
+
+	public void createOP(OrdenPedido op) {
+		AlmacenDAO.getInstance().createOP(op);
+		
 	}
 
 	

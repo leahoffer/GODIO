@@ -1,11 +1,5 @@
 package dao;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
-import business.OrdenPedido;
-import hibernate.HibernateUtil;
-
 public class ComprasDAO {
 
 	private static ComprasDAO instance;
