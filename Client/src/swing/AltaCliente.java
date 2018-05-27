@@ -27,11 +27,10 @@ public class AltaCliente {
 	
 	public AltaCliente(ventanaPrincipal p) {
 		
+	
 		ventana = p;
-		
-		contentPane = new JPanel();
-	    contentPane.setLayout(null);
-	    contentPane.setBounds(0, 0, 592, 350);
+		ventana.getPanel().removeAll();
+		contentPane = p.getPanel();
 		
 		JLabel lblAltaCliente = new JLabel("Alta Cliente");
 		contentPane.add(lblAltaCliente);

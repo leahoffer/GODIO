@@ -26,9 +26,7 @@ public class ventanaPrincipal {
 	private String rol;
     private ventanaPrincipal vent;
 	private JFrame ventana;
-	private JTextField textField;
-	private JPasswordField passwordField;
-	private JPanel panel;
+	private JPanel panel2;
 	
 	
 	public ventanaPrincipal( String user) {
@@ -44,6 +42,10 @@ public class ventanaPrincipal {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		contentPane = new JPanel();
+	    contentPane.setLayout(null);
+	    contentPane.setBounds(0, 0, 592, 350);
+	    
 		
 		this.ventana = new JFrame("Administración");
 		this.ventana.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -70,7 +72,8 @@ public class ventanaPrincipal {
 		mnNewMenu.add(mntmNewMenuItem);
 		mntmNewMenuItem.setFont(new Font("Tahoma", Font.BOLD, 11));
 		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {				
+			public void actionPerformed(ActionEvent arg0) {		
+				
 				new AltaCliente (vent);
 			}
 		});
@@ -80,7 +83,7 @@ public class ventanaPrincipal {
 		mntmModificarCliente.setFont(new Font("Tahoma", Font.BOLD, 11));
 		mntmModificarCliente.addActionListener(new ActionListener() {					
 			public void actionPerformed(ActionEvent arg0) {			
-			//	new VentanaModificacionCliente(ventana);
+		     	new ModificarCliente(vent);
 			}
 		});
 		
@@ -89,7 +92,7 @@ public class ventanaPrincipal {
 		mntmBajaCliente.setFont(new Font("Tahoma", Font.BOLD, 11));
 		mntmBajaCliente.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent arg0) {
-				//new VentanaBajaCliente(ventana);				
+				new BajaCliente(vent);				
 			}
 		});
 		
@@ -280,6 +283,7 @@ public class ventanaPrincipal {
         timee.start();
 		
         ventana.repaint();
+        ventana.getContentPane().add(contentPane);
 		 vent = this;
 	}
 
@@ -288,7 +292,7 @@ public class ventanaPrincipal {
 	}
 	
 	public JPanel getPanel(){
-		return panel;
+		return contentPane;
 	}
 	
 	public String getRol(){
