@@ -51,7 +51,8 @@ public class AlmacenDAO {
 		ReservaEntity re = new ReservaEntity();
 		re.setCantidad(r.getCantidad());
 		re.setCompleta(r.isCompleta());
-		re.setFecha(r.getFecha());
+		java.sql.Date sqlDate = new java.sql.Date(re.getFecha().getTime());
+		re.setFecha(sqlDate);
 		re.setPedido(PedidoDAO.getInstance().pedidoToEntity(r.getPedido()));
 		re.setProducto(ProductoDAO.getInstance().productoToEntity(r.getProducto()));
 		return re;
@@ -61,7 +62,8 @@ public class AlmacenDAO {
 		Reserva r = new Reserva();
 		r.setCantidad(re.getCantidad());
 		r.setCompleta(re.isCompleta());
-		r.setFecha(re.getFecha());
+		java.util.Date utilDate = new java.util.Date(re.getFecha().getTime());
+		r.setFecha(utilDate);
 		r.setNumero(re.getNumero());
 		r.setPedido(PedidoDAO.getInstance().pedidoToNegocio(re.getPedido()));
 		r.setProducto(ProductoDAO.getInstance().productoToNegocio(re.getProducto()));
