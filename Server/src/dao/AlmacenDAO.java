@@ -138,9 +138,10 @@ public class AlmacenDAO {
 					for (MovimientoReservaEntity mre : ope.getMovReserva())
 					{
 						MovimientoReserva mr = new MovimientoReserva();
+						java.util.Date utilDate = new java.util.Date(mre.getFecha().getTime());
 						mr.setCantidad(mre.getCantidad());
 						mr.setCompleta(mre.isCompleta());
-						mr.setFecha(mre.getFecha());
+						mr.setFecha(utilDate);
 						mr.setNro(mre.getNro());
 						mr.setPedido(PedidoDAO.getInstance().pedidoToNegocio(mre.getPedido()));
 						op.getMovReserva().add(mr);
@@ -207,9 +208,10 @@ public class AlmacenDAO {
 		for (MovimientoReserva mr : op.getMovReserva())
 		{
 			MovimientoReservaEntity mre = new MovimientoReservaEntity();
+			java.sql.Date sqlDate = new java.sql.Date(mr.getFecha().getTime());
 			mre.setCantidad(mr.getCantidad());
 			mre.setCompleta(mr.isCompleta());
-			mre.setFecha(mr.getFecha());
+			mre.setFecha(sqlDate);
 			mre.setPedido(PedidoDAO.getInstance().pedidoToEntity(mr.getPedido()));
 			if (mr.getNro() != 0)
 				mre.setNro(mr.getNro());
