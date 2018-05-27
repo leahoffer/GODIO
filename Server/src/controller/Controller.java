@@ -372,6 +372,32 @@ public class Controller {
 		return resultado;
 	}
 
+	public ClienteDTO mostrarCliente(String cuit) throws ClienteException {
+		// TODO Auto-generated method stub
+		
+			Cliente c= this.buscarCliente(cuit);
+			ClienteDTO cdto= new ClienteDTO();
+			cdto.setCuit(c.getCuit());
+			cdto.setDireccion(c.getDireccion());
+			cdto.setR_inscripto(c.isR_inscripto());
+			cdto.setRazon_social(c.getRazon_social());
+			cdto.setTelefono(c.getTelefono());
+			cdto.setCondicionEsp(c.getCondicionEsp());
+		return cdto;
+	}
+
+	public void modificarCliente(ClienteDTO cdto) throws ClienteException {
+		// TODO Auto-generated method stub
+		Cliente c= this.buscarCliente(cdto.getCuit());
+		c.setCondicionEsp(cdto.getCondicionEsp());
+		c.setDireccion(cdto.getDireccion());
+		c.setR_inscripto(cdto.isR_inscripto());
+		c.setRazon_social(cdto.getRazon_social());
+		c.setTelefono(cdto.getTelefono());
+		//No tiene en cuenta ni cuenta corriente ni Movimientos. Es solo para updatear datos personales//	
+		ClienteDAO.getInstance().update(c);
+	}
+
 
 	public void agregarMovimientoStock(String codBarra, UbicacionDTO udto, String responsable, int cantidad)
 	{
