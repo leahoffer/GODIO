@@ -90,7 +90,7 @@ public class Cliente {
 	}
 	
 	public boolean excedeLimite(float monto) {
-		if (this.obtenerSaldo() < monto)
+		if (this.obtenerSaldo() > monto)
 			return false;
 		return true;
 	}
@@ -100,6 +100,11 @@ public class Cliente {
 		this.updateMe();
 	}
 
+	public void agregarBonificacion(float monto, String descripcion)
+	{
+		
+	}
+	
 	public void updateMe() {
 
 		ClienteDAO.getInstance().update(this);

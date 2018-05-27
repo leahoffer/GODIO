@@ -47,7 +47,6 @@ public class test {
 			cliente.setR_inscripto(true);
 			cliente.setRazon_social("Razon Social");
 			cliente.setTelefono("Telefono");
-		//	cliente.getCuentaCorriente().setId("001");
 			cliente.getCuentaCorriente().setLimite(10000);
 			cliente.getCuentaCorriente().setSaldo(0);
 			cliente.setCondicionEsp("Condicion Especial");
@@ -66,16 +65,6 @@ public class test {
 			
 		}
 		
-        if (entradaTeclado.equals("3"))
-        {
-        	
-        	List<ProductoDTO> productos= BusinessDelegate.getInstance().listarProductosDisponibles();
-        	
-        	for (ProductoDTO p: productos)
-        	{
-        		System.out.println(p.getCodBarras()+" "+p.getMarca()+" "+p.getDescripcion()+" "+p.getEstado());
-        	}
-        }
         
 		if (entradaTeclado.equals("2"))
 		{
@@ -148,6 +137,17 @@ public class test {
 			*/
 			
 		}
+		
+		  if (entradaTeclado.equals("3"))
+	        {
+	        	
+	        	List<ProductoDTO> productos= BusinessDelegate.getInstance().listarProductosDisponibles();
+	        	
+	        	for (ProductoDTO p: productos)
+	        	{
+	        		System.out.println(p.getCodBarras()+" "+p.getMarca()+" "+p.getDescripcion()+" "+p.getEstado());
+	        	}
+	        }
 		
 	}
 

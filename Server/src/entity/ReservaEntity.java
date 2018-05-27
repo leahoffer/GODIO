@@ -1,11 +1,10 @@
 package entity;
 
-import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import java.sql.Date;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -15,8 +14,12 @@ public class ReservaEntity {
 	@Id
 	@GeneratedValue
 	private int numero;
+	
+	@ManyToOne
 	private ProductoEntity producto;
 	private int cantidad;
+	
+	@OneToOne
 	private PedidoEntity pedido;
 	private boolean completa;
 	private Date fecha;
