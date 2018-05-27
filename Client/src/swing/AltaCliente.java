@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import exception.ClienteException;
@@ -24,6 +26,7 @@ public class AltaCliente {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JCheckBox radio;
 	
 	public AltaCliente(ventanaPrincipal p) {
 		
@@ -40,7 +43,7 @@ public class AltaCliente {
 		lblNewLabel.setBounds(206, 20, 213, 56);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblNombre = new JLabel("<html>Nombre: <font color = \"red\">*</font><html>");
+		JLabel lblNombre = new JLabel("<html>Razón Social: <font color = \"red\">*</font><html>");
 		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNombre.setBounds(32, 117, 61, 35);
 		contentPane.add(lblNombre);
@@ -50,12 +53,12 @@ public class AltaCliente {
 		lblDomicilio.setBounds(32, 175, 177, 35);
 		contentPane.add(lblDomicilio);
 		
-		JLabel lblMail = new JLabel("<html>Mail: <font color = \"red\">*</font><html>");
+		JLabel lblMail = new JLabel("<html>Cond. Especial: <font color = \"red\">*</font><html>");
 		lblMail.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblMail.setBounds(32, 237, 130, 35);
+		lblMail.setBounds(32, 237, 61, 35);
 		contentPane.add(lblMail);
 		
-		JLabel lblApellido = new JLabel("<html>Apellido: <font color = \"red\">*</font><html>");
+		JLabel lblApellido = new JLabel("<html>CUIT: <font color = \"red\">*</font><html>");
 		lblApellido.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblApellido.setBounds(269, 117, 177, 35);
 		contentPane.add(lblApellido);
@@ -65,9 +68,9 @@ public class AltaCliente {
 		lblTelfono.setBounds(269, 175, 177, 35);
 		contentPane.add(lblTelfono);
 	
-		JLabel lblDNI = new JLabel("<html>DNI:<font color = \"red\">*</font><html>");
+		JLabel lblDNI = new JLabel("<html>Responsable Inscripto:<font color = \"red\">*</font><html>");
 		lblDNI.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblDNI.setBounds(269, 237, 177, 35);
+		lblDNI.setBounds(269, 237, 74, 35);
 		contentPane.add(lblDNI);
 		
 		textField = new JTextField(); //nombre
@@ -95,10 +98,11 @@ public class AltaCliente {
 		textField_4.setBounds(95, 244, 156, 28);
 		contentPane.add(textField_4);
 		
-		textField_5 = new JTextField(); //dni
-		textField_5.setBounds(335, 244, 156, 28);
-		contentPane.add(textField_5);
-		textField_5.setColumns(10);
+	
+		radio = new JCheckBox();
+		radio.setBounds(350, 244, 25, 25);
+		contentPane.add(radio);
+		
 	
 		
 		JLabel lblCamposObligatorios = new JLabel("* Campos Obligatorios");

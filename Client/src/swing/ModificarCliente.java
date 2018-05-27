@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -23,6 +23,7 @@ public class ModificarCliente {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JCheckBox radio;
 	
 	
 	public ModificarCliente(ventanaPrincipal p ){
@@ -32,7 +33,7 @@ public class ModificarCliente {
 		ventana.getPanel().removeAll();
 		contentPane = p.getPanel();
 	    
-		JLabel lblCamposObligatorios = new JLabel("Apellido:");
+		JLabel lblCamposObligatorios = new JLabel("CUIT:");
 		lblCamposObligatorios.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblCamposObligatorios.setForeground(Color.BLACK);
 		lblCamposObligatorios.setBounds(296, 191, 147, 14);
@@ -41,13 +42,13 @@ public class ModificarCliente {
 		JLabel lblBuscar = new JLabel("Buscar: ");
 		lblBuscar.setForeground(Color.BLACK);
 		lblBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblBuscar.setBounds(59, 129, 57, 21);
+		lblBuscar.setBounds(39, 129, 57, 21);
 		contentPane.add(lblBuscar);
 		
-		JLabel lblNombre = new JLabel("Nombre: ");
+		JLabel lblNombre = new JLabel("Razón Social: ");
 		lblNombre.setForeground(Color.BLACK);
 		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNombre.setBounds(59, 191, 147, 14);
+		lblNombre.setBounds(39, 191, 147, 14);
 		contentPane.add(lblNombre);
 		
 		JLabel lblModificacinCliente = new JLabel("Modificaci\u00F3n Cliente");
@@ -56,7 +57,7 @@ public class ModificarCliente {
 		lblModificacinCliente.setBounds(164, 62, 279, 31);
 		contentPane.add(lblModificacinCliente);
 		
-		JLabel lblinsertarDni = new JLabel("(ingresar DNI)");
+		JLabel lblinsertarDni = new JLabel("(ingresar CUIT)");
 		lblinsertarDni.setForeground(Color.BLACK);
 		lblinsertarDni.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblinsertarDni.setBounds(339, 132, 147, 14);
@@ -64,7 +65,7 @@ public class ModificarCliente {
 		
 		JLabel lblNewLabel = new JLabel("Domicilio:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel.setBounds(59, 232, 57, 14);
+		lblNewLabel.setBounds(39, 232, 57, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tel\u00E9fono:");
@@ -72,10 +73,17 @@ public class ModificarCliente {
 		lblNewLabel_1.setBounds(296, 232, 65, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Mail:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_2.setBounds(59, 268, 46, 14);
-		contentPane.add(lblNewLabel_2);
+		JLabel lblNewLabel_resp = new JLabel("Responsable Inscripto");
+		lblNewLabel_resp.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_resp.setBounds(39, 273, 130, 14);
+		contentPane.add(lblNewLabel_resp);
+		
+		radio = new JCheckBox();
+		radio.setBounds(200, 268, 25, 25);
+		contentPane.add(radio);
+		
+		
+		
 		
 		textField = new JTextField();  //dni
 		textField.setBounds(120, 129, 156, 28);
@@ -91,11 +99,6 @@ public class ModificarCliente {
 		textField_2.setColumns(10);
 		textField_2.setBounds(120, 229, 156, 28);
 		contentPane.add(textField_2);
-		
-		textField_3 = new JTextField(); //mail
-		textField_3.setColumns(10);
-		textField_3.setBounds(120, 265, 156, 28);
-		contentPane.add(textField_3);
 		
 		textField_4 = new JTextField();  //apellido
 		textField_4.setColumns(10);
@@ -160,7 +163,7 @@ public class ModificarCliente {
 						}
 					}
 					else
-						JOptionPane.showMessageDialog(null, "Debe ingresar un dni", "Warning", JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Debe ingresar un CUIT", "Warning", JOptionPane.WARNING_MESSAGE);
 				} catch (ConnectionException e1) {
 					JOptionPane.showMessageDialog(null, "Fallo en la conexión", "Error", JOptionPane.ERROR_MESSAGE);
 				} catch(ClienteException e2){

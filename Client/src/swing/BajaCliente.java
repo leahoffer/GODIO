@@ -32,7 +32,7 @@ public class BajaCliente {
 		contentPane = p.getPanel();
 
 		
-		JLabel lblCamposObligatorios = new JLabel("Apellido:");
+		JLabel lblCamposObligatorios = new JLabel("CUIT:");
 		lblCamposObligatorios.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblCamposObligatorios.setForeground(Color.BLACK);
 		lblCamposObligatorios.setBounds(256, 191, 147, 14);
@@ -45,13 +45,13 @@ public class BajaCliente {
 		JLabel lblBuscar = new JLabel("Buscar: ");
 		lblBuscar.setForeground(Color.BLACK);
 		lblBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblBuscar.setBounds(59, 135, 57, 21);
+		lblBuscar.setBounds(39, 135, 57, 21);
 		contentPane.add(lblBuscar);
 		
-		JLabel lblNombre = new JLabel("Nombre: ");
+		JLabel lblNombre = new JLabel("Razón Social: ");
 		lblNombre.setForeground(Color.BLACK);
 		lblNombre.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNombre.setBounds(59, 191, 57, 14);
+		lblNombre.setBounds(39, 191, 87, 14);
 		contentPane.add(lblNombre);
 		
 		JLabel lblModificacinCliente = new JLabel("Baja Cliente");
@@ -60,7 +60,7 @@ public class BajaCliente {
 		lblModificacinCliente.setBounds(211, 56, 279, 31);
 		contentPane.add(lblModificacinCliente);
 		
-		JLabel lblinsertarDni = new JLabel("(ingresar DNI)");
+		JLabel lblinsertarDni = new JLabel("(ingresar CUIT)");
 		lblinsertarDni.setForeground(Color.BLACK);
 		lblinsertarDni.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblinsertarDni.setBounds(339, 132, 147, 14);
@@ -68,7 +68,7 @@ public class BajaCliente {
 		
 		JLabel lblNewLabel = new JLabel("Direccion:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel.setBounds(59, 232, 57, 14);
+		lblNewLabel.setBounds(39, 232, 57, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Tel\u00E9fono:");
@@ -76,10 +76,6 @@ public class BajaCliente {
 		lblNewLabel_1.setBounds(257, 232, 65, 14);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Mail:");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_2.setBounds(59, 268, 46, 14);
-		contentPane.add(lblNewLabel_2);
 		
 		textField = new JTextField();
 		textField.setBounds(120, 129, 156, 28);
@@ -98,11 +94,6 @@ public class BajaCliente {
 		label.setBounds(120, 232, 86, 14);
 		contentPane.add(label);
 		
-		label_1 = new JLabel("Nombre");
-		label_1.setForeground(Color.BLUE);
-		label_1.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		label_1.setBounds(120, 268, 86, 14);
-		contentPane.add(label_1);
 		
 		label_2 = new JLabel("Nombre");
 		label_2.setForeground(Color.BLUE);
@@ -175,7 +166,7 @@ public class BajaCliente {
 				}*/
 					JOptionPane.showMessageDialog(null, "El cliente ha sido dado de baja", "Éxito", JOptionPane.INFORMATION_MESSAGE); //Borrar Luego.
 				else
-					JOptionPane.showMessageDialog(null, "Debe ingresar un dni", "Warning", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Debe ingresar un CUIT", "Warning", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 			

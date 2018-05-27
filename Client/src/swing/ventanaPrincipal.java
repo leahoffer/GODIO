@@ -13,11 +13,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
+//import de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel;
+//import de.javasoft.plaf.synthetica.SyntheticaMauveMetallicLookAndFeel;
+//import de.javasoft.plaf.synthetica.SyntheticaBlueLightLookAndFeel;
+//import de.javasoft.plaf.synthetica.SyntheticaOrangeMetallicLookAndFeel;
+
+
+
 
 
 public class ventanaPrincipal {
@@ -35,8 +40,12 @@ public class ventanaPrincipal {
 		try{			  
 			  ventana.setDefaultLookAndFeelDecorated(true);			  
 			  
-			  UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-			  //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			 UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		//	  UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			  //UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaGreenDreamLookAndFeel");
+		//	  UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaMauveMetallicLookAndFeel");
+			//  UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaBlueLightLookAndFeel");
+			 // UIManager.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaOrangeMetallicLookAndFeel");
 			  //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 			  //UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 		} catch (Exception e) {
@@ -44,12 +53,13 @@ public class ventanaPrincipal {
 		}
 		contentPane = new JPanel();
 	    contentPane.setLayout(null);
+	    
 	    contentPane.setBounds(0, 0, 592, 350);
 	    
 		
 		this.ventana = new JFrame("Administración");
 		this.ventana.setFont(new Font("Tahoma", Font.BOLD, 11));
-		this.ventana.setPreferredSize(new Dimension(590,410));
+		this.ventana.setPreferredSize(new Dimension(590,430));
 		this.ventana.setResizable(false);
 		this.ventana.getContentPane().setLayout(null);
 		this.ventana.setLocationByPlatform(true);
@@ -96,35 +106,7 @@ public class ventanaPrincipal {
 			}
 		});
 		
-		mnNewMenu.addSeparator();
-		mnNewMenu.addSeparator();
-		
-		JMenuItem mntmAltaProducto = new JMenuItem("Alta Producto");
-		mnNewMenu.add(mntmAltaProducto);
-		mntmAltaProducto.setFont(new Font("Tahoma", Font.BOLD, 11));
-		mntmAltaProducto.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//new VentanaAltaProducto(ventana);
-			}
-		});
-		
-		JMenuItem mntmBajaProducto = new JMenuItem("Modificar Producto");
-		mnNewMenu.add(mntmBajaProducto);
-		mntmBajaProducto.setFont(new Font("Tahoma", Font.BOLD, 11));
-		mntmBajaProducto.addActionListener(new ActionListener() {			
-			public void actionPerformed(ActionEvent arg0) {				
-				//new VentanaModificarProducto(ventana);
-			}
-		});
-		
-		JMenuItem mntmBajaProducto_1 = new JMenuItem("Baja Producto");
-		mnNewMenu.add(mntmBajaProducto_1);
-		mntmBajaProducto_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		mntmBajaProducto_1.addActionListener(new ActionListener() {			
-			public void actionPerformed(ActionEvent arg0) {				
-				//new VentanaBajaProducto(ventana);			
-			}
-		});
+
 			
 		JMenu mnNewMenu_1 = new JMenu("Call Center");
 		menuBar.add(mnNewMenu_1);
@@ -234,18 +216,9 @@ public class ventanaPrincipal {
 		
 		
 		JLabel lblNewLabel_2 = new JLabel();
-		if( 1 == 1){
-			lblNewLabel_2.setText("<html>Rol: <font color =\"blue\">Administrador</font><html>");
-		} else if(rol.equals("call center")){
-			lblNewLabel_2.setText("<html>Rol: <font color =\"blue\">Call Center</font><html>");
-		} else if(rol.equals("consulta")){
-			lblNewLabel_2.setText("<html>Rol: <font color =\"blue\">Consulta</font><html>");
-		} else if(rol.equals("distribucion")){
-			lblNewLabel_2.setText("<html>Rol: <font color =\"blue\">Distribución</font><html>");
-		} else if(rol.equals("facturacion")){
-			lblNewLabel_2.setText("<html>Rol: <font color =\"blue\">Facturación</font><html>");
-		} else
-			lblNewLabel_2.setText("<html>Rol: <font color =\"blue\">Zona</font><html>");
+		
+	    lblNewLabel_2.setText("<html>Rol: <font color =\"blue\">Administrador</font><html>");
+	
 		lblNewLabel_2.setBounds(10, 0, 150, 21);
 		panel.add(lblNewLabel_2);
 		
