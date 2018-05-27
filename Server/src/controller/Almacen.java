@@ -104,6 +104,23 @@ public class Almacen {
 		
 	}
 
+	public Ubicacion traerUbicacion(String calle, int bloque, int estanteria, int estante, int posicion) {
+		for (Ubicacion u : this.ubicaciones)
+		{
+			if (u.getCalle().equals(calle) && u.getBloque()==bloque && u.getEstanteria()==estanteria && u.getEstante()==estante && u.getPosicion()==posicion)
+				return u;
+			
+		}
+		Ubicacion u = new Ubicacion();
+		u.setCalle(calle);
+		u.setBloque(bloque);
+		u.setEstanteria(estanteria);
+		u.setEstante(estante);
+		u.setPosicion(posicion);
+		Ubicacion resultado = AlmacenDAO.getInstance().traerUbicacion(u);
+		return resultado;
+	}
+
 	
 	
 	

@@ -12,6 +12,7 @@ import business.MovimientoStock;
 import business.OrdenPedido;
 import business.Producto;
 import business.Reserva;
+import business.Ubicacion;
 import entity.MovimientoReservaEntity;
 import entity.MovimientoStockEntity;
 import entity.OrdenPedidoEntity;
@@ -244,6 +245,21 @@ public class AlmacenDAO {
 		}
 		
 	}
+	public Ubicacion traerUbicacion(Ubicacion u) {
+		try
+		{
+			Ubicacion resultado;
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			UbicacionId uid = s.get(UbicacionId.class, )
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 
 
 

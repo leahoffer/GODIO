@@ -12,6 +12,8 @@ import business.DetallePedido;
 import business.OrdenPedido;
 import business.Pedido;
 import business.Producto;
+import business.Ubicacion;
+import dao.AlmacenDAO;
 import dao.ClienteDAO;
 import dao.PedidoDAO;
 import dao.ProductoDAO;
@@ -19,6 +21,7 @@ import dto.ClienteDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
+import dto.UbicacionDTO;
 import entity.ProductoEntity;
 import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
@@ -370,7 +373,11 @@ public class Controller {
 	}
 
 
-	
+	public void agregarMovimientoStock(String codBarra, UbicacionDTO udto, String responsable, int cantidad)
+	{
+		Ubicacion u = Almacen.getInstance().traerUbicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());
+		
+	}
 	
 	
 }
