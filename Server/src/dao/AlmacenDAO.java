@@ -269,6 +269,7 @@ public class AlmacenDAO {
 			s.getTransaction().commit();
 			s.flush();
 			s.close();
+			//UbicacionId uid = s.get(UbicacionId.class, )
 		}
 		catch (Exception e)
 		{

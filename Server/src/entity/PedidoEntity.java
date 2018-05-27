@@ -24,6 +24,7 @@ public class PedidoEntity {
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	private FacturaEntity factura;
+	
 	private String dir_entrega;
 	private Date fecha;
 	private Date fecha_despacho;
