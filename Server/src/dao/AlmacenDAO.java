@@ -224,6 +224,9 @@ public class AlmacenDAO {
 		ope.setMovReserva(mres);
 		return ope;
 	}
+	/*
+	 * SOLO PARA INICIALIZAR. USAR UN TEST PARA CREAR SI NO LAS TENES EN LA BASE
+	 * */
 	public void crearUbicacion(UbicacionEntity ue) {
 		try
 		{
