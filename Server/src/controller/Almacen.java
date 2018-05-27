@@ -12,6 +12,7 @@ import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
+import dao.ProductoDAO;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
 
@@ -119,6 +120,42 @@ public class Almacen {
 		u.setPosicion(posicion);
 		Ubicacion resultado = AlmacenDAO.getInstance().traerUbicacion(u);
 		return resultado;
+	}
+
+	public List<Ubicacion> buscarUbicacionesParaDespachar(Pedido p) {
+		List<Ubicacion> us = new ArrayList<Ubicacion>();
+		for (DetallePedido dp : p.getDetalle())
+		{
+			List<Ubicacion> ubicaciones = ProductoDAO.getInstance().traerUbicacionesDelProducto(dp.getProducto());
+			for (Ubicacion u : ubicaciones)
+			{
+				if(u.getCantidadActual() >= dp.getCantidad())
+				{
+					int cantidad = u.getCantidadActual();
+					u.setCantidadActual(cantidad-dp.getCantidad());;
+					if(u.getCantidadActual()==0)
+					{
+						dp.getProducto().sacarUbicacion(u);
+					}
+					MovimientoStock ms = new MovimientoStock();
+					ms.setCantidad(dp.getCantidad());
+					ms.setMotivo("Venta");
+					ms.setTipo(TipoMovimientoStock.Venta);
+					ms.setProducto(dp.getProducto());
+					ms.setResponsable("N/A");
+					ms.save();
+					us.add(u);
+				}
+				else
+				{
+					
+				}
+			}
+		}
+	}
+
+	public void saveMocimientoStock(MovimientoStock movimientoStock) {
+		AlmacenDAO.getInstance().saveMovimientoStock(movimientoStock);
 	}
 
 	

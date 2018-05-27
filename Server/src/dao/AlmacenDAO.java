@@ -252,12 +252,38 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			UbicacionId uid = s.get(UbicacionId.class, )
+			
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+	}
+	public void saveMovimientoStock(MovimientoStock movimientoStock) {
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			s.save(movimientoStockToEntity(movimientoStock));
+			s.getTransaction().commit();
+			s.flush();
+			s.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	private MovimientoStockEntity movimientoStockToEntity(MovimientoStock ms) {
+		MovimientoStockEntity mse = new MovimientoStockEntity();
+		mse.setCantidad(ms.getCantidad());
+		mse.setMotivo(ms.getMotivo());
+		mse.setProducto(ProductoDAO.getInstance().productoToEntity(ms.getProducto()));
+		mse.setResponsable(ms.getResponsable());
+		mse.setTipo(ms.getTipo().toString());
+		return mse;
 	}
 	
 

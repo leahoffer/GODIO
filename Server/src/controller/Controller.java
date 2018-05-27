@@ -405,5 +405,34 @@ public class Controller {
 		
 	}
 	
+	public List<UbicacionDTO> despacharPedido (PedidoDTO pdto)
+	{
+		List<UbicacionDTO> udtos = new ArrayList<UbicacionDTO>();
+		List<Ubicacion> us;
+		Pedido p = PedidoDAO.getInstance().findByNro(pdto.getNroPedido());
+		//buscarUbicacionesParaDespachar se va a encargar de crear los movimientos y de actualizar las ubicaciones que encuentre y devuelva
+		us = Almacen.getInstance().buscarUbicacionesParaDespachar(p);
+		for (Ubicacion u : us)
+		{
+			UbicacionDTO udto = new UbicacionDTO();
+			udto.setBloque(u.getBloque());
+			udto.setCalle(u.getCalle());
+			udto.setCantidadActual(u.getCantidadActual());
+			udto.setEstante(u.getEstante());
+			udto.setEstanteria(u.getEstanteria());
+			udto.setPosicion(u.getPosicion());
+			udtos.add(udto);
+		}
+		p.setEstado(EstadoPedido.Despachado);
+		facturarPedido(p);
+		p.update();
+		return udtos;
+	}
+
+	private void facturarPedido(Pedido p) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 }
