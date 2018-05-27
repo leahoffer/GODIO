@@ -114,7 +114,6 @@ public class ProductoDAO {
 			Session s = sf.openSession();
 			s.beginTransaction();
 			List<ProductoEntity> lista = (List<ProductoEntity>)s.createQuery("from ProductoEntity").list();
-			s.close();
 			return lista;
 		}
 		catch (Exception e)
@@ -166,7 +165,6 @@ public class ProductoDAO {
 			Session s = sf.openSession();
 			s.beginTransaction();
 			ProductoEntity pe = (ProductoEntity)s.createQuery("from ProductoEntity where codBarras = ?").setString(0, cod).uniqueResult();
-			s.close();
 			return productoToNegocio(pe);
 		}
 		catch (Exception e)

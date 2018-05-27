@@ -147,6 +147,10 @@ public class Pedido {
 		}
 		return resultado;
 	}
+	
+	public void createMe() {
+		PedidoDAO.getInstance().createOrUpdate(this);
+	}
 
 	
 	
