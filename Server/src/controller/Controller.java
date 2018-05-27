@@ -331,7 +331,7 @@ public class Controller {
 						//Creo que esto está bien... que el crearOrdenPedido no genere el movimientoReserva.
 						Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad()-sd);
 						op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
-						op.agregarMovimientoReserva(dp.getCantidad(), p);
+						op.agregarMovimientoReserva(dp.getCantidad()-sd, p);
 					}
 				}
 				//Si no puedo completar, y aparte no hay NADA de stock, voy directamente a ver si tengo para reservarle a una OP
