@@ -97,62 +97,44 @@ public class Controller {
 		
 	}
 	
-	public void crearPedido (String cuit , List<DetallePedidoDTO> ped, String dir, String motivo) throws ClienteException, ProductoException
+	public void crearPedido (PedidoDTO p) throws ClienteException, ProductoException
 	{
-		Calendar  hoy = Calendar.getInstance();
+		//Calendar  hoy = Calendar.getInstance();
 		
-		Cliente cliente = buscarCliente(cuit);
-		
-		   DetallePedido pedc = new DetallePedido();
-		    List<DetallePedido> pedcs = new ArrayList<DetallePedido>();
-		    Producto prod = new Producto();
-		    prod.setCantAComprar(100);
-		    prod.setCantPosicion(100);
-		    prod.setCodBarras("12345678");
-		    prod.setDescripcion("Prod 1");
-		    prod.setEstado(EstadoProducto.Activo);
-		    prod.setMarca("Marca");
-		    prod.setPrecio(100);
-		    prod.setPresentacion(Presentacion.Bolsa);
-		    prod.setTamaño(100);
-		    prod.setUnidad(10);
-		    
-		float subtotal = 0;
-		float totalbruto = 0;
-		
-		for (DetallePedidoDTO pedido: ped)
-		{
-	     
-	     subtotal = pedido.getCantidad() *  pedido.getProducto().getPrecio();;
-	     pedido.setSubtotal(subtotal);
-	     totalbruto = totalbruto + subtotal;
-	     
-	     pedc.setCantidad(pedido.getCantidad());
-	     pedc.setProducto(prod);
-	     pedc.setSubtotal(pedido.getSubtotal());
-	     
-	     pedcs.add(pedc);
+		Cliente cliente = buscarCliente(p.getCliente().getCuit());
+		List<DetallePedido> detalles = new ArrayList<DetallePedido>();
+		for (DetallePedidoDTO ddto : p.getDetalle())
+		{ 
+			DetallePedido pedc = new DetallePedido();
+			Producto prod = this.buscarProducto(ddto.getProducto().getCodBarras());
+			pedc.setCantidad(ddto.getCantidad());
+			pedc.setProducto(prod);
+			pedc.calcularSubTotal();
+			detalles.add(pedc);
 		}
-	
-	 
-	    
-	    
-		Pedido p = new Pedido();
 		
-		p.setCliente(cliente);
-		p.setAclaracionEspecial("TEST");
-		p.setDespachable(false);
-		p.setDetalle(pedcs);
-		p.setDir_entrega(dir);
-		p.setEstado(EstadoPedido.PendienteAutorizacion);
-		p.setFecha(hoy.getTime());	
-		hoy.add(Calendar.DATE, 7); // Añade 7 dias para el despacho.
-		p.setFecha_despacho(hoy.getTime());
-		p.setMotivoEstado(motivo);
-		p.setTotal_bruto(totalbruto);
+		Pedido pedido=new Pedido();
+		pedido.setDetalle(detalles);
+		pedido.calcularTotal();
+		pedido.setAclaracionEspecial(p.getAclaracionEspecial());
+		pedido.setCliente(cliente);
+		pedido.setCondicionesAplicadas(new ArrayList<Condicion>());
+		pedido.setDespachable(p.isDespachable());
+		pedido.setDir_entrega(p.getDir_entrega());
+		pedido.setEstado(EstadoPedido.valueOf("PendienteAutorizacion"));
+		pedido.setFecha(p.getFecha());
+		pedido.setMotivoEstado(p.getMotivoEstado());
+		
+		pedido.saveOrUpdate();
 		
 	}
 	
+	private Producto buscarProducto(String codBarras) {
+		// TODO Auto-generated method stub
+		Producto p = ProductoDAO.getInstance().findById(codBarras);
+		return p;
+	}
+
 	public List<ProductoDTO> listarProductos() throws ProductoException
 	{
 		List<ProductoEntity> prods = new ArrayList<ProductoEntity>();
@@ -403,6 +385,15 @@ public class Controller {
 	{
 		Ubicacion u = Almacen.getInstance().traerUbicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());
 		
+	}
+
+	public ProductoDTO mostrarProducto(String codbarras) {
+		// TODO Auto-generated method stub
+		Producto p = this.buscarProducto(codbarras);
+		ProductoDTO pdto = new ProductoDTO();
+		pdto.setCodBarras(p.getCodBarras());
+		pdto.setDescripcion(p.getDescripcion());
+		return pdto;
 	}
 	
 	

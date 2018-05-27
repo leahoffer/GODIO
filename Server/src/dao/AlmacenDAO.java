@@ -252,12 +252,13 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			UbicacionId uid = s.get(UbicacionId.class, )
+			//UbicacionId uid = s.get(UbicacionId.class, )
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+		return u;
 	}
 	
 

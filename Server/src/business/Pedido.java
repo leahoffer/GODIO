@@ -148,7 +148,10 @@ public class Pedido {
 		return resultado;
 	}
 	
-	public void createMe() {
+
+
+	public void saveOrUpdate() {
+		// TODO Auto-generated method stub
 		PedidoDAO.getInstance().createOrUpdate(this);
 	}
 
