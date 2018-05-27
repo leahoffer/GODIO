@@ -80,7 +80,10 @@ public class ClienteDAO {
 	public ClienteEntity clienteToEntity(Cliente c) {
 		ClienteEntity ce = new ClienteEntity();
 		ce.setCondicionEsp(c.getCondicionEsp());
-		ce.setCuentaCorriente(cuentaCorrienteToEntity(c.getCuentaCorriente()));
+		if(c.getCuentaCorriente()!=null)
+		{
+			ce.setCuentaCorriente(cuentaCorrienteToEntity(c.getCuentaCorriente()));
+		}
 		ce.setCuit(c.getCuit());
 		ce.setDireccion(c.getDireccion());
 		ce.setR_inscripto(c.isR_inscripto());
@@ -135,7 +138,6 @@ public class ClienteDAO {
 			Session s = sf.openSession();
 			s.beginTransaction();
 			ClienteEntity cliente = (ClienteEntity)s.createQuery("from ClienteEntity where cuit = ?").setString(0, cuit).uniqueResult();
-			s.close();
 			return clienteToNegocio(cliente);
 		}
 		catch (Exception e)
@@ -159,6 +161,7 @@ public class ClienteDAO {
 		c.setTelefono(ce.getTelefono());
 		cc.setLimite(ce.getCuentaCorriente().getLimite());
 		cc.setSaldo(ce.getCuentaCorriente().getSaldo());
+		cc.setId(ce.getCuentaCorriente().getId());
 		for (CondicionEntity conde : ce.getCuentaCorriente().getCondiciones())
 		{
 			if (conde instanceof BonificacionEntity)

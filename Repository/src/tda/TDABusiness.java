@@ -18,6 +18,10 @@ public interface TDABusiness extends Remote {
 	
 	public abstract List<ProductoDTO> listarProductosDisponibles() throws RemoteException, ProductoException;
 
+	public abstract ClienteDTO traerCliente(String cuit) throws RemoteException, ClienteException;
+
+	public abstract void modificarCliente(ClienteDTO c) throws RemoteException, ClienteException;
+
 	
 			
 }

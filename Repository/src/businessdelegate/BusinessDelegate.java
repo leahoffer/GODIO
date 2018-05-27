@@ -61,4 +61,14 @@ public class BusinessDelegate implements TDABusiness {
 		}
 	}
 
+	public ClienteDTO traerCliente(String cuit) throws RemoteException, ClienteException {
+		// TODO Auto-generated method stub
+		return RemoteObject.traerCliente(cuit);
+	}
+
+	public void modificarCliente(ClienteDTO c) throws RemoteException, ClienteException {
+		// TODO Auto-generated method stub
+		RemoteObject.modificarCliente(c);
+	}
+
 }

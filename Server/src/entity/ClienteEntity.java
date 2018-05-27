@@ -1,5 +1,7 @@
 package entity;
 
+
+
 import javax.persistence.*;
 
 
@@ -13,7 +15,8 @@ public class ClienteEntity {
 	private String telefono;
 	private String Direccion;
 	private boolean r_inscripto;
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne (cascade=CascadeType.ALL)
+//	@JoinColumn (name = "CuentaCorriente_ID", updatable = false)
 	private CuentaCorrienteEntity cuentaCorriente;
 	private String condicionEsp;
 	

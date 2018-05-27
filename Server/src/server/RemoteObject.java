@@ -38,6 +38,18 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		
 	}
 
+	@Override
+	public ClienteDTO traerCliente(String cuit) throws RemoteException, ClienteException {
+		// TODO Auto-generated method stub
+		return controlador.mostrarCliente(cuit);
+	}
+
+	@Override
+	public void modificarCliente(ClienteDTO c) throws RemoteException, ClienteException {
+		// TODO Auto-generated method stub
+		controlador.modificarCliente(c);
+	}
+
 	
 	
 

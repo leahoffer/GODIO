@@ -13,7 +13,7 @@ public class Cliente {
 	private String condicionEsp;
 	
 	public Cliente() {
-		this.cuentaCorriente = new CuentaCorriente();
+		
 	}
 
 	public String getCuit() {

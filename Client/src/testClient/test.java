@@ -10,6 +10,7 @@ import businessdelegate.BusinessDelegate;
 import dto.ClienteDTO;
 import dto.CuentaCorrienteDTO;
 import dto.DetallePedidoDTO;
+import dto.MovimientoCCDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
 import exception.ClienteException;
@@ -26,6 +27,7 @@ public class test {
 		System.out.println("Presione 1 para Ingresar Cliente");
 		System.out.println("Presione 2 para Ingresar Pedido");
 		System.out.println("Presione 3 para Traer Productos");
+		System.out.println("Presione 4 para Modificar Cliente de Cuit1");
 		String entradaTeclado = "";
 
         Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
@@ -148,7 +150,23 @@ public class test {
 	        		System.out.println(p.getCodBarras()+" "+p.getMarca()+" "+p.getDescripcion()+" "+p.getEstado());
 	        	}
 	        }
-		
+		  if (entradaTeclado.equals("4"))
+		  { 
+			  try {
+				ClienteDTO c= BusinessDelegate.getInstance().traerCliente("Cuit1");
+				System.out.println(c.getCuit()+" "+c.getDireccion()+" "+c.getRazon_social()+" "+c.getTelefono());
+				System.out.print("Modificando...");
+				c.setDireccion("Direccion Modificada");
+				c.setTelefono("Telefono Modificado");
+				BusinessDelegate.getInstance().modificarCliente(c);
+			} catch (ClienteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			  
+			  
+		  }
+		  
 	}
 
 	@Override
