@@ -16,10 +16,12 @@ import business.Ubicacion;
 import entity.MovimientoReservaEntity;
 import entity.MovimientoStockEntity;
 import entity.OrdenPedidoEntity;
+import entity.ProductoEntity;
 import entity.ReservaEntity;
 import entity.UbicacionEntity;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
+import exception.ProductoException;
 import hibernate.HibernateUtil;
 
 public class AlmacenDAO {
@@ -271,7 +273,7 @@ public class AlmacenDAO {
 		mse.setTipo(ms.getTipo().toString());
 		return mse;
 	}
-	/*public Ubicacion traerUbicacion(Ubicacion u) {
+	public Ubicacion traerUbicacion(Ubicacion u) {
 		try
 		{
 			SessionFactory sf = HibernateUtil.getSessionFactory();
@@ -279,14 +281,15 @@ public class AlmacenDAO {
 			s.beginTransaction();
 			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = u.getCalle() AND ue.idubicacion.bloque = u.getBloque AND ue.idUbicacion.estente = u.getEstante() AND ue.idUbicacion.estanteria = u.getEstanteria() AND ue.idUbicacion.posicion = u.getPosicion").uniqueResult();
 			Ubicacion ub = new Ubicacion();
-			ub.set
+			
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
+		return u;
 		
-	}*/
+	}
 	public void updateUbicacion(Ubicacion u) {
 		try
 		{
@@ -307,6 +310,41 @@ public class AlmacenDAO {
 		{
 			e.printStackTrace();
 		}
+	}
+	public List<Ubicacion> traerTodasLasUbicaciones() {
+		// TODO Auto-generated method stub
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			List<UbicacionEntity> lista = s.createQuery("from UbicacionEntity").list();
+			List<Ubicacion> listafinal = new ArrayList<Ubicacion>();			
+			for (UbicacionEntity ue: lista)
+			{ 
+				Ubicacion u = this.UbicacionToNegocio(ue);
+				listafinal.add(u);
+				
+			}
+			return listafinal;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
+	private Ubicacion UbicacionToNegocio(UbicacionEntity ue) {
+		// TODO Auto-generated method stub
+		Ubicacion u = new Ubicacion();
+		u.setBloque(ue.getIdUbicacion().getBloque());
+		u.setCalle(ue.getIdUbicacion().getCalle());
+		u.setCantidadActual(ue.getCantidadActual());
+		u.setEstante(ue.getIdUbicacion().getEstante());
+		u.setEstanteria(ue.getIdUbicacion().getEstanteria());
+		u.setPosicion(ue.getIdUbicacion().getPosicion());
+		return u;
 	}
 	
 
