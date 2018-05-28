@@ -30,6 +30,10 @@ public interface TDABusiness extends Remote {
 	public abstract void agregarAjusteStock(String producto, String tipo, UbicacionDTO u, String motivo, int cantidad,
 			String responsable) throws RemoteException;
 
+	public abstract void autorizarPedido(int nropedido) throws RemoteException;
+
+	public abstract String validarCreditoCliente(int nropedido) throws RemoteException;
+
 
 	
 			

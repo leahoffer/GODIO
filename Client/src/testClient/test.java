@@ -32,6 +32,7 @@ public class test {
 		System.out.println("Presione 4 para Modificar Cliente de Cuit1");
 		System.out.println("Presione 5 para Crear un pedido");
 		System.out.println("Presione 6 para Agregar un movimiento de stock del producto CodBarra1");
+		System.out.println("Presione 7 para Autorizar Pedido");
 		String entradaTeclado = "";
 
         Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
@@ -123,7 +124,7 @@ public class test {
 				pedido.setTotal_bruto(0);
 				
 				ProductoDTO producto=new ProductoDTO();
-				producto.setCodBarras("123456");
+				producto.setCodBarras("CodBarra1");
 				ProductoDTO producto2=new ProductoDTO();
 				producto2.setCodBarras("CodBarra2");
 				ProductoDTO producto3=new ProductoDTO();
@@ -179,8 +180,23 @@ public class test {
 				u.setEstante(1);
 				u.setEstanteria(1);
 				u.setPosicion(1);
-				BusinessDelegate.getInstance().agregarAjusteStock("CodBarra1", "AjustePos", u, "Motivo Movimiento", 5, "Responsable");
+				BusinessDelegate.getInstance().agregarAjusteStock("CodBarra1", "Vencimiento", u, "Motivo Movimiento", 5, "Responsable");
 			
+			}
+			if (entradaTeclado.equals("7"))
+			{
+				System.out.println(BusinessDelegate.getInstance().validarCreditoCliente(2));
+				String entrada = "";
+		        Scanner Escaner = new Scanner (System.in); 
+		        entrada = entradaEscaner.nextLine ();
+		        if (entrada.equals("SI"))
+		        	{
+		        		BusinessDelegate.getInstance().autorizarPedido(2);
+		        	}
+		        else
+		        	{
+		        		System.out.print("Pedido no Autorizado");
+		        	}
 			}
 			
 	}

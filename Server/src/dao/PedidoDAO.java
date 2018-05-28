@@ -46,7 +46,6 @@ public class PedidoDAO {
 			s.getTransaction().commit();
 			System.out.println("Pedido guardado!");
 			s.flush();
-			s.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("Error al guardar el Pedido");
@@ -232,7 +231,6 @@ public class PedidoDAO {
 			s.beginTransaction();
 			PedidoEntity pe = (PedidoEntity) s.get(PedidoEntity.class, nro);
 			s.getTransaction().commit();
-			s.close();
 			return pedidoToNegocio(pe);
 		}
 		catch (Exception e)

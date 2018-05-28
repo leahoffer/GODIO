@@ -61,5 +61,26 @@ public class Ubicacion {
 		udto.setPosicion(this.posicion);
 		return udto;
 	}
+	public boolean soyLaUbicacion(Ubicacion ub) {
+		// TODO Auto-generated method stub
+		if (ub.getBloque()==this.bloque)
+		{
+			if (ub.getCalle().equalsIgnoreCase(this.getCalle()))
+			{
+				if(ub.getEstante()==this.getEstante())
+				{ 
+					if (ub.getEstanteria()==this.getEstanteria())
+					{
+						if(ub.getPosicion()==this.getPosicion())
+						{
+							return true;
+						}
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
 	
 }

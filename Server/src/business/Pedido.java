@@ -145,13 +145,13 @@ public class Pedido {
 		PedidoDAO.getInstance().update(this);
 	}
 	
-	public float calcularTotal() {
+	public void calcularTotal() {
 		float resultado = 0;
 		for (DetallePedido dp : this.getDetalle())
 		{
 			resultado = resultado+dp.getSubtotal();
 		}
-		return resultado;
+		this.total_bruto= resultado;
 	}
 	
 

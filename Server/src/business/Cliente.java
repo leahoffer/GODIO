@@ -75,7 +75,7 @@ public class Cliente {
 	
 	
 	public float obtenerSaldo() {
-		float resultado = 0;
+		float resultado = this.getCuentaCorriente().getLimite();
 		for (MovimientoCC mcc : this.cuentaCorriente.getMovimientos())
 		{
 			if (mcc.isSigno())
