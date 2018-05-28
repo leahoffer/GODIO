@@ -134,7 +134,7 @@ public class test {
 
 				
 				DetallePedidoDTO detalle= new DetallePedidoDTO();
-				detalle.setCantidad(10);
+				detalle.setCantidad(15);
 				detalle.setSubtotal(0);
 				detalle.setProducto(producto);
 				
@@ -204,7 +204,7 @@ public class test {
 
 	@Override
 	public boolean equals(Object arg0) {
-		// TODO Auto-generated method stub
+		
 		return super.equals(arg0);
 	}
 
