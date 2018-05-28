@@ -180,8 +180,7 @@ public class test {
 				u.setEstanteria(1);
 				u.setPosicion(1);
 				BusinessDelegate.getInstance().agregarAjusteStock("CodBarra1", "AjustePos", u, "Motivo Movimiento", 5, "Responsable");
-				//BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
-				//BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
+			
 			}
 			
 	}
