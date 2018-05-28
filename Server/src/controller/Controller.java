@@ -11,9 +11,11 @@ import business.CuentaCorriente;
 import business.DetallePedido;
 import business.Factura;
 import business.ItemFactura;
+import business.MovimientoReserva;
 import business.OrdenPedido;
 import business.Pedido;
 import business.Producto;
+import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
 import dao.ClienteDAO;
@@ -464,6 +466,47 @@ public class Controller {
 		return PedidoDAO.getInstance().traerPedidosPendientesDespacho();
 
 	}
+	
+	public void cerrarOP(int nroOP){
+		OrdenPedido op = AlmacenDAO.getInstance().findOPByNro(nroOP);
+		op.setEstado(EstadoOP.Completa);
+		if (!op.getMovReserva().isEmpty())
+		{
+			for (MovimientoReserva mr : op.getMovReserva())
+			{
+				Reserva r = Almacen.getInstance().convertirMovimientoReserva(mr, op.getProducto());
+				r.createMe();
+				mr.setCompleta(true);
+				revalidarPedido(mr.getPedido());
+			}
+		}
+		op.updateMe();
+	}
+
+	private void revalidarPedido(Pedido pedido) {
+		boolean completoONo = true;
+		List<OrdenPedido> ordenesPendientes = AlmacenDAO.getInstance().buscarOPSPendientesOReservadas();
+		if(!ordenesPendientes.isEmpty())
+		{
+			for (OrdenPedido op : ordenesPendientes)
+			{
+				for (MovimientoReserva mr : op.getMovReserva())
+				{
+					if (mr.getPedido().getNroPedido() == pedido.getNroPedido())
+						completoONo = false;
+				}
+			}
+		}
+		if (completoONo)
+		{
+			pedido.setEstado(EstadoPedido.PendienteDespacho);
+			pedido.update();
+		}
+	}
+	
+	
+	
+	
 }
 
 	
