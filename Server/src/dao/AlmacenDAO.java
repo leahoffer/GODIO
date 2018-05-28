@@ -81,7 +81,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			List<MovimientoStockEntity> mses = (List<MovimientoStockEntity>)s.createQuery("from MovimientoStockEntity mse where mse.producto.codBarras = p.codBarras").list();
+			List<MovimientoStockEntity> mses = (List<MovimientoStockEntity>)s.createQuery("from MovimientoStockEntity mse where mse.producto.codBarras = '" + p.getCodBarras()+"'").list();
 			for (MovimientoStockEntity mse : mses)
 			{
 				MovimientoStock ms = new MovimientoStock();
@@ -108,7 +108,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			List <ReservaEntity> res = (List<ReservaEntity>) s.createQuery("from ReservaEntity re where producto.codBarras = p.codBarras").list();
+			List <ReservaEntity> res = (List<ReservaEntity>) s.createQuery("from ReservaEntity re where producto.codBarras = '"+p.getCodBarras()+"'").list();
 			for (ReservaEntity re : res)
 			{
 				Reserva r = reservaToNegocio(re);
@@ -130,7 +130,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			OrdenPedidoEntity ope = (OrdenPedidoEntity) s.createQuery("from OrdenPedidoEntity ope where ope.producto.codBarras = "+p.getCodBarras()+" AND ope.estado = 'Pendiente'").uniqueResult();
+			OrdenPedidoEntity ope = (OrdenPedidoEntity) s.createQuery("from OrdenPedidoEntity ope where ope.producto.codBarras = '"+p.getCodBarras()+"' AND ope.estado = 'Pendiente'").uniqueResult();
 			if (ope!=null)
 			{
 				op.setCantidadPedida(ope.getCantidadPedida());
@@ -279,7 +279,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = "+u.getCalle()+" AND ue.idUbicacion.bloque = "+u.getBloque()+" AND ue.idUbicacion.estante = "+u.getEstante()+" AND ue.idUbicacion.estanteria = "+u.getEstanteria()+" AND ue.idUbicacion.posicion = "+u.getPosicion()).uniqueResult();
+			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = '"+u.getCalle()+"' AND ue.idUbicacion.bloque = "+u.getBloque()+" AND ue.idUbicacion.estante = "+u.getEstante()+" AND ue.idUbicacion.estanteria = "+u.getEstanteria()+" AND ue.idUbicacion.posicion = "+u.getPosicion()).uniqueResult();
 			Ubicacion ub = this.UbicacionToNegocio(ue);
 			return ub;
 		}
