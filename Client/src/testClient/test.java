@@ -120,7 +120,7 @@ public class test {
 				pedido.setTotal_bruto(0);
 				
 				ProductoDTO producto=new ProductoDTO();
-				producto.setCodBarras("CodBarra1");
+				producto.setCodBarras("123456");
 				ProductoDTO producto2=new ProductoDTO();
 				producto2.setCodBarras("CodBarra2");
 				ProductoDTO producto3=new ProductoDTO();
