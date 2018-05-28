@@ -173,7 +173,13 @@ public class test {
 			}
 			if (entradaTeclado.equals("6"))
 			{
-				BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 35, "Responsable");
+				UbicacionDTO u = new UbicacionDTO();
+				u.setBloque(1);
+				u.setCalle("A");
+				u.setEstante(1);
+				u.setEstanteria(1);
+				u.setPosicion(1);
+				BusinessDelegate.getInstance().agregarAjusteStock("CodBarra1", "AjustePos", u, "Motivo Movimiento", 5, "Responsable");
 				//BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
 				//BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
 			}

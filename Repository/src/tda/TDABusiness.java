@@ -27,8 +27,9 @@ public interface TDABusiness extends Remote {
 
 	public abstract List<UbicacionDTO> traerUbicaciones() throws RemoteException;
 
-	public abstract void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad,
+	public abstract void agregarAjusteStock(String producto, String tipo, UbicacionDTO u, String motivo, int cantidad,
 			String responsable) throws RemoteException;
+
 
 	
 			

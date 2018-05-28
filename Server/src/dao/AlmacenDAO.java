@@ -130,7 +130,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			OrdenPedidoEntity ope = (OrdenPedidoEntity) s.createQuery("from OrdenPedidoEntity ope where ope.producto.codBarras = p.codBarras AND ope.estado = 'Pendiente'").uniqueResult();
+			OrdenPedidoEntity ope = (OrdenPedidoEntity) s.createQuery("from OrdenPedidoEntity ope where ope.producto.codBarras = "+p.getCodBarras()+" AND ope.estado = 'Pendiente'").uniqueResult();
 			if (ope!=null)
 			{
 				op.setCantidadPedida(ope.getCantidadPedida());
@@ -279,15 +279,16 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = u.getCalle() AND ue.idubicacion.bloque = u.getBloque AND ue.idUbicacion.estente = u.getEstante() AND ue.idUbicacion.estanteria = u.getEstanteria() AND ue.idUbicacion.posicion = u.getPosicion").uniqueResult();
-			Ubicacion ub = new Ubicacion();
+			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = "+u.getCalle()+" AND ue.idUbicacion.bloque = u.getBloque AND ue.idUbicacion.estante = u.getEstante() AND ue.idUbicacion.estanteria = u.getEstanteria() AND ue.idUbicacion.posicion = u.getPosicion").uniqueResult();
+			Ubicacion ub = this.UbicacionToNegocio(ue);
+			return ub;
 			
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		return u;
+		return null;
 		
 	}
 	public void updateUbicacion(Ubicacion u) {

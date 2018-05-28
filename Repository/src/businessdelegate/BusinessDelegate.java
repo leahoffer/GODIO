@@ -82,9 +82,12 @@ public class BusinessDelegate implements TDABusiness {
 		return RemoteObject.traerUbicaciones();
 	}
 
-	public void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad, String responsable) throws RemoteException{
+	public void agregarAjusteStock(String producto, String tipo, UbicacionDTO u, String motivo, int cantidad,
+			String responsable) throws RemoteException {
 		// TODO Auto-generated method stub
-		RemoteObject.agregarMovimientoStock(codbarra, tipoajuste, motivo, cantidad, responsable);
+		RemoteObject.agregarAjusteStock(producto, tipo, u, motivo, cantidad, responsable);
 	}
+
+
 
 }
