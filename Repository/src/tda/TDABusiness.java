@@ -34,6 +34,8 @@ public interface TDABusiness extends Remote {
 
 	public abstract String validarCreditoCliente(int nropedido) throws RemoteException;
 
+	public abstract void completarOP(int nro) throws RemoteException;
+
 
 	
 			

@@ -371,7 +371,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			op = (OrdenPedidoEntity) s.get(OrdenPedido.class, nroOP);
+			op = (OrdenPedidoEntity) s.get(OrdenPedidoEntity.class, nroOP);
 			resultado = ordenPedidoToNegocio(op);
 			s.close();
 			return resultado;

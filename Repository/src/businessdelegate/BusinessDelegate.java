@@ -98,6 +98,11 @@ public class BusinessDelegate implements TDABusiness {
 		return RemoteObject.validarCreditoCliente(nropedido);
 	}
 
+	public void completarOP(int nro) throws RemoteException {
+		// TODO Auto-generated method stub
+		RemoteObject.completarOP(nro);
+	}
+
 
 
 }

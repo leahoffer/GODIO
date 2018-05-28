@@ -87,8 +87,8 @@ public class OrdenPedido {
 			reservas = reservas + mr.getCantidad();
 		}
 		if (i >= (this.getCantidadPedida()-reservas))
-			return true;
-		return false;
+			return false;
+		return true;
 	}
 
 	public void agregarMovimientoReserva(int i, Pedido p) {
@@ -109,7 +109,12 @@ public class OrdenPedido {
 
 	public int disponible() {
 		// TODO Auto-generated method stub
-		return 0;
+		int reservas = 0;
+		for (MovimientoReserva mr : this.getMovReserva())
+		{
+			reservas = reservas + mr.getCantidad();
+		}
+		return this.getCantidadPedida()-reservas;
 	}
 
 	public void createMe() {

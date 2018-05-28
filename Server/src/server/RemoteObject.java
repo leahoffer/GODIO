@@ -83,6 +83,12 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		return controlador.validarCreditoCliente(nropedido);
 	}
 
+	@Override
+	public void completarOP(int nro) throws RemoteException {
+		// TODO Auto-generated method stub
+		controlador.cerrarOP(nro);
+	}
+
 
 	
 	

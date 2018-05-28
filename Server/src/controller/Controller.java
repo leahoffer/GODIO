@@ -316,7 +316,10 @@ public class Controller {
 							int reservadoOP = op.disponible();
 							op.agregarMovimientoReserva(reservadoOP, p);
 							op.setEstado(EstadoOP.Reservada);
+							op.updateMe();
 							Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad()-sd-reservadoOP);
+							op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+							op.agregarMovimientoReserva(dp.getCantidad()-sd-reservadoOP, p);
 						}
 					}
 					//Tengo stock, aunque no suficiente, pero no tenog OPs con disponibilidad para reservar
@@ -346,7 +349,10 @@ public class Controller {
 							int reservadoOP = op.disponible();
 							op.agregarMovimientoReserva(reservadoOP, p);
 							op.setEstado(EstadoOP.Reservada);
+							op.updateMe();
 							Almacen.getInstance().crearOrdenPedido(p, dp, dp.getCantidad()-reservadoOP);
+							op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+							op.agregarMovimientoReserva(dp.getCantidad()-sd-reservadoOP, p);
 						}
 					}
 					//No solo no tengo nada de stock sino que no tengo OP con disponibilidad. Caso más horrible.
@@ -472,6 +478,7 @@ public class Controller {
 	public void cerrarOP(int nroOP){
 		OrdenPedido op = AlmacenDAO.getInstance().findOPByNro(nroOP);
 		op.setEstado(EstadoOP.Completa);
+		op.updateMe();
 		if (!op.getMovReserva().isEmpty())
 		{
 			for (MovimientoReserva mr : op.getMovReserva())
@@ -482,7 +489,7 @@ public class Controller {
 				revalidarPedido(mr.getPedido());
 			}
 		}
-		op.updateMe();
+		
 	}
 
 	private void revalidarPedido(Pedido pedido) {

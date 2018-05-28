@@ -33,6 +33,7 @@ public class test {
 		System.out.println("Presione 5 para Crear un pedido");
 		System.out.println("Presione 6 para Agregar un movimiento de stock del producto CodBarra1");
 		System.out.println("Presione 7 para Autorizar Pedido");
+		System.out.println("Presione 8 para Cerrar una OP");
 		String entradaTeclado = "";
 
         Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
@@ -134,7 +135,7 @@ public class test {
 
 				
 				DetallePedidoDTO detalle= new DetallePedidoDTO();
-				detalle.setCantidad(15);
+				detalle.setCantidad(1500);
 				detalle.setSubtotal(0);
 				detalle.setProducto(producto);
 				
@@ -185,13 +186,13 @@ public class test {
 			}
 			if (entradaTeclado.equals("7"))
 			{
-				System.out.println(BusinessDelegate.getInstance().validarCreditoCliente(7));
+				System.out.println(BusinessDelegate.getInstance().validarCreditoCliente(11));
 				String entrada = "";
 		        Scanner Escaner = new Scanner (System.in); 
 		        entrada = entradaEscaner.nextLine ();
 		        if (entrada.equals("SI"))
 		        	{
-		        		BusinessDelegate.getInstance().autorizarPedido(7);
+		        		BusinessDelegate.getInstance().autorizarPedido(11);
 		        		System.out.print("Pedido Autorizado!");
 		        	}
 		        else
@@ -199,8 +200,13 @@ public class test {
 		        		System.out.print("Pedido no Autorizado");
 		        	}
 			}
-			
+			 if (entradaTeclado.equals("8"))
+				{
+				 	BusinessDelegate.getInstance().completarOP(6);
+				 	System.out.print("Orden de Pedido cerrada.");
+				}
 	}
+			 
 
 	@Override
 	public boolean equals(Object arg0) {
