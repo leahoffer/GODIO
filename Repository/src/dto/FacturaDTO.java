@@ -13,16 +13,16 @@ public class FacturaDTO implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -8180412007257528106L;
-	private String nro;
+	private int nro;
 	private TipoFactura tipo;
 	private ClienteDTO cliente;
 	private float total;
 	private List<ItemFacturaDTO> items;
 	private float cancelado;
-	public String getNro() {
+	public int getNro() {
 		return nro;
 	}
-	public void setNro(String nro) {
+	public void setNro(int nro) {
 		this.nro = nro;
 	}
 	public TipoFactura getTipo() {
