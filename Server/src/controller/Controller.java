@@ -268,9 +268,6 @@ public class Controller {
 	public void autorizarPedido (int nro)
 	{
 		Pedido p = PedidoDAO.getInstance().findByNro(nro);
-	
-		
-		
 		if (validarCompletarPedido(p))
 		{
 			p.setEstado(EstadoPedido.PendienteDespacho);

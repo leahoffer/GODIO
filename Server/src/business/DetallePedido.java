@@ -4,6 +4,7 @@ import dto.DetallePedidoDTO;
 
 public class DetallePedido {
 	
+	private int id;
 	private  float subtotal;
 	private int  cantidad;
 	private Producto producto;
@@ -40,5 +41,11 @@ public class DetallePedido {
 		dpdto.setProducto(this.producto.toDTO());
 		dpdto.setSubtotal(this.subtotal);
 		return dpdto;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

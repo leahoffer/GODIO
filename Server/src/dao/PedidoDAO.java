@@ -95,6 +95,7 @@ public class PedidoDAO {
 			dpe.setCantidad(dp.getCantidad());
 			dpe.setProducto(ProductoDAO.getInstance().productoToEntity(dp.getProducto()));
 			dpe.setSubtotal(dp.getSubtotal());
+			dpe.setId(dp.getId());
 			dpes.add(dpe);
 		}
 		pe.setCondicionesAplicadas(caes);
@@ -178,8 +179,9 @@ public class PedidoDAO {
 		{
 			DetallePedido dp = new DetallePedido();
 			dp.setCantidad(dpe.getCantidad());
-			dp.setSubtotal(dp.getSubtotal());
+			dp.setSubtotal(dpe.getSubtotal());
 			dp.setProducto(ProductoDAO.getInstance().productoToNegocio(dpe.getProducto()));
+			dp.setId(dpe.getId());
 			ds.add(dp);
 		}
 		p.setCondicionesAplicadas(conds);
@@ -215,7 +217,6 @@ public class PedidoDAO {
 			s.beginTransaction();
 			s.update(pedidoToEntity(pedido));
 			s.getTransaction().commit();
-			s.close();
 		}
 		catch (Exception e)
 		{

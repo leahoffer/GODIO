@@ -37,5 +37,13 @@ public class DetallePedidoEntity {
 	public void setProducto(ProductoEntity producto) {
 		this.producto = producto;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	
 
 }

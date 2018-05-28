@@ -17,7 +17,7 @@ public class MovimientoReservaEntity {
 	@GeneratedValue
 	private int nro;
 	private int cantidad;
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne
 	private PedidoEntity pedido;
 	private boolean completa;
 	private Date fecha;

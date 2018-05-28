@@ -97,6 +97,7 @@ public class OrdenPedido {
 		mr.setCompleta(false);
 		mr.setFecha(new Date());
 		mr.setPedido(p);
+		this.movReserva.add(mr);
 		updateMe();
 		
 	}

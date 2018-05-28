@@ -2,14 +2,23 @@ package entity;
 
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="Ordenes_Pedido")
 public class OrdenPedidoEntity {
 
+	@Id
+	@GeneratedValue
 	private int nro;
 	private String estado;
+	@ManyToOne
 	private PedidoEntity pedidoOrigen;
+	@ManyToOne
 	private ProductoEntity producto;
 	private int cantidadPedida;
 //	private List<Pair<String, Float>> ultimosTresProv;
+	@OneToMany (cascade=CascadeType.ALL)
 	private List <MovimientoReservaEntity> movReserva;
 	
 	public OrdenPedidoEntity() {}

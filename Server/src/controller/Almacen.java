@@ -12,6 +12,7 @@ import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
+import dao.ProductoDAO;
 import dto.UbicacionDTO;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
@@ -37,9 +38,10 @@ public class Almacen {
 
 	public void createReserva(Pedido p, DetallePedido dp, int cantidad) {
 		Reserva r = new Reserva();
+		Date fecha = new Date();
 		r.setCantidad(cantidad);
 		r.setCompleta(false);
-		r.setFecha(new Date());
+		r.setFecha(fecha);
 		r.setPedido(p);
 		r.setProducto(dp.getProducto());
 		r.createMe();
@@ -70,19 +72,12 @@ public class Almacen {
 	}
 
 	public int devolverStockProducto(Producto producto) {
-		List<MovimientoStock> movimientos = AlmacenDAO.getInstance().movimientosStockProducto(producto);
+		List<Ubicacion> ubicaciones = producto.getUbicaciones();
 		List<Reserva> reservas = AlmacenDAO.getInstance().reservasProducto(producto);
 		int cantidadStock = 0;
-		for (MovimientoStock ms : movimientos)
+		for (Ubicacion u : ubicaciones)
 		{
-			if (ms.getMotivo().toString().equals(TipoMovimientoStock.Compra.toString()) || ms.getMotivo().toString().equals(TipoMovimientoStock.AjustePos.toString()))
-			{
-				cantidadStock = cantidadStock + ms.getCantidad();
-			}
-			else
-			{
-				cantidadStock = cantidadStock - ms.getCantidad();
-			}
+			cantidadStock=cantidadStock+u.getCantidadActual();
 		}
 		for (Reserva r : reservas)
 		{
@@ -344,6 +339,22 @@ public class Almacen {
 					ms.save();
 					
 					ub.setCantidadActual(cantidad);
+					p.updateMe();
+				}
+			}
+			if (p.getUbicaciones().isEmpty())
+			{
+				if (tipo.equalsIgnoreCase("AjustePos"))
+				{
+					ms.setCantidad(cantidad);
+					ms.setMotivo(motivo);
+					ms.setProducto(p);
+					ms.setResponsable(responsable);
+					ms.setTipo(TipoMovimientoStock.valueOf(tipo));
+					this.movimientos.add(ms);
+					ms.save();
+					u.setCantidadActual(cantidad);
+					p.getUbicaciones().add(u);
 					p.updateMe();
 				}
 			}
