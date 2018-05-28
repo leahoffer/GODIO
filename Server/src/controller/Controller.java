@@ -130,7 +130,7 @@ public class Controller {
 		
 	}
 	
-	private Producto buscarProducto(String codBarras) {
+	public Producto buscarProducto(String codBarras) {
 		// TODO Auto-generated method stub
 		Producto p = ProductoDAO.getInstance().findById(codBarras);
 		return p;
@@ -425,6 +425,8 @@ public class Controller {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 	
 	
 }

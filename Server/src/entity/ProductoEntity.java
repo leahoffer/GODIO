@@ -18,7 +18,7 @@ public class ProductoEntity {
 	private int unidad;
 	private float precio;
 	private int cantPosicion;
-	@OneToMany
+	@OneToMany (cascade=CascadeType.ALL)
 	protected List<UbicacionEntity> ubicaciones;
 	private String presentacion;
 	@OneToOne

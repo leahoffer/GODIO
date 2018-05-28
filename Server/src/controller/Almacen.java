@@ -12,6 +12,7 @@ import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
+import dto.UbicacionDTO;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
 @SuppressWarnings("unused")
@@ -104,7 +105,7 @@ public class Almacen {
 		
 	}
 
-	/*public Ubicacion traerUbicacion(String calle, int bloque, int estanteria, int estante, int posicion) {
+	public Ubicacion traerUbicacion(String calle, int bloque, int estanteria, int estante, int posicion) {
 		for (Ubicacion u : this.ubicaciones)
 		{
 			if (u.getCalle().equals(calle) && u.getBloque()==bloque && u.getEstanteria()==estanteria && u.getEstante()==estante && u.getPosicion()==posicion)
@@ -119,7 +120,30 @@ public class Almacen {
 		u.setPosicion(posicion);
 		Ubicacion resultado = AlmacenDAO.getInstance().traerUbicacion(u);
 		return resultado;
-	}*/
+	}
+	
+	public List<UbicacionDTO> mostrarUbicaciones() {
+		// TODO Auto-generated method stub
+		List<Ubicacion> ubicaciones = this.traerUbicaciones();
+		List<UbicacionDTO> ubicacionesdto = new ArrayList<UbicacionDTO>();
+		for (Ubicacion u:ubicaciones)
+		{
+			UbicacionDTO udto = new UbicacionDTO();
+			udto.setBloque(u.getBloque());
+			udto.setCalle(u.getCalle());
+			udto.setCantidadActual(u.getCantidadActual());
+			udto.setEstante(u.getEstante());
+			udto.setEstanteria(u.getEstanteria());
+			udto.setPosicion(u.getPosicion());
+			ubicacionesdto.add(udto);
+		}
+		return ubicacionesdto;
+	}
+
+	private List<Ubicacion> traerUbicaciones() {
+		// TODO Auto-generated method stub
+		return AlmacenDAO.getInstance().traerTodasLasUbicaciones();
+	}
 
 	public List<Ubicacion> buscarUbicacionesParaDespachar(Pedido p) {
 		List<Ubicacion> us = new ArrayList<Ubicacion>();
@@ -172,8 +196,18 @@ public class Almacen {
 		return us;
 	}
 
-	public void saveMocimientoStock(MovimientoStock movimientoStock) {
-		AlmacenDAO.getInstance().saveMovimientoStock(movimientoStock);
+
+	public void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad,
+			String responsable) {
+		// TODO Auto-generated method stub
+		MovimientoStock ms= new MovimientoStock();
+		ms.setCantidad(cantidad);
+		ms.setMotivo(motivo);
+		ms.setProducto(Controller.getInstance().buscarProducto(codbarra));
+		ms.setResponsable(responsable);
+		ms.setTipo(TipoMovimientoStock.valueOf(tipoajuste));
+		this.movimientos.add(ms);
+		ms.save();
 	}
 
 	
