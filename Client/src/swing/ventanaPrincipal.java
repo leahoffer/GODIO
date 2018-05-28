@@ -72,7 +72,7 @@ public class ventanaPrincipal {
 		JMenuBar menuBar = new JMenuBar();
 		ventana.setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("ABM Clientes / Productos");
+		JMenu mnNewMenu = new JMenu("ABM Clientes");
 		menuBar.add(mnNewMenu);
 		mnNewMenu.setFont(new Font("Tahoma", Font.BOLD, 11));
 		mnNewMenu.setEnabled(true);
@@ -105,91 +105,30 @@ public class ventanaPrincipal {
 				new BajaCliente(vent);				
 			}
 		});
-		
-
-			
-		JMenu mnNewMenu_1 = new JMenu("Call Center");
-		menuBar.add(mnNewMenu_1);
-		mnNewMenu_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		mnNewMenu_1.setEnabled(false);
-		
-		
-		JMenu mnNewMenu_2 = new JMenu("Reclamos");
-		mnNewMenu_1.add(mnNewMenu_2);
-		mnNewMenu_2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Crear Reclamo Simple");
-		mnNewMenu_2.add(mntmNewMenuItem_1);
-		mntmNewMenuItem_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//new ReclamosSimples(ventana);
-			}
-		});
-		
-		JMenuItem menuItem_6 = new JMenuItem("Crear Reclamo Compuesto");
-		mnNewMenu_2.add(menuItem_6);
-		menuItem_6.setFont(new Font("Tahoma", Font.BOLD, 11));
-		menuItem_6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//new ReclamosCompuestos(ventana);
-			}
-		});
-		
-		JMenu menu = new JMenu("Tablero de Reclamos");
-		menuBar.add(menu);
-		menu.setFont(new Font("Tahoma", Font.BOLD, 11));
-		menu.setEnabled(false);
 	
 		
-		JMenuItem menuItem_8 = new JMenuItem("Visualizar Reclamos");
+		JMenu menu = new JMenu("Autorizar");
+		menuBar.add(menu);
+		menu.setFont(new Font("Tahoma", Font.BOLD, 11));
+		menu.setEnabled(true);
+	
+		
+		JMenuItem menuItem_8 = new JMenuItem("Autorizar Pedidos");
 		menu.add(menuItem_8);
 		menuItem_8.setFont(new Font("Tahoma", Font.BOLD, 11));
 		menuItem_8.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent e) {
-			//	new VisualizarReclamos(ventana, user);				
+				new AutorizarPedido(vent);				
 			}
 		});
 		
-		JMenu menu_1 = new JMenu("Reportes/Rankings");
-		menuBar.add(menu_1);
-		menu_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		menu_1.setEnabled(false);
-
 		
-		JMenuItem menuItem_10 = new JMenuItem("Ranking Reclamos Cliente");
-		menu_1.add(menuItem_10);
-		menuItem_10.setFont(new Font("Tahoma", Font.BOLD, 11));
-		menuItem_10.addActionListener(new ActionListener() {			
-			public void actionPerformed(ActionEvent e) {
-			//	new RankingReclamosClientes(ventana);				
-			}
-		});
-		
-		JMenuItem menuItem_11 = new JMenuItem("Ranking Tratamientos Reclamos");
-		menu_1.add(menuItem_11);
-		menuItem_11.setFont(new Font("Tahoma", Font.BOLD, 11));
-		menuItem_11.addActionListener(new ActionListener() {			
-			public void actionPerformed(ActionEvent e) {
-			//	new RankingTratamientosReclamos(ventana);
-			}
-		});
-		
-		JMenuItem menuItem_12 = new JMenuItem("Reclamos por mes");
-		menu_1.add(menuItem_12);
-		menuItem_12.setFont(new Font("Tahoma", Font.BOLD, 11));
-		menuItem_12.addActionListener(new ActionListener() {		
-			public void actionPerformed(ActionEvent e) {
-			//new ReclamosPorMes(ventana);
-			}
-		});
-		
-		JMenuItem menuItem_13 = new JMenuItem("Reporte Tiempo Promedio");
-		menu_1.add(menuItem_13);
-		menuItem_13.setFont(new Font("Tahoma", Font.BOLD, 11));
-		menuItem_13.addActionListener(new ActionListener() {			
-			public void actionPerformed(ActionEvent e) {
-			//	new ReporteTiempoPromedio(ventana);				
+		JMenuItem menuItem_15 = new JMenuItem("Autorizar Despacho");
+		menu.add(menuItem_15);
+		menuItem_15.setFont(new Font("Tahoma", Font.BOLD, 11));		
+		menuItem_15.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent arg0) {				
+				new AutorizarDespacho(vent);
 			}
 		});
 		
