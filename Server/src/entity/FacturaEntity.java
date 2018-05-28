@@ -10,7 +10,8 @@ import javax.persistence.*;
 public class FacturaEntity {
 
 	@Id
-	private String nro;
+	@GeneratedValue
+	private int nro;
 	private String tipo;
 		
 	@OneToOne (cascade=CascadeType.ALL)
@@ -20,10 +21,10 @@ public class FacturaEntity {
 	@OneToMany (cascade=CascadeType.ALL)
 	protected List<ItemFacturaEntity> items;
 	private float cancelado;
-	public String getNro() {
+	public int getNro() {
 		return nro;
 	}
-	public void setNro(String nro) {
+	public void setNro(int nro) {
 		this.nro = nro;
 	}
 	public String getTipo() {

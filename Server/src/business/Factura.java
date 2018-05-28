@@ -8,7 +8,7 @@ import enumeration.TipoFactura;
 
 public class Factura {
 
-	private String nro;
+	private int nro;
 	private TipoFactura tipo;
 	private Cliente cliente;
 	private float total;
@@ -18,10 +18,10 @@ public class Factura {
 		this.cliente = new Cliente();
 		this.items = new ArrayList<ItemFactura>();
 	}
-	public String getNro() {
+	public int getNro() {
 		return nro;
 	}
-	public void setNro(String nro) {
+	public void setNro(int nro) {
 		this.nro = nro;
 	}
 	public TipoFactura getTipo() {
