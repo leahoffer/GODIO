@@ -43,6 +43,10 @@ public class AutorizarPedido {
 		btnNewButton.setBounds(437, 302, 104, 31);
 		contentPane.add(btnNewButton);
 		
+		JButton btnNewButton_2 = new JButton("Cancelar");
+		btnNewButton_2.setBounds(327, 302, 104, 31);
+		contentPane.add(btnNewButton_2);
+		
 		JLabel lblBuscar = new JLabel("Buscar: ");
 		lblBuscar.setForeground(Color.BLACK);
 		lblBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -180,6 +184,16 @@ public class AutorizarPedido {
 					JOptionPane.showMessageDialog(null, "El cliente ha sido dado de baja", "Éxito", JOptionPane.INFORMATION_MESSAGE); //Borrar Luego.
 				else
 					JOptionPane.showMessageDialog(null, "Debe ingresar un CUIT", "Warning", JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		
+		
+		btnNewButton_2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 			
