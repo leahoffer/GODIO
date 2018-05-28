@@ -18,6 +18,7 @@ import dao.ClienteDAO;
 import dao.PedidoDAO;
 import dao.ProductoDAO;
 import dto.ClienteDTO;
+import dto.CuentaCorrienteDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
@@ -30,6 +31,7 @@ import enumeration.Presentacion;
 import exception.ClienteException;
 import exception.ProductoException;
 
+@SuppressWarnings("unused")
 public class Controller {
 
 	private static Controller instance;
@@ -129,7 +131,7 @@ public class Controller {
 		
 	}
 	
-	private Producto buscarProducto(String codBarras) {
+	public Producto buscarProducto(String codBarras) {
 		// TODO Auto-generated method stub
 		Producto p = ProductoDAO.getInstance().findById(codBarras);
 		return p;
@@ -381,11 +383,11 @@ public class Controller {
 	}
 
 
-	public void agregarMovimientoStock(String codBarra, UbicacionDTO udto, String responsable, int cantidad)
+	/*public void agregarMovimientoStock(String codBarra, UbicacionDTO udto, String responsable, int cantidad)
 	{
 		Ubicacion u = Almacen.getInstance().traerUbicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());
 		
-	}
+	}*/
 
 	public ProductoDTO mostrarProducto(String codbarras) {
 		// TODO Auto-generated method stub
@@ -424,6 +426,24 @@ public class Controller {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 	
-	
+	public List<PedidoDTO> listarPedidosPendientesDespacho(){
+		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
+		List<Pedido> pps = PedidoDAO.getInstance().traerPedidosPendientesDespacho();
+		for (Pedido p : pps)
+		{
+			PedidoDTO pdto = p.toDTO();
+			pdtos.add(pdto);
+		}
+		return pdtos;
+	}
+
+	private List<Pedido> traerPedidosPendientesDespacho() {
+		return PedidoDAO.getInstance().traerPedidosPendientesDespacho();
+
+	}
 }
+
+	

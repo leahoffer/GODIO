@@ -5,7 +5,7 @@ import java.util.List;
 
 import business.OrdenPedido;
 import business.Proveedor;
-
+@SuppressWarnings("unused")
 public class Compras {
 
 	private List<OrdenPedido> ordenesPedido;

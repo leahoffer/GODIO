@@ -1,5 +1,8 @@
 package business;
 
+import dao.AlmacenDAO;
+import dto.UbicacionDTO;
+
 public class Ubicacion {
 
 	private String calle;
@@ -43,6 +46,20 @@ public class Ubicacion {
 	}
 	public void setCantidadActual(int cantidadActual) {
 		this.cantidadActual = cantidadActual;
+	}
+	public void update() {
+		AlmacenDAO.getInstance().updateUbicacion(this);
+		
+	}
+	public UbicacionDTO toDTO() {
+		UbicacionDTO udto = new UbicacionDTO();
+		udto.setCalle(this.calle);
+		udto.setBloque(this.bloque);
+		udto.setCantidadActual(this.cantidadActual);
+		udto.setEstante(this.estante);
+		udto.setEstanteria(this.estanteria);
+		udto.setPosicion(this.posicion);
+		return udto;
 	}
 	
 }

@@ -4,11 +4,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+import controller.Almacen;
 import controller.Controller;
 import dto.ClienteDTO;
-import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
+import dto.UbicacionDTO;
 import exception.ClienteException;
 import exception.ProductoException;
 import tda.TDABusiness;
@@ -52,10 +53,23 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 	}
 
 	@Override
-	public ProductoDTO mostrarProducto(String codbarras) {
+	public ProductoDTO mostrarProducto(String codbarras) throws RemoteException{
 		// TODO Auto-generated method stub
 		return controlador.mostrarProducto(codbarras);
 	}
+
+	@Override
+	public List<UbicacionDTO> traerUbicaciones() throws RemoteException {
+		// TODO Auto-generated method stub
+		return Almacen.getInstance().mostrarUbicaciones();
+	}
+
+	@Override
+	public void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad,
+			String responsable) throws RemoteException {
+		// TODO Auto-generated method stub
+		Almacen.getInstance().agregarMovimientoStock(codbarra, tipoajuste, motivo, cantidad, responsable);
+	};
 
 	
 	

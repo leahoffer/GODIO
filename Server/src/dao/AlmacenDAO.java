@@ -16,11 +16,12 @@ import business.Ubicacion;
 import entity.MovimientoReservaEntity;
 import entity.MovimientoStockEntity;
 import entity.OrdenPedidoEntity;
+import entity.ProductoEntity;
 import entity.ReservaEntity;
 import entity.UbicacionEntity;
-import entity.UbicacionId;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
+import exception.ProductoException;
 import hibernate.HibernateUtil;
 
 public class AlmacenDAO {
@@ -132,7 +133,6 @@ public class AlmacenDAO {
 			OrdenPedidoEntity ope = (OrdenPedidoEntity) s.createQuery("from OrdenPedidoEntity ope where ope.producto.codBarras = p.codBarras AND ope.estado = 'Pendiente'").uniqueResult();
 			if (ope!=null)
 			{
-				List<MovimientoReserva> mrs = new ArrayList<MovimientoReserva>();
 				op.setCantidadPedida(ope.getCantidadPedida());
 				op.setEstado(EstadoOP.valueOf(ope.getEstado()));
 				op.setNro(ope.getNro());
@@ -245,20 +245,7 @@ public class AlmacenDAO {
 		}
 		
 	}
-	public Ubicacion traerUbicacion(Ubicacion u) {
-		try
-		{
-			Ubicacion resultado;
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session s = sf.openSession();
-			s.beginTransaction();
-			
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	
 	public void saveMovimientoStock(MovimientoStock movimientoStock) {
 		try
 		{
@@ -285,6 +272,95 @@ public class AlmacenDAO {
 		mse.setResponsable(ms.getResponsable());
 		mse.setTipo(ms.getTipo().toString());
 		return mse;
+	}
+	public Ubicacion traerUbicacion(Ubicacion u) {
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = u.getCalle() AND ue.idubicacion.bloque = u.getBloque AND ue.idUbicacion.estente = u.getEstante() AND ue.idUbicacion.estanteria = u.getEstanteria() AND ue.idUbicacion.posicion = u.getPosicion").uniqueResult();
+			Ubicacion ub = new Ubicacion();
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return u;
+		
+	}
+	public void updateUbicacion(Ubicacion u) {
+		try
+		{
+			UbicacionEntity ue= new UbicacionEntity();
+			ue.getIdUbicacion().setCalle(u.getCalle());
+			ue.getIdUbicacion().setBloque(u.getBloque());
+			ue.getIdUbicacion().setEstante(u.getEstante());
+			ue.getIdUbicacion().setEstanteria(u.getEstanteria());
+			ue.getIdUbicacion().setPosicion(u.getPosicion());
+			ue.setCantidadActual(u.getCantidadActual());
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.update(ue);
+			s.flush();
+			s.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	public List<Ubicacion> traerTodasLasUbicaciones() {
+		// TODO Auto-generated method stub
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			List<UbicacionEntity> lista = s.createQuery("from UbicacionEntity").list();
+			List<Ubicacion> listafinal = new ArrayList<Ubicacion>();			
+			for (UbicacionEntity ue: lista)
+			{ 
+				Ubicacion u = this.UbicacionToNegocio(ue);
+				listafinal.add(u);
+				
+			}
+			return listafinal;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			
+		}
+		return null;
+	}
+	private Ubicacion UbicacionToNegocio(UbicacionEntity ue) {
+		// TODO Auto-generated method stub
+		Ubicacion u = new Ubicacion();
+		u.setBloque(ue.getIdUbicacion().getBloque());
+		u.setCalle(ue.getIdUbicacion().getCalle());
+		u.setCantidadActual(ue.getCantidadActual());
+		u.setEstante(ue.getIdUbicacion().getEstante());
+		u.setEstanteria(ue.getIdUbicacion().getEstanteria());
+		u.setPosicion(ue.getIdUbicacion().getPosicion());
+		return u;
+	}
+	public Ubicacion traerPrimeraUbicacionVacia() {
+		// TODO Auto-generated method stub
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session s = sf.openSession();
+		s.beginTransaction();
+		List<UbicacionEntity> lista = s.createQuery("from UbicacionEntity ue where ue.cantidadActual=0").list();
+		List<Ubicacion> listafinal = new ArrayList<Ubicacion>();			
+		for (UbicacionEntity ue: lista)
+		{ 
+			Ubicacion u = this.UbicacionToNegocio(ue);
+			listafinal.add(u);
+			
+		}
+		return listafinal.get(0);
+		
 	}
 	
 

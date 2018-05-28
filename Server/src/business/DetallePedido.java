@@ -1,5 +1,7 @@
 package business;
 
+import dto.DetallePedidoDTO;
+
 public class DetallePedido {
 	
 	private  float subtotal;
@@ -31,5 +33,12 @@ public class DetallePedido {
 
 	public float calcularSubTotal(){
 		return this.cantidad*this.getProducto().getPrecio();
+	}
+	public DetallePedidoDTO toDTO() {
+		DetallePedidoDTO dpdto = new DetallePedidoDTO();
+		dpdto.setCantidad(this.cantidad);
+		dpdto.setProducto(this.producto.toDTO());
+		dpdto.setSubtotal(this.subtotal);
+		return dpdto;
 	}
 }

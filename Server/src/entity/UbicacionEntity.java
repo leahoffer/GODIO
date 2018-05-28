@@ -8,6 +8,7 @@ public class UbicacionEntity {
 
 	@EmbeddedId
 	private UbicacionId idUbicacion;
+	private int cantidadActual;
 
 	public UbicacionEntity() {
 		super();
@@ -19,6 +20,14 @@ public class UbicacionEntity {
 
 	public void setIdUbicacion(UbicacionId idUbicacion) {
 		this.idUbicacion = idUbicacion;
+	}
+
+	public int getCantidadActual() {
+		return cantidadActual;
+	}
+
+	public void setCantidadActual(int cantidadActual) {
+		this.cantidadActual = cantidadActual;
 	}
 	
 	

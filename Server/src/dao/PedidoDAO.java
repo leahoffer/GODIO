@@ -241,6 +241,27 @@ public class PedidoDAO {
 			return null;
 		}
 	}
+
+	public List<Pedido> traerPedidosPendientesDespacho() {
+		try
+		{
+			List<Pedido> ps = new ArrayList<Pedido>();
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			List <PedidoEntity> pes = (List<PedidoEntity>) s.createQuery("from PedidoEntity pe where pe.estado = 'PendienteDespacho'").list();
+			for (PedidoEntity pe : pes)
+			{
+				Pedido p = pedidoToNegocio(pe);
+				ps.add(p);
+			}
+			return ps;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 
 }

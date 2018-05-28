@@ -12,6 +12,7 @@ import dto.ProductoDTO;
 import exception.ClienteException;
 import exception.ProductoException;
 
+@SuppressWarnings("unused")
 public class test_hibernate {
 
 	public static void main(String[] args) throws RemoteException, ClienteException, ProductoException {

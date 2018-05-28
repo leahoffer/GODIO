@@ -2,13 +2,13 @@ package controller;
 
 import java.util.Date;
 
-import business.*;
 import dao.AlmacenDAO;
 import dao.ProductoDAO;
 import entity.UbicacionEntity;
 import entity.UbicacionId;
 import enumeration.EstadoPedido;
 
+@SuppressWarnings("unused")
 public class test_hibernate2 {
 
 	public static void main(String[] args) {
@@ -51,7 +51,7 @@ public class test_hibernate2 {
 		p.getDetalle().add(dp2);
 		p.createMe();*/
 		
-		/*String calle;
+		String calle;
 		int bloque = 1;
 		int estanteria = 1;
 		int estante = 1;
@@ -67,7 +67,7 @@ public class test_hibernate2 {
 		 * 6 hasta 7 -> F
 		 * 7 hasta 8 -> G
 		 * */
-		/*for (bloque = 7 ; bloque <= 8; bloque++)
+		for (bloque = 7 ; bloque <= 8; bloque++)
 		{
 			for (estanteria = 1; estanteria <6; estanteria++)
 			{
@@ -79,7 +79,7 @@ public class test_hibernate2 {
 						UbicacionId uid = new UbicacionId();
 						uid.setBloque(bloque);
 						uid.setCalle("G");
-						uid.setCantidadActual(0);
+						ue.setCantidadActual(0);
 						uid.setEstante(estante);
 						uid.setEstanteria(estanteria);
 						uid.setPosicion(posicion);
@@ -88,7 +88,7 @@ public class test_hibernate2 {
 					}
 				}
 			}
-		}*/
+		}
 		
 		
 	}

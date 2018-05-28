@@ -1,5 +1,7 @@
 package business;
 
+import dto.MovimientoCCDTO;
+
 public class MovimientoCC {
 
 	private float monto;
@@ -34,6 +36,15 @@ public class MovimientoCC {
 
 	public void setFacturaAplicada(Factura facturaAplicada) {
 		this.facturaAplicada = facturaAplicada;
+	}
+
+	public MovimientoCCDTO toDTO() {
+		MovimientoCCDTO mccdto = new MovimientoCCDTO();
+		mccdto.setMonto(this.monto);
+		mccdto.setSigno(this.signo);
+		if (this.facturaAplicada != null)
+			mccdto.setFacturaAplicada(this.facturaAplicada.toDTO());
+		return mccdto;
 	}
 	
 	

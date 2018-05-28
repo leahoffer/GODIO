@@ -5,9 +5,9 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import dto.ClienteDTO;
-import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
+import dto.UbicacionDTO;
 import exception.ClienteException;
 import exception.ProductoException;
 
@@ -24,6 +24,11 @@ public interface TDABusiness extends Remote {
 	public abstract void modificarCliente(ClienteDTO c) throws RemoteException, ClienteException;
 
 	public abstract ProductoDTO mostrarProducto(String codbarras) throws RemoteException;
+
+	public abstract List<UbicacionDTO> traerUbicaciones() throws RemoteException;
+
+	public abstract void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad,
+			String responsable) throws RemoteException;
 
 	
 			

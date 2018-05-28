@@ -2,6 +2,8 @@ package business;
 
 import java.util.Date;
 
+import dto.LoteDTO;
+
 public class Lote {
 
 	private String numero;
@@ -36,6 +38,15 @@ public class Lote {
 	}
 	public void setPrecioventa(float precioventa) {
 		this.precioventa = precioventa;
+	}
+	public LoteDTO toDTO() {
+		LoteDTO ldto = new LoteDTO();
+		ldto.setNumero(this.numero);
+		ldto.setPrecio(this.proveedor.getPrecio());
+		ldto.setPrecioventa(this.precioventa);
+		ldto.setProveedor(this.proveedor.getNombreProv());
+		ldto.setVencimiento(this.vencimiento);
+		return ldto;
 	}
 	
 	

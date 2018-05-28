@@ -1,8 +1,12 @@
 package business;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import dao.ProductoDAO;
+import dto.ProductoDTO;
+import dto.UbicacionDTO;
 import enumeration.EstadoProducto;
 import enumeration.Presentacion;
 
@@ -121,6 +125,47 @@ public class Producto{
 
 	public void setUbicaciones(List<Ubicacion> ubicaciones) {
 		this.ubicaciones = ubicaciones;
+	}
+
+
+	//PRIMERA VEZ QUE USO ITERATOR TENGO MIEDO
+	public void sacarUbicacion(Ubicacion u) {
+		Iterator<Ubicacion> iter = this.ubicaciones.iterator();
+		while(iter.hasNext())
+		{
+			Ubicacion ub = iter.next();
+			if (u.getCalle().equals(ub.getCalle()) && u.getBloque()==ub.getBloque() && u.getEstante()==ub.getEstante() && u.getEstanteria()==ub.getEstanteria() && u.getPosicion()==ub.getPosicion())
+				iter.remove();
+		}
+		//VALIDAR BIEN. El update que está abajo llama al createOrUpdate. Actualizará la List de ubicaciones? :(
+		this.updateMe();
+	}
+
+	public void updateMe() {
+		ProductoDAO.getInstance().createOrUpdate(this);
+		
+	}
+
+	public ProductoDTO toDTO() {
+		ProductoDTO prdto = new ProductoDTO();
+		List<UbicacionDTO> udtos = new ArrayList<UbicacionDTO>();
+		prdto.setCantAComprar(this.cantAComprar);
+		prdto.setCantPosicion(this.cantPosicion);
+		prdto.setCodBarras(this.codBarras);
+		prdto.setDescripcion(this.descripcion);
+		prdto.setEstado(this.estado.toString());
+		prdto.setLote(this.lote.toDTO());
+		prdto.setMarca(this.marca);
+		prdto.setPrecio(this.precio);
+		prdto.setPresentacion(this.presentacion.toString());
+		prdto.setTamaño(this.tamaño);
+		prdto.setUnidad(this.unidad);
+		for(Ubicacion u : this.ubicaciones)
+		{
+			udtos.add(u.toDTO());
+		}
+		prdto.setUbicaciones(udtos);
+		return prdto;
 	}
 	
 	

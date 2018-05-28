@@ -13,9 +13,11 @@ import dto.DetallePedidoDTO;
 import dto.MovimientoCCDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
+import dto.UbicacionDTO;
 import exception.ClienteException;
 import exception.ProductoException;
 
+@SuppressWarnings("unused")
 public class test {
 
 	public static void main(String[] args) throws RemoteException, ProductoException {
@@ -29,6 +31,7 @@ public class test {
 		System.out.println("Presione 3 para Traer Productos");
 		System.out.println("Presione 4 para Modificar Cliente de Cuit1");
 		System.out.println("Presione 5 para Crear un pedido");
+		System.out.println("Presione 6 para Agregar un movimiento de stock del producto CodBarra1");
 		String entradaTeclado = "";
 
         Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
@@ -167,6 +170,12 @@ public class test {
 				
 				
 				
+			}
+			if (entradaTeclado.equals("6"))
+			{
+				BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 35, "Responsable");
+				//BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
+				//BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
 			}
 			
 	}

@@ -5,9 +5,9 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import dto.ClienteDTO;
-import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
+import dto.UbicacionDTO;
 import exception.ClienteException;
 import exception.ProductoException;
 import tda.TDABusiness;
@@ -75,6 +75,16 @@ public class BusinessDelegate implements TDABusiness {
 	public ProductoDTO mostrarProducto(String codbarras) throws RemoteException {
 		// TODO Auto-generated method stub
 		return RemoteObject.mostrarProducto(codbarras);
+	}
+
+	public List<UbicacionDTO> traerUbicaciones() throws RemoteException {
+		// TODO Auto-generated method stub
+		return RemoteObject.traerUbicaciones();
+	}
+
+	public void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad, String responsable) throws RemoteException{
+		// TODO Auto-generated method stub
+		RemoteObject.agregarMovimientoStock(codbarra, tipoajuste, motivo, cantidad, responsable);
 	}
 
 }

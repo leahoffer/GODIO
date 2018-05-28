@@ -12,10 +12,10 @@ import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
-import dao.ProductoDAO;
+import dto.UbicacionDTO;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
-
+@SuppressWarnings("unused")
 public class Almacen {
 
 	private static Almacen instance;
@@ -121,41 +121,146 @@ public class Almacen {
 		Ubicacion resultado = AlmacenDAO.getInstance().traerUbicacion(u);
 		return resultado;
 	}
+	
+	public List<UbicacionDTO> mostrarUbicaciones() {
+		// TODO Auto-generated method stub
+		List<Ubicacion> ubicaciones = this.traerUbicaciones();
+		List<UbicacionDTO> ubicacionesdto = new ArrayList<UbicacionDTO>();
+		for (Ubicacion u:ubicaciones)
+		{
+			UbicacionDTO udto = new UbicacionDTO();
+			udto.setBloque(u.getBloque());
+			udto.setCalle(u.getCalle());
+			udto.setCantidadActual(u.getCantidadActual());
+			udto.setEstante(u.getEstante());
+			udto.setEstanteria(u.getEstanteria());
+			udto.setPosicion(u.getPosicion());
+			ubicacionesdto.add(udto);
+		}
+		return ubicacionesdto;
+	}
+
+	private List<Ubicacion> traerUbicaciones() {
+		// TODO Auto-generated method stub
+		return AlmacenDAO.getInstance().traerTodasLasUbicaciones();
+	}
 
 	public List<Ubicacion> buscarUbicacionesParaDespachar(Pedido p) {
 		List<Ubicacion> us = new ArrayList<Ubicacion>();
 		for (DetallePedido dp : p.getDetalle())
 		{
-			List<Ubicacion> ubicaciones = ProductoDAO.getInstance().traerUbicacionesDelProducto(dp.getProducto());
+			//Obtengo todas las ubicaciones que tiene el producto
+			List<Ubicacion> ubicaciones = dp.getProducto().getUbicaciones();
+			int aux = 0;
+			//Por cada ubicación encontrada arriba
 			for (Ubicacion u : ubicaciones)
 			{
-				if(u.getCantidadActual() >= dp.getCantidad())
+				//Mientras no haya encontrado el total que me pide el DetallePedido...
+				while (aux < dp.getCantidad())
 				{
-					int cantidad = u.getCantidadActual();
-					u.setCantidadActual(cantidad-dp.getCantidad());;
-					if(u.getCantidadActual()==0)
+					//Si la Ubicacion que estoy analizando tiene el total de lo que me falta sacar, saco todo (si me queda en 0 desasocio) y aumento el aux en la cantidad sacada
+					if(u.getCantidadActual() >= dp.getCantidad()-aux)
 					{
+						int cantidadPosicion = u.getCantidadActual();
+						//Primer ronda, aux=0. Rondas subsiguientes, aux va a ser lo que saqué de otras ubicaciones...
+						int cantidadASacar = (dp.getCantidad()-aux);
+						//Actualizo la cantidadActual, restando lo que necesito sacar
+						u.setCantidadActual(cantidadPosicion-cantidadASacar);
+						if(u.getCantidadActual()==0)
+						{
+							dp.getProducto().sacarUbicacion(u);
+						}
+						u.update();
+						us.add(u);
+						aux = aux + cantidadASacar;
+					}
+					//Si la Ubicacion que estoy analizando no tiene el total de lo que me falta sacar, saco todo lo que hay en la ubicación, desasocio y aumento el aux en el total de lo que tenía la posición
+					else
+					{
+						us.add(u);
+						aux = aux + u.getCantidadActual();
+						u.setCantidadActual(0);
+						u.update();
 						dp.getProducto().sacarUbicacion(u);
 					}
-					MovimientoStock ms = new MovimientoStock();
-					ms.setCantidad(dp.getCantidad());
-					ms.setMotivo("Venta");
-					ms.setTipo(TipoMovimientoStock.Venta);
-					ms.setProducto(dp.getProducto());
-					ms.setResponsable("N/A");
-					ms.save();
-					us.add(u);
-				}
-				else
-				{
-					
 				}
 			}
+			MovimientoStock ms = new MovimientoStock();
+			ms.setCantidad(dp.getCantidad());
+			ms.setMotivo("Venta");
+			ms.setTipo(TipoMovimientoStock.Venta);
+			ms.setProducto(dp.getProducto());
+			ms.setResponsable("N/A");
+			ms.save();
+		}
+		return us;
+	}
+
+
+	public void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad,
+			String responsable) {
+		// TODO Auto-generated method stub
+		MovimientoStock ms= new MovimientoStock();
+		Producto p = Controller.getInstance().buscarProducto(codbarra);
+		ms.setCantidad(cantidad);
+		ms.setMotivo(motivo);
+		ms.setProducto(p);
+		ms.setResponsable(responsable);
+		ms.setTipo(TipoMovimientoStock.valueOf(tipoajuste));
+		this.movimientos.add(ms);
+		ms.save();
+		if (ms.getTipo().toString().equalsIgnoreCase("AjustePos"))
+		{
+			if (p.getUbicaciones().isEmpty())
+			{
+				Ubicacion u= this.traerPrimeraUbicacionVacia();
+				if (cantidad<p.getCantPosicion())
+				{ 
+					u.setCantidadActual(cantidad);
+					p.getUbicaciones().add(u);
+					p.updateMe();
+				}
+				else
+				{ 
+					u.setCantidadActual(p.getCantPosicion());
+					int cantaux = cantidad - p.getCantPosicion();
+					p.getUbicaciones().add(u);
+					p.updateMe();
+					
+					while (cantaux>=p.getCantPosicion())
+					{ 
+						Ubicacion uaux =this.traerPrimeraUbicacionVacia();
+						uaux.setCantidadActual(p.getCantPosicion());
+						cantaux = cantaux - p.getCantPosicion();
+						p.getUbicaciones().add(uaux);
+						p.updateMe();
+					}
+					if (cantaux>0)
+					{ 	Ubicacion uaux =this.traerPrimeraUbicacionVacia();
+						uaux.setCantidadActual(p.getCantPosicion());
+						u.setCantidadActual(cantaux);
+						p.getUbicaciones().add(uaux);
+						p.updateMe();
+					}
+
+					
+				}
+				
+			}
+			else
+			{ 
+				
+			}
+		}
+		else
+		{ 
+			
 		}
 	}
 
-	public void saveMocimientoStock(MovimientoStock movimientoStock) {
-		AlmacenDAO.getInstance().saveMovimientoStock(movimientoStock);
+	private Ubicacion traerPrimeraUbicacionVacia() {
+		// TODO Auto-generated method stub
+		return AlmacenDAO.getInstance().traerPrimeraUbicacionVacia();
 	}
 
 	

@@ -1,6 +1,7 @@
 package business;
 
 import controller.Almacen;
+import dao.AlmacenDAO;
 import enumeration.TipoMovimientoStock;
 
 public class MovimientoStock {
@@ -56,7 +57,7 @@ public class MovimientoStock {
 	}
 
 	public void save() {
-		Almacen.getInstance().saveMocimientoStock(this);
+		AlmacenDAO.getInstance().saveMovimientoStock(this);
 	}
 	
 	
