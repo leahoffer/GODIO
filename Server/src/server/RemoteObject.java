@@ -71,6 +71,17 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		Almacen.getInstance().agregarAjusteStock(producto, tipo, u, motivo, cantidad, responsable);
 	}
 
+	@Override
+	public void autorizarPedido(int nropedido) throws RemoteException {
+		// TODO Auto-generated method stub
+		controlador.autorizarPedido(nropedido);
+	}
+
+	@Override
+	public String validarCreditoCliente(int nropedido) throws RemoteException {
+		// TODO Auto-generated method stub
+		return controlador.validarCreditoCliente(nropedido);
+	}
 
 
 	

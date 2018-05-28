@@ -279,7 +279,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = "+u.getCalle()+" AND ue.idUbicacion.bloque = "+u.getBloque()+" AND ue.idUbicacion.estante = "+u.getEstante()+" AND ue.idUbicacion.estanteria = "+u.getEstanteria()+" AND ue.idUbicacion.posicion = "+u.getPosicion()).uniqueResult();
+			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = '"+u.getCalle()+"' AND ue.idUbicacion.bloque = "+Integer.toString(u.getBloque())+" AND ue.idUbicacion.estante = "+Integer.toString(u.getEstante())+" AND ue.idUbicacion.estanteria = "+Integer.toString(u.getEstanteria())+" AND ue.idUbicacion.posicion = "+Integer.toString(u.getPosicion())).uniqueResult();
 			Ubicacion ub = this.UbicacionToNegocio(ue);
 			return ub;
 		}

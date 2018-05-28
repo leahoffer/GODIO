@@ -88,6 +88,16 @@ public class BusinessDelegate implements TDABusiness {
 		RemoteObject.agregarAjusteStock(producto, tipo, u, motivo, cantidad, responsable);
 	}
 
+	public void autorizarPedido(int nropedido) throws RemoteException {
+		// TODO Auto-generated method stub
+		RemoteObject.autorizarPedido(nropedido);
+	}
+
+	public String validarCreditoCliente(int nropedido) throws RemoteException {
+		// TODO Auto-generated method stub
+		return RemoteObject.validarCreditoCliente(nropedido);
+	}
+
 
 
 }

@@ -252,17 +252,22 @@ public class Controller {
 		return pdtos;
 	}
 	
-	public boolean validarCreditoCliente(ClienteDTO cdto, PedidoDTO pdto) throws ClienteException
+	public String validarCreditoCliente(int nropedido) 
 	{
-		Cliente c = ClienteDAO.getInstance().findByCuit(cdto.getCuit());
-		if (c.excedeLimite(pdto.getTotal_bruto()))
-			return false;
-		return true;
+		Pedido p = PedidoDAO.getInstance().findByNro(nropedido);
+		Cliente c= p.getCliente();
+		if(!c.excedeLimite(p.getTotal_bruto()))
+			return "El Cliente "+c.getRazon_social()+" CUIT "+c.getCuit()+" tiene límite suficiente para hacer este pedido. Autorizar (SI/NO)?";
+		else
+			return "El Cliente "+c.getRazon_social()+" CUIT "+c.getCuit()+" no tiene límite suficiente para hacer este pedido. Autorizar (SI/NO)?";
 	}
 	
 	public void autorizarPedido (int nro)
 	{
 		Pedido p = PedidoDAO.getInstance().findByNro(nro);
+	
+		
+		
 		if (validarCompletarPedido(p))
 		{
 			p.setEstado(EstadoPedido.PendienteDespacho);

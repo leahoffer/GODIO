@@ -31,8 +31,8 @@ public class DetallePedido {
 		this.producto = producto;
 	}
 
-	public float calcularSubTotal(){
-		return this.cantidad*this.getProducto().getPrecio();
+	public void calcularSubTotal(){
+		this.subtotal= this.cantidad*this.getProducto().getPrecio();
 	}
 	public DetallePedidoDTO toDTO() {
 		DetallePedidoDTO dpdto = new DetallePedidoDTO();

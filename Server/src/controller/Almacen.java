@@ -320,21 +320,35 @@ public class Almacen {
 		u.setEstanteria(udto.getEstanteria());
 		u.setPosicion(udto.getPosicion());
 		
-		u= AlmacenDAO.getInstance().traerUbicacion(u);
-		
 		MovimientoStock ms= new MovimientoStock();
 		Producto p = Controller.getInstance().buscarProducto(producto);
-		ms.setCantidad(cantidad-u.getCantidadActual());
-		ms.setMotivo(motivo);
-		ms.setProducto(p);
-		ms.setResponsable(responsable);
-		ms.setTipo(TipoMovimientoStock.valueOf(tipo));
-		this.movimientos.add(ms);
-		ms.save();
 		
-		u.setCantidadActual(cantidad);
-		p.getUbicaciones().add(u);
-		p.updateMe();
+			for (Ubicacion ub:p.getUbicaciones())
+			{
+				if (u.soyLaUbicacion(ub))
+				{ 
+					if (tipo.equalsIgnoreCase("AjustePos"))
+					{
+						ms.setCantidad(cantidad-ub.getCantidadActual());
+					}
+					else
+					{
+						ms.setCantidad(ub.getCantidadActual()-cantidad);
+					}
+					
+					ms.setMotivo(motivo);
+					ms.setProducto(p);
+					ms.setResponsable(responsable);
+					ms.setTipo(TipoMovimientoStock.valueOf(tipo));
+					this.movimientos.add(ms);
+					ms.save();
+					
+					ub.setCantidadActual(cantidad);
+					p.updateMe();
+				}
+			}
+		
+	
 		
 	}
 

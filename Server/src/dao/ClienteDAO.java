@@ -48,7 +48,6 @@ public class ClienteDAO {
 			s.getTransaction().commit();
 			System.out.println("Cliente guardado!");
 			s.flush();
-			s.close();
 		}
 		catch (Exception e)
 		{
@@ -68,7 +67,6 @@ public class ClienteDAO {
 			s.update(ce);
 			s.getTransaction().commit();
 			s.flush();
-			s.close();
 		}
 		catch (Exception e)
 		{
