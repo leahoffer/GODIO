@@ -3,6 +3,12 @@ package business;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.BonificacionDTO;
+import dto.CondicionDTO;
+import dto.CuentaCorrienteDTO;
+import dto.DescuentoDTO;
+import dto.MovimientoCCDTO;
+
 public class CuentaCorriente {
 
 	private int id;
@@ -51,6 +57,39 @@ public class CuentaCorriente {
 	public void agregarMovimiento(float monto, boolean signo) {
 		MovimientoCC mcc = new MovimientoCC(monto, signo);
 		this.movimientos.add(mcc);
+	}
+
+	public CuentaCorrienteDTO toDTO() {
+		CuentaCorrienteDTO ccdto = new CuentaCorrienteDTO();
+		List<MovimientoCCDTO> mccdtos = new ArrayList<MovimientoCCDTO>();
+		List<CondicionDTO> cdtos = new ArrayList<CondicionDTO>();
+		ccdto.setId(this.id);
+		ccdto.setLimite(this.limite);
+		ccdto.setSaldo(this.saldo);
+		for (MovimientoCC mcc : this.movimientos)
+		{
+			mccdtos.add(mcc.toDTO());
+		}
+		ccdto.setMovimientos(mccdtos);
+		for (Condicion c : this.condiciones)
+		{
+			if (c instanceof Bonificacion)
+			{
+				BonificacionDTO bdto = new BonificacionDTO();
+				bdto.setCondicion(c.getCondicion());
+				bdto.setMonto(((Bonificacion) c).getMonto());
+				cdtos.add(bdto);
+			}
+			else if (c instanceof Descuento)
+			{
+				DescuentoDTO ddto = new DescuentoDTO();
+				ddto.setCondicion(c.getCondicion());
+				ddto.setPorcentaje(((Descuento) c).getPorcentaje());
+				cdtos.add(ddto);
+			}
+		}
+		ccdto.setCondiciones(cdtos);
+		return ccdto;
 	}
 	
 	

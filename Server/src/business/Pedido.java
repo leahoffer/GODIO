@@ -5,6 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import dao.PedidoDAO;
+import dto.BonificacionDTO;
+import dto.CondicionDTO;
+import dto.DescuentoDTO;
+import dto.DetallePedidoDTO;
+import dto.FacturaDTO;
+import dto.PedidoDTO;
 import enumeration.EstadoPedido;
 
 public class Pedido {
@@ -153,6 +159,51 @@ public class Pedido {
 	public void saveOrUpdate() {
 		// TODO Auto-generated method stub
 		PedidoDAO.getInstance().createOrUpdate(this);
+	}
+
+	public PedidoDTO toDTO() {
+		PedidoDTO pdto = new PedidoDTO();
+		List<DetallePedidoDTO> dpdtos = new ArrayList<DetallePedidoDTO>();
+		List<CondicionDTO> cdtos = new ArrayList<CondicionDTO>();
+		pdto.setAclaracionEspecial(this.aclaracionEspecial);
+		pdto.setCliente(this.cliente.toDTO());
+		pdto.setDespachable(this.despachable);
+		pdto.setDir_entrega(this.dir_entrega);
+		pdto.setEstado(this.estado.toString());
+		pdto.setFecha(this.fecha);
+		pdto.setFecha_despacho(this.fecha_despacho);
+		pdto.setMotivoEstado(this.motivoEstado);
+		pdto.setNroPedido(this.nroPedido);
+		pdto.setTotal_bruto(this.total_bruto);
+		for (DetallePedido dp : this.detalle)
+		{
+			dpdtos.add(dp.toDTO());
+		}
+		for (Condicion c : this.condicionesAplicadas)
+		{
+			if (c instanceof Bonificacion)
+			{
+				BonificacionDTO bdto = new BonificacionDTO();
+				bdto.setCondicion(c.getCondicion());
+				bdto.setMonto(((Bonificacion) c).getMonto());
+				cdtos.add(bdto);
+			}
+			else if (c instanceof Descuento)
+			{
+				DescuentoDTO ddto = new DescuentoDTO();
+				ddto.setCondicion(c.getCondicion());
+				ddto.setPorcentaje(((Descuento) c).getPorcentaje());
+				cdtos.add(ddto);
+			}
+		}
+		pdto.setDetalle(dpdtos);
+		pdto.setCondicionesAplicadas(cdtos);
+		if (this.factura != null)
+		{
+			FacturaDTO fdto = this.factura.toDTO();
+			pdto.setFactura(fdto);
+		}
+		return pdto;
 	}
 
 	

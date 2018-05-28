@@ -1,5 +1,7 @@
 package business;
 
+import dto.ItemFacturaDTO;
+
 public class ItemFactura {
 
 	private float subtotal;
@@ -33,6 +35,14 @@ public class ItemFactura {
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+
+	public ItemFacturaDTO toDTO() {
+		ItemFacturaDTO ifdto = new ItemFacturaDTO();
+		ifdto.setCantidad(this.cantidad);
+		ifdto.setProducto(this.producto.toDTO());
+		ifdto.setSubtotal(this.subtotal);
+		return ifdto;
 	}
 	
 	

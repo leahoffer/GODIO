@@ -3,6 +3,7 @@ package business;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.FacturaDTO;
 import enumeration.TipoFactura;
 
 public class Factura {
@@ -52,6 +53,20 @@ public class Factura {
 	}
 	public void setCancelado(float cancelado) {
 		this.cancelado = cancelado;
+	}
+	public FacturaDTO toDTO() {
+		FacturaDTO fdto = new FacturaDTO();
+		fdto.setCancelado(this.cancelado);
+		//Lo comento porque me va a entrar en loop infinito esto es horrible
+		//fdto.setCliente(this.cliente.toDTO());
+		fdto.setNro(this.nro);
+		fdto.setTipo(this.tipo);
+		fdto.setTotal(this.total);
+		for (ItemFactura ifa : this.items)
+		{
+			fdto.getItems().add(ifa.toDTO());
+		}
+		return fdto;
 	}
 	
 	

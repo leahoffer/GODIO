@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import dao.ProductoDAO;
+import dto.ProductoDTO;
+import dto.UbicacionDTO;
 import enumeration.EstadoProducto;
 import enumeration.Presentacion;
 
@@ -142,6 +144,28 @@ public class Producto{
 	public void updateMe() {
 		ProductoDAO.getInstance().createOrUpdate(this);
 		
+	}
+
+	public ProductoDTO toDTO() {
+		ProductoDTO prdto = new ProductoDTO();
+		List<UbicacionDTO> udtos = new ArrayList<UbicacionDTO>();
+		prdto.setCantAComprar(this.cantAComprar);
+		prdto.setCantPosicion(this.cantPosicion);
+		prdto.setCodBarras(this.codBarras);
+		prdto.setDescripcion(this.descripcion);
+		prdto.setEstado(this.estado.toString());
+		prdto.setLote(this.lote.toDTO());
+		prdto.setMarca(this.marca);
+		prdto.setPrecio(this.precio);
+		prdto.setPresentacion(this.presentacion.toString());
+		prdto.setTamaño(this.tamaño);
+		prdto.setUnidad(this.unidad);
+		for(Ubicacion u : this.ubicaciones)
+		{
+			udtos.add(u.toDTO());
+		}
+		prdto.setUbicaciones(udtos);
+		return prdto;
 	}
 	
 	

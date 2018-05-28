@@ -1,6 +1,7 @@
 package business;
 
 import dao.ClienteDAO;
+import dto.ClienteDTO;
 
 public class Cliente {
 
@@ -114,6 +115,18 @@ public class Cliente {
 	public void saveOrUpdate() {
 		// TODO Auto-generated method stub
 		ClienteDAO.getInstance().createOrUpdate(this);
+	}
+
+	public ClienteDTO toDTO() {
+		ClienteDTO cdto = new ClienteDTO();
+		cdto.setCondicionEsp(this.condicionEsp);
+		cdto.setCuentaCorriente(this.cuentaCorriente.toDTO());
+		cdto.setCuit(this.cuit);
+		cdto.setDireccion(this.Direccion);
+		cdto.setR_inscripto(this.r_inscripto);
+		cdto.setRazon_social(this.razon_social);
+		cdto.setTelefono(this.telefono);
+		return cdto;
 	}
 	
 }

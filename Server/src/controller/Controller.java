@@ -18,6 +18,7 @@ import dao.ClienteDAO;
 import dao.PedidoDAO;
 import dao.ProductoDAO;
 import dto.ClienteDTO;
+import dto.CuentaCorrienteDTO;
 import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
@@ -426,5 +427,21 @@ public class Controller {
 		
 	}
 	
-	
+	public List<PedidoDTO> listarPedidosPendientesDespacho(){
+		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
+		List<Pedido> pps = PedidoDAO.getInstance().traerPedidosPendientesDespacho();
+		for (Pedido p : pps)
+		{
+			PedidoDTO pdto = p.toDTO();
+			pdtos.add(pdto);
+		}
+		return pdtos;
+	}
+
+	private List<Pedido> traerPedidosPendientesDespacho() {
+		return PedidoDAO.getInstance().traerPedidosPendientesDespacho();
+
+	}
 }
+
+	
