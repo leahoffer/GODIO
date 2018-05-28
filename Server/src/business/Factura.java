@@ -68,6 +68,18 @@ public class Factura {
 		}
 		return fdto;
 	}
+	public float calcularTotal() {
+		float total = 0;
+		for (ItemFactura ifa : this.items)
+		{
+			total = total + ifa.getSubtotal();
+		}
+		return total;
+	}
+	public void saveMe() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

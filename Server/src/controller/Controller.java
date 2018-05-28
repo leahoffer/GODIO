@@ -9,6 +9,8 @@ import business.Cliente;
 import business.Condicion;
 import business.CuentaCorriente;
 import business.DetallePedido;
+import business.Factura;
+import business.ItemFactura;
 import business.OrdenPedido;
 import business.Pedido;
 import business.Producto;
@@ -28,6 +30,7 @@ import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
 import enumeration.EstadoProducto;
 import enumeration.Presentacion;
+import enumeration.TipoFactura;
 import exception.ClienteException;
 import exception.ProductoException;
 
@@ -423,8 +426,25 @@ public class Controller {
 	}
 
 	private void facturarPedido(Pedido p) {
-		// TODO Auto-generated method stub
-		
+		Factura f = new Factura();
+		List<ItemFactura> ifas = new ArrayList<ItemFactura>();
+		f.setCliente(p.getCliente());
+		if (p.getCliente().isR_inscripto())
+			f.setTipo(TipoFactura.A);
+		else
+			f.setTipo(TipoFactura.B);
+		for (DetallePedido dp : p.getDetalle())
+		{
+			ItemFactura ifa = new ItemFactura();
+			ifa.setCantidad(dp.getCantidad());
+			ifa.setProducto(dp.getProducto());
+			ifa.setSubtotal(ifa.getProducto().getPrecio()*ifa.getCantidad());
+			ifas.add(ifa);
+		}
+		f.setItems(ifas);
+		f.setTotal(f.calcularTotal());
+		p.setFactura(f);
+		p.update();		
 	}
 
 
