@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Movimientos Reserva")
+@Table(name="Movimientos_Reserva")
 public class MovimientoReservaEntity {
 
 	@Id

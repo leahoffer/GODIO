@@ -173,7 +173,9 @@ public class test {
 			}
 			if (entradaTeclado.equals("6"))
 			{
-				BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
+				BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 35, "Responsable");
+				//BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
+				//BusinessDelegate.getInstance().agregarMovimientoStock("CodBarra1", "AjustePos", "Motivo Movimiento", 150, "Responsable");
 			}
 			
 	}

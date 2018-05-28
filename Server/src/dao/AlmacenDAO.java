@@ -346,6 +346,22 @@ public class AlmacenDAO {
 		u.setPosicion(ue.getIdUbicacion().getPosicion());
 		return u;
 	}
+	public Ubicacion traerPrimeraUbicacionVacia() {
+		// TODO Auto-generated method stub
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session s = sf.openSession();
+		s.beginTransaction();
+		List<UbicacionEntity> lista = s.createQuery("from UbicacionEntity ue where ue.cantidadActual=0").list();
+		List<Ubicacion> listafinal = new ArrayList<Ubicacion>();			
+		for (UbicacionEntity ue: lista)
+		{ 
+			Ubicacion u = this.UbicacionToNegocio(ue);
+			listafinal.add(u);
+			
+		}
+		return listafinal.get(0);
+		
+	}
 	
 
 
