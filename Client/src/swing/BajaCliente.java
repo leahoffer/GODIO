@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
-
+@SuppressWarnings("unused")
 public class BajaCliente {
 	
 	private ventanaPrincipal ventana;

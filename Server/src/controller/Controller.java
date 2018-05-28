@@ -30,6 +30,7 @@ import enumeration.Presentacion;
 import exception.ClienteException;
 import exception.ProductoException;
 
+@SuppressWarnings("unused")
 public class Controller {
 
 	private static Controller instance;
@@ -381,11 +382,11 @@ public class Controller {
 	}
 
 
-	public void agregarMovimientoStock(String codBarra, UbicacionDTO udto, String responsable, int cantidad)
+	/*public void agregarMovimientoStock(String codBarra, UbicacionDTO udto, String responsable, int cantidad)
 	{
 		Ubicacion u = Almacen.getInstance().traerUbicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());
 		
-	}
+	}*/
 
 	public ProductoDTO mostrarProducto(String codbarras) {
 		// TODO Auto-generated method stub

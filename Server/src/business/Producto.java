@@ -1,8 +1,10 @@
 package business;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import dao.ProductoDAO;
 import enumeration.EstadoProducto;
 import enumeration.Presentacion;
 
@@ -121,6 +123,25 @@ public class Producto{
 
 	public void setUbicaciones(List<Ubicacion> ubicaciones) {
 		this.ubicaciones = ubicaciones;
+	}
+
+
+	//PRIMERA VEZ QUE USO ITERATOR TENGO MIEDO
+	public void sacarUbicacion(Ubicacion u) {
+		Iterator<Ubicacion> iter = this.ubicaciones.iterator();
+		while(iter.hasNext())
+		{
+			Ubicacion ub = iter.next();
+			if (u.getCalle().equals(ub.getCalle()) && u.getBloque()==ub.getBloque() && u.getEstante()==ub.getEstante() && u.getEstanteria()==ub.getEstanteria() && u.getPosicion()==ub.getPosicion())
+				iter.remove();
+		}
+		//VALIDAR BIEN. El update que está abajo llama al createOrUpdate. Actualizará la List de ubicaciones? :(
+		this.updateMe();
+	}
+
+	public void updateMe() {
+		ProductoDAO.getInstance().createOrUpdate(this);
+		
 	}
 	
 	

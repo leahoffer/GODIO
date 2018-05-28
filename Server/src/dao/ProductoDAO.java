@@ -10,7 +10,6 @@ import business.Lote;
 import business.Producto;
 import business.Proveedor;
 import business.Ubicacion;
-import entity.ClienteEntity;
 import entity.LoteEntity;
 import entity.ProductoEntity;
 import entity.UbicacionEntity;
@@ -79,11 +78,11 @@ public class ProductoDAO {
 			UbicacionId uid = new UbicacionId();
 			uid.setBloque(u.getBloque());
 			uid.setCalle(u.getCalle());
-			uid.setCantidadActual(u.getCantidadActual());
 			uid.setEstante(u.getEstante());
 			uid.setEstanteria(u.getEstanteria());
 			uid.setPosicion(u.getPosicion());
 			ue.setIdUbicacion(uid);
+			ue.setCantidadActual(u.getCantidadActual());
 			ues.add(ue);
 		}
 		pe.setUbicaciones(ues);
@@ -147,7 +146,7 @@ public class ProductoDAO {
 			Ubicacion u = new Ubicacion();
 			u.setBloque(ue.getIdUbicacion().getBloque());
 			u.setCalle(ue.getIdUbicacion().getCalle());
-			u.setCantidadActual(ue.getIdUbicacion().getCantidadActual());
+			u.setCantidadActual(ue.getCantidadActual());
 			u.setEstante(ue.getIdUbicacion().getEstante());
 			u.setEstanteria(ue.getIdUbicacion().getEstanteria());
 			u.setPosicion(ue.getIdUbicacion().getPosicion());
@@ -173,4 +172,7 @@ public class ProductoDAO {
 			return null;
 		}
 	}
+
+	
+	
 }

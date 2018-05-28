@@ -12,7 +12,6 @@ public class UbicacionId implements Serializable{
 	private int estanteria;
 	private int estante;
 	private int posicion;
-	private int cantidadActual;
 	public String getCalle() {
 		return calle;
 	}
@@ -43,12 +42,7 @@ public class UbicacionId implements Serializable{
 	public void setPosicion(int posicion) {
 		this.posicion = posicion;
 	}
-	public int getCantidadActual() {
-		return cantidadActual;
-	}
-	public void setCantidadActual(int cantidadActual) {
-		this.cantidadActual = cantidadActual;
-	}
+
 	
 	
 	

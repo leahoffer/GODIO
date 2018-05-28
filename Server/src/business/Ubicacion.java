@@ -1,5 +1,7 @@
 package business;
 
+import dao.AlmacenDAO;
+
 public class Ubicacion {
 
 	private String calle;
@@ -43,6 +45,10 @@ public class Ubicacion {
 	}
 	public void setCantidadActual(int cantidadActual) {
 		this.cantidadActual = cantidadActual;
+	}
+	public void update() {
+		AlmacenDAO.getInstance().updateUbicacion(this);
+		
 	}
 	
 }

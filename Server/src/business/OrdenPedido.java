@@ -8,6 +8,7 @@ import controller.Almacen;
 import dao.AlmacenDAO;
 import enumeration.EstadoOP;
 
+@SuppressWarnings("unused")
 public class OrdenPedido {
 
 	private int nro;

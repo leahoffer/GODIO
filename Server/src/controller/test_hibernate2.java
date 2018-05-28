@@ -2,13 +2,13 @@ package controller;
 
 import java.util.Date;
 
-import business.*;
 import dao.AlmacenDAO;
 import dao.ProductoDAO;
 import entity.UbicacionEntity;
 import entity.UbicacionId;
 import enumeration.EstadoPedido;
 
+@SuppressWarnings("unused")
 public class test_hibernate2 {
 
 	public static void main(String[] args) {

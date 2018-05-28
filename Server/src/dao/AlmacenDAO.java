@@ -18,7 +18,6 @@ import entity.MovimientoStockEntity;
 import entity.OrdenPedidoEntity;
 import entity.ReservaEntity;
 import entity.UbicacionEntity;
-import entity.UbicacionId;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
 import hibernate.HibernateUtil;
@@ -132,7 +131,6 @@ public class AlmacenDAO {
 			OrdenPedidoEntity ope = (OrdenPedidoEntity) s.createQuery("from OrdenPedidoEntity ope where ope.producto.codBarras = p.codBarras AND ope.estado = 'Pendiente'").uniqueResult();
 			if (ope!=null)
 			{
-				List<MovimientoReserva> mrs = new ArrayList<MovimientoReserva>();
 				op.setCantidadPedida(ope.getCantidadPedida());
 				op.setEstado(EstadoOP.valueOf(ope.getEstado()));
 				op.setNro(ope.getNro());
@@ -245,20 +243,7 @@ public class AlmacenDAO {
 		}
 		
 	}
-	public Ubicacion traerUbicacion(Ubicacion u) {
-		try
-		{
-			Ubicacion resultado;
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session s = sf.openSession();
-			s.beginTransaction();
-			
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	
 	public void saveMovimientoStock(MovimientoStock movimientoStock) {
 		try
 		{
@@ -285,6 +270,43 @@ public class AlmacenDAO {
 		mse.setResponsable(ms.getResponsable());
 		mse.setTipo(ms.getTipo().toString());
 		return mse;
+	}
+	/*public Ubicacion traerUbicacion(Ubicacion u) {
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			UbicacionEntity ue = (UbicacionEntity) s.createQuery("from UbicacionEntity ue where ue.idUbicacion.calle = u.getCalle() AND ue.idubicacion.bloque = u.getBloque AND ue.idUbicacion.estente = u.getEstante() AND ue.idUbicacion.estanteria = u.getEstanteria() AND ue.idUbicacion.posicion = u.getPosicion").uniqueResult();
+			Ubicacion ub = new Ubicacion();
+			ub.set
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}*/
+	public void updateUbicacion(Ubicacion u) {
+		try
+		{
+			UbicacionEntity ue= new UbicacionEntity();
+			ue.getIdUbicacion().setCalle(u.getCalle());
+			ue.getIdUbicacion().setBloque(u.getBloque());
+			ue.getIdUbicacion().setEstante(u.getEstante());
+			ue.getIdUbicacion().setEstanteria(u.getEstanteria());
+			ue.getIdUbicacion().setPosicion(u.getPosicion());
+			ue.setCantidadActual(u.getCantidadActual());
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.update(ue);
+			s.flush();
+			s.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 

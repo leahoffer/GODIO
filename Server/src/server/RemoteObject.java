@@ -6,7 +6,6 @@ import java.util.List;
 
 import controller.Controller;
 import dto.ClienteDTO;
-import dto.DetallePedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
 import exception.ClienteException;
