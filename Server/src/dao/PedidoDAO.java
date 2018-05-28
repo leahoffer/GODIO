@@ -65,10 +65,8 @@ public class PedidoDAO {
 		pe.setEstado(ped.getEstado().toString());
 		if (pe.getFactura() != null)
 			pe.setFactura(facturaToEntity(ped.getFactura()));
-		java.sql.Date fecha = new java.sql.Date(ped.getFecha().getTime());
-		pe.setFecha(fecha);
-		java.sql.Date fechaDespacho = new java.sql.Date(ped.getFecha_despacho().getTime());
-		pe.setFecha_despacho(fechaDespacho);
+		pe.setFecha(ped.getFecha());
+		pe.setFecha_despacho(ped.getFecha_despacho());
 		pe.setMotivoEstado(ped.getMotivoEstado());
 		pe.setNroPedido(ped.getNroPedido());
 		pe.setTotal_bruto(ped.getTotal_bruto());
@@ -154,10 +152,8 @@ public class PedidoDAO {
 		p.setDespachable(pe.isDespachable());
 		p.setDir_entrega(pe.getDir_entrega());
 		p.setEstado(EstadoPedido.valueOf(pe.getEstado()));
-		java.util.Date fecha = new java.util.Date(pe.getFecha().getTime());
-		p.setFecha(fecha);
-		java.util.Date fechaDespacho = new java.util.Date(pe.getFecha_despacho().getTime());
-		p.setFecha_despacho(fechaDespacho);
+		p.setFecha(pe.getFecha());
+		p.setFecha_despacho(pe.getFecha_despacho());
 		p.setMotivoEstado(pe.getMotivoEstado());
 		p.setNroPedido(pe.getNroPedido());
 		p.setTotal_bruto(pe.getTotal_bruto());
