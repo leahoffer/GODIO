@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import business.DetallePedido;
+import business.MovimientoReserva;
 import business.MovimientoStock;
 import business.OrdenPedido;
 import business.Pedido;
@@ -361,6 +362,16 @@ public class Almacen {
 		
 	
 		
+	}
+
+	public Reserva convertirMovimientoReserva(MovimientoReserva mr, Producto p) {
+		Reserva r = new Reserva();
+		r.setCantidad(mr.getCantidad());
+		r.setCompleta(false);
+		r.setFecha(mr.getFecha());
+		r.setPedido(mr.getPedido());
+		r.setProducto(p);
+		return r;
 	}
 
 	
