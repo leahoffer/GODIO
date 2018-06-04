@@ -4,16 +4,22 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
 
-import dto.CuentaCorrienteDTO;
+import businessdelegate.BusinessDelegate;
+import dto.PedidoDTO;
 
 
 
@@ -21,14 +27,17 @@ import dto.CuentaCorrienteDTO;
 public class listaPedidos {
 
 	
-	private JPanel contentPane;
+private JPanel contentPane;
 private String rol;
 private listaPedidos vent;
 private JTextField saldo;
 private JTextField limite;
 private JFrame ventana;
 private JPanel panel2;
-private CuentaCorrienteDTO cuenta;
+private DefaultListModel<Integer> listaPedido;
+private List<PedidoDTO> pedidos;
+private PedidoDTO pedidoDTO;
+private JList itemList;
 
 public listaPedidos (){
 
@@ -50,13 +59,23 @@ public listaPedidos (){
 	contentPane = new JPanel();
     contentPane.setLayout(null);
     
-    contentPane.setBounds(0, 0, 300, 200);
+    contentPane.setBounds(0, 0, 300, 400);
     
-	cuenta = new CuentaCorrienteDTO();
+    
+    
+    try {
+	pedidos = BusinessDelegate.getInstance().listarPedidosPendientes();
+	} catch (RemoteException e1) {
+		// TODO Auto-generated catch block
+		JOptionPane.showMessageDialog(null, "Error de Conexión", "Error", JOptionPane.ERROR_MESSAGE);
+	}
+    
+    listaPedido = new DefaultListModel();
+    
 	
-	this.ventana = new JFrame("Cuenta Corriente");
+	this.ventana = new JFrame("Pedidos");
 	this.ventana.setFont(new Font("Tahoma", Font.BOLD, 11));
-	this.ventana.setPreferredSize(new Dimension(300,200));
+	this.ventana.setPreferredSize(new Dimension(300,400));
 	this.ventana.setResizable(false);
 	this.ventana.getContentPane().setLayout(null);
 	this.ventana.setLocationByPlatform(true);
@@ -66,27 +85,25 @@ public listaPedidos (){
 	this.ventana.setVisible(true);
 	this.ventana.pack();
 	
-	JLabel lblNombre = new JLabel("<html>Saldo: <html>");
-	lblNombre.setFont(new Font("Tahoma", Font.BOLD, 11));
-	lblNombre.setBounds(32, 54, 61, 35);
-	contentPane.add(lblNombre);
 	
-	JLabel lblNombre2 = new JLabel("<html>Limite: <html>");
-	lblNombre2.setFont(new Font("Tahoma", Font.BOLD, 11));
-	lblNombre2.setBounds(32, 94, 61, 35);
-	contentPane.add(lblNombre2);
+	for (PedidoDTO ped : pedidos)
+	{
+		listaPedido.addElement(ped.getNroPedido());
+	}
 	
-	 
-	 saldo = new JTextField(); //saldo
-	 saldo.setBounds(95, 54, 156, 28);
-	 contentPane.add(saldo);
-	 
-	 limite = new JTextField(); //limite
-	 limite.setBounds(95, 94, 156, 28);
-	 contentPane.add(limite);
+	  itemList = new JList(listaPedido);
+      itemList.setVisibleRowCount(10);
+      itemList.setFixedCellHeight(20);
+      itemList.setFixedCellWidth(140);
+      itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      
+      JScrollPane list1 = new JScrollPane(itemList);
+      list1.setBounds(70,50, 140, 200);
+      contentPane.add(list1);    
+	
 
-	 JButton btnNewButton = new JButton("Guardar");
-		btnNewButton.setBounds(150, 130, 104, 31);
+	 JButton btnNewButton = new JButton("Seleccionar");
+		btnNewButton.setBounds(150,280, 104, 31);
 		contentPane.add(btnNewButton);
 		
 		btnNewButton.addActionListener(new ActionListener() {
@@ -94,23 +111,30 @@ public listaPedidos (){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				if (!limite.getText().trim().isEmpty() & !saldo.getText().trim().isEmpty())
-				try {
-					cuenta.setLimite(Float.parseFloat(limite.getText().toString()));
-					cuenta.setSaldo(Float.parseFloat(saldo.getText().toString()));
-					vent.getFrame().dispose();
+				if (!itemList.isSelectionEmpty())
+				try{
+				    
+					for (PedidoDTO ped : pedidos)
+					{
+						if ( ped.getNroPedido() == (Integer)itemList.getSelectedValue())
+						{
+							pedidoDTO = ped;
+						}
+							
+					}
+					vent.getFrame().dispose();	
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog(null, "Ingresar con el formato 1200.00", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				else
-					JOptionPane.showMessageDialog(null, "Faltan datos", "Warning", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Elija un pedido", "Warning", JOptionPane.WARNING_MESSAGE);
 				
 			}
 		});
 		
 		JButton btnNewButton2 = new JButton("Cancelar");
-		btnNewButton2.setBounds(40, 130, 104, 31);
+		btnNewButton2.setBounds(40, 280, 104, 31);
 		contentPane.add(btnNewButton2);
 		btnNewButton2.addActionListener(new ActionListener() {
 			
@@ -133,16 +157,18 @@ public JFrame getFrame(){
 	return ventana;
 }
 
-public CuentaCorrienteDTO getCuenta()
-{
-	return cuenta;
-}
+
 public JPanel getPanel(){
 	return contentPane;
 }
 
 public String getRol(){
 	return rol;
+}
+
+public PedidoDTO getPedido()
+{	
+	return pedidoDTO;
 }
 
 }

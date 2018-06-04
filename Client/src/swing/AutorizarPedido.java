@@ -3,14 +3,19 @@ package swing;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import businessdelegate.BusinessDelegate;
+import dto.PedidoDTO;
 
 
 
@@ -26,6 +31,9 @@ public class AutorizarPedido {
 	private JLabel label_2;
 	private JLabel label_3;
 	private JLabel label_4;
+	private JLabel label_5;
+	private listaPedidos ventanaPedidos;
+	private PedidoDTO pedido;
 	
 	public AutorizarPedido(ventanaPrincipal p){
 		
@@ -48,7 +56,7 @@ public class AutorizarPedido {
 		btnNewButton_2.setBounds(327, 302, 104, 31);
 		contentPane.add(btnNewButton_2);
 		
-		JLabel lblBuscar = new JLabel("Pedido: ");
+		JLabel lblBuscar = new JLabel("CUIT: ");
 		lblBuscar.setForeground(Color.BLACK);
 		lblBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblBuscar.setBounds(39, 135, 57, 21);
@@ -66,11 +74,11 @@ public class AutorizarPedido {
 		lblModificacinCliente.setBounds(211, 56, 279, 31);
 		contentPane.add(lblModificacinCliente);
 		
-		JLabel lblinsertarDni = new JLabel("(ingresar Pedido)");
+	/*	JLabel lblinsertarDni = new JLabel("(ingresar Pedido)");
 		lblinsertarDni.setForeground(Color.BLACK);
 		lblinsertarDni.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblinsertarDni.setBounds(339, 132, 147, 14);
-		contentPane.add(lblinsertarDni);
+		lblinsertarDni.setBounds(399, 132, 147, 14);
+		contentPane.add(lblinsertarDni);*/
 		
 		JLabel lblNewLabel = new JLabel("Crédito:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -88,10 +96,13 @@ public class AutorizarPedido {
 		lblNewLabel_2.setBounds(39, 273, 65, 14);
 		contentPane.add(lblNewLabel_2);
 		
-		textField = new JTextField();
-		textField.setBounds(120, 129, 156, 28);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		
+		
+		label_5 = new JLabel("Nombre");
+		label_5.setForeground(Color.BLUE);
+		label_5.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		label_5.setBounds(120, 138, 86, 14);
+		contentPane.add(label_5);
 		
 		lblNewLabel_3 = new JLabel("Nombre");
 		lblNewLabel_3.setForeground(Color.BLUE);
@@ -115,7 +126,7 @@ public class AutorizarPedido {
 		label_3 = new JLabel("Nombre");
 		label_3.setForeground(Color.BLUE);
 		label_3.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		label_3.setBounds(317, 232, 86, 14);
+		label_3.setBounds(317, 232, 186, 14);
 		contentPane.add(label_3);
 		
 		label_4 = new JLabel("Nombre");
@@ -124,14 +135,18 @@ public class AutorizarPedido {
 		label_4.setBounds(120, 273, 86, 14);
 		contentPane.add(label_4);
 		
+	
 		
-		JButton btnNewButton_1 = new JButton("Seleccionar Pedido");
+		
+		JButton btnNewButton_1 = new JButton("Seleccionar");
 		btnNewButton_1.setBounds(286, 127, 106, 25);
 		contentPane.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				
+				ventanaPedidos = 	new listaPedidos();
+		
 				/*
 				try {
 					if(!textField.getText().trim().isEmpty()){
@@ -165,31 +180,29 @@ public class AutorizarPedido {
 		
 		btnNewButton.addActionListener(new ActionListener() {					
 			public void actionPerformed(ActionEvent e) {
-				if(!textField.getText().trim().isEmpty())
-		/*		{
-					try {					
-						int dialogButton = JOptionPane.YES_NO_OPTION;
-						int dialogResult = JOptionPane.showConfirmDialog (null, "¿Está seguro que desea borrar el cliente?", "Warning", dialogButton);
-						if(dialogResult == JOptionPane.YES_OPTION){
-						//	Controlador.getInstancia().darBajaCliente(textField.getText());
-							JOptionPane.showMessageDialog(null, "El cliente ha sido dado de baja", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+				
+				
+				try {
+					if (pedido != null)
+					{
+						try {
+							BusinessDelegate.getInstance().autorizarPedido(pedido.getNroPedido());
+							JOptionPane.showMessageDialog(null, "Se ha Autorizado El pedido", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+							pedido = null;
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE);
+							e1.printStackTrace();
 						}
-						textField.setText(null);
-						lblNewLabel_3.setText(null);
-						label_1.setText(null);
-						label.setText(null);
-						label_1.setText(null);
-						label_2.setText(null);
-						label_3.setText(null);
-					} catch (ClienteException e1){
-						JOptionPane.showMessageDialog(null, "Fallo con el cliente", "Error", JOptionPane.ERROR_MESSAGE);
-					} catch(ConnectionException e2){
-						JOptionPane.showMessageDialog(null, "Error de conexión", "Error", JOptionPane.ERROR_MESSAGE);
+						
+						
 					}
-				}*/
-					JOptionPane.showMessageDialog(null, "El cliente ha sido dado de baja", "Éxito", JOptionPane.INFORMATION_MESSAGE); //Borrar Luego.
-				else
-					JOptionPane.showMessageDialog(null, "Debe ingresar un Nro de Pedido", "Warning", JOptionPane.WARNING_MESSAGE);
+				}  catch (Exception e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "No se seleccionó ningun Pedido", "Warning", JOptionPane.WARNING_MESSAGE);
+				}
+		
+				
 			}
 		});
 		
@@ -201,7 +214,44 @@ public class AutorizarPedido {
 				
 			}
 		});
+		
+		JButton boton3 = new JButton("Refresh");
+		boton3 .setBounds(399, 127, 106, 25);
+		contentPane.add(boton3 );
+		
+		boton3.addActionListener(new ActionListener() {
 			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			
+			
+				try {
+					if (ventanaPedidos.getPedido() != null)
+					{
+						pedido = ventanaPedidos.getPedido();
+						label.setText(String.valueOf(pedido.getCliente().getCuentaCorriente().getSaldo()));
+						lblNewLabel_3.setText(pedido.getCliente().getRazon_social());
+						label_4.setText(String.valueOf(pedido.getTotal_bruto()));
+						label_2.setText(String.valueOf(pedido.getNroPedido()));
+						label_3.setText(pedido.getEstado());
+						label_5.setText(pedido.getCliente().getCuit());
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "No se seleccionó ningun Pedido", "Warning", JOptionPane.WARNING_MESSAGE);
+				}
+			
+			
+
+			}
+		});
+		
+		
+		
+		
+	
 		ventana.getFrame().getContentPane().add(contentPane);
 		ventana.getFrame().repaint();
 	}
