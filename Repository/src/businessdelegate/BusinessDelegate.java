@@ -102,6 +102,10 @@ public class BusinessDelegate implements TDABusiness {
 		// TODO Auto-generated method stub
 		RemoteObject.completarOP(nro);
 	}
+	
+	public List<PedidoDTO> listarPedidosPendientes() throws RemoteException {
+		return RemoteObject.listarPedidosPendientes();
+	}
 
 
 

@@ -88,6 +88,11 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		// TODO Auto-generated method stub
 		controlador.cerrarOP(nro);
 	}
+	
+	@Override
+	public  List<PedidoDTO> listarPedidosPendientes() throws RemoteException  {
+		return controlador.listarPedidosPendientes();
+	}
 
 
 	

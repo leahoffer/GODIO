@@ -1,16 +1,17 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import business.Bonificacion;
 import business.Cliente;
 import business.Condicion;
 import business.CuentaCorriente;
+import business.Descuento;
 import business.DetallePedido;
 import business.Factura;
 import business.ItemFactura;
+import business.MovimientoCC;
 import business.MovimientoReserva;
 import business.OrdenPedido;
 import business.Pedido;
@@ -22,16 +23,20 @@ import dao.ClienteDAO;
 import dao.PedidoDAO;
 import dao.ProductoDAO;
 import dto.ClienteDTO;
+import dto.CondicionDTO;
 import dto.CuentaCorrienteDTO;
 import dto.DetallePedidoDTO;
+import dto.MovimientoCCDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
 import dto.UbicacionDTO;
+import entity.BonificacionEntity;
+import entity.CondicionEntity;
+import entity.DescuentoEntity;
+import entity.MovimientoCCEntity;
 import entity.ProductoEntity;
 import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
-import enumeration.EstadoProducto;
-import enumeration.Presentacion;
 import enumeration.TipoFactura;
 import exception.ClienteException;
 import exception.ProductoException;
@@ -165,11 +170,11 @@ public class Controller {
 	
 	private Cliente buscarCliente (String cuit) throws ClienteException
 	{
-		for (Cliente clie : clientes)
+	/*	for (Cliente clie : clientes)
 		{
 			if (clie.getCuit().equals(cuit));
 				return clie; //Busqueda en memoria.
-		}
+		}*/
 		
 		//Los DAO reciben y devuelven objetos de negocio
 		Cliente cliente = ClienteDAO.getInstance().findByCuit(cuit);
@@ -373,6 +378,11 @@ public class Controller {
 		// TODO Auto-generated method stub
 		
 			Cliente c= this.buscarCliente(cuit);
+			CuentaCorrienteDTO cc = new CuentaCorrienteDTO();
+			List<MovimientoCCDTO> mccs = new ArrayList<MovimientoCCDTO>();
+			List<CondicionDTO> cs = new ArrayList<CondicionDTO>();
+			
+			
 			ClienteDTO cdto= new ClienteDTO();
 			cdto.setCuit(c.getCuit());
 			cdto.setDireccion(c.getDireccion());
@@ -380,6 +390,12 @@ public class Controller {
 			cdto.setRazon_social(c.getRazon_social());
 			cdto.setTelefono(c.getTelefono());
 			cdto.setCondicionEsp(c.getCondicionEsp());
+			
+			cc.setLimite(c.getCuentaCorriente().getLimite());
+			cc.setSaldo(c.getCuentaCorriente().getSaldo());
+			cc.setId(c.getCuentaCorriente().getId());
+			cdto.setCuentaCorriente(cc);
+		
 		return cdto;
 	}
 
