@@ -12,6 +12,7 @@ import dto.DescuentoDTO;
 import dto.DetallePedidoDTO;
 import dto.FacturaDTO;
 import dto.PedidoDTO;
+import dto.UbicacionDTO;
 import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
 import enumeration.TipoFactura;
@@ -319,6 +320,17 @@ public class Pedido {
 		f.setTotal(f.calcularTotal());
 		this.setFactura(f);
 		this.update();		
+	}
+
+
+
+	public List<Ubicacion> despachar() {
+		//buscarUbicacionesParaDespachar se va a encargar de crear los movimientos y de actualizar las ubicaciones que encuentre y devuelva
+		List<Ubicacion> us = Almacen.getInstance().buscarUbicacionesParaDespachar(this);
+		this.estado = EstadoPedido.Despachado;
+		this.facturar();
+		this.update();
+		return us;
 	}
 			
 	

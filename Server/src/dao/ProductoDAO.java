@@ -97,16 +97,17 @@ public class ProductoDAO {
 		return le;
 	}
 
-	public List<ProductoEntity> findAll() throws ProductoException {
-		// TODO Auto-generated method stub
-		
+	public List<Producto> findAll() throws ProductoException {
 		try
 		{
+			List<Producto> ps = new ArrayList<Producto>();
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
 			List<ProductoEntity> lista = (List<ProductoEntity>)s.createQuery("from ProductoEntity").list();
-			return lista;
+			for (ProductoEntity pe : lista)
+				ps.add(productoToNegocio(pe));
+			return ps;
 		}
 		catch (Exception e)
 		{

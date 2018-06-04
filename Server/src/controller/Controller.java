@@ -58,55 +58,19 @@ public class Controller {
 	}
 
 	public void crearCliente(ClienteDTO c) throws ClienteException  {
-		/**
-		 * Creo un método para que me deje crear el RO y esas otras cosas
-		 */
-		
-			if(ClienteDAO.getInstance().findByCuit(c.getCuit()) == null)
-			{
-
-				Cliente cliente=new Cliente();
-				CuentaCorriente cc= new CuentaCorriente();
-				Bonificacion boni  = new Bonificacion();
-				Bonificacion boni2 = new Bonificacion();
-				
-
-				cc.setId(c.getCuentaCorriente().getId());
-				cc.setLimite(c.getCuentaCorriente().getLimite());
-				cc.setSaldo(c.getCuentaCorriente().getSaldo());
-				
-				cliente.setCondicionEsp(c.getCondicionEsp());
-				cliente.setCuentaCorriente(cc);
-				cliente.setCuit(c.getCuit());
-				cliente.setDireccion(c.getDireccion());
-				cliente.setR_inscripto(c.isR_inscripto());
-				cliente.setRazon_social(c.getRazon_social());
-				cliente.setTelefono(c.getTelefono());
-			
-				boni.setCondicion("Condicion 1");
-				boni.setMonto(150);
-				
-				boni2.setCondicion("Condicion 2");
-				boni2.setMonto(200);
-				
-				List<Condicion> condi = new ArrayList<Condicion>();
-				condi.add(boni);
-				condi.add(boni2);
-				
-				cliente.getCuentaCorriente().setCondiciones(condi);
-				
-				
-				cliente.saveOrUpdate();
-			}
-			else
-				throw new ClienteException("Cliente ya creado");
-		
-		
+		if(ClienteDAO.getInstance().findByCuit(c.getCuit()) == null)
+		{
+			Cliente cliente=new Cliente(c.getCuit(), c.getRazon_social(), c.getTelefono(), c.getDireccion(), c.isR_inscripto(), c.getCondicionEsp());
+			CuentaCorriente cc= new CuentaCorriente(c.getCuentaCorriente().getSaldo(), c.getCuentaCorriente().getLimite());
+			cliente.setCuentaCorriente(cc);
+			cliente.saveOrUpdate();
+		}
+		else
+			throw new ClienteException("Cliente ya creado");
 	}
 	
 	public void crearPedido (PedidoDTO p) throws ClienteException, ProductoException
 	{
-		//Calendar  hoy = Calendar.getInstance();
 		Cliente cliente = buscarCliente(p.getCliente().getCuit());
 		List<DetallePedido> detalles = new ArrayList<DetallePedido>();
 		for (DetallePedidoDTO ddto : p.getDetalle())
@@ -115,8 +79,7 @@ public class Controller {
 			pedc.calcularSubTotal();
 			detalles.add(pedc);
 		}
-		
-		Pedido pedido=new Pedido();
+		Pedido pedido = new Pedido();
 		pedido.setDetalle(detalles);
 		pedido.calcularTotal();
 		pedido.setAclaracionEspecial(p.getAclaracionEspecial());
@@ -127,32 +90,18 @@ public class Controller {
 		pedido.setEstado(EstadoPedido.valueOf("PendienteAutorizacion"));
 		pedido.setFecha(p.getFecha());
 		pedido.setMotivoEstado(p.getMotivoEstado());
-		
 		pedido.saveOrUpdate();
 		
 	}
-	
-	/*public Producto buscarProducto(String codBarras) {
-		// TODO Auto-generated method stub
-		Producto p = ProductoDAO.getInstance().findById(codBarras);
-		return p;
-	}*/
+
 
 	public List<ProductoDTO> listarProductos() throws ProductoException
 	{
-		List<ProductoEntity> prods = new ArrayList<ProductoEntity>();
-		prods=ProductoDAO.getInstance().findAll();
-		
+		List<Producto> ps = Almacen.getInstance().findAllProducts();
 		List <ProductoDTO> prodsvo = new ArrayList<ProductoDTO>();
-		
-		for (ProductoEntity pe : prods)
-		{ 
-			ProductoDTO p= new ProductoDTO(pe.getCodBarras(), pe.getMarca(), pe.getDescripcion(), pe.getEstado(), pe.getTamaño(), pe.getUnidad(), pe.getPrecio(), pe.getPresentacion());
-			prodsvo.add(p);
-		}
-		
+		for (Producto p : ps) 
+			prodsvo.add(p.toDTO());		
 		return prodsvo;
-	
 	}
 	
 	private Cliente buscarCliente (String cuit) throws ClienteException
@@ -347,41 +296,14 @@ public class Controller {
 		List<UbicacionDTO> udtos = new ArrayList<UbicacionDTO>();
 		List<Ubicacion> us;
 		Pedido p = PedidoDAO.getInstance().findByNro(pdto.getNroPedido());
-		//buscarUbicacionesParaDespachar se va a encargar de crear los movimientos y de actualizar las ubicaciones que encuentre y devuelva
-		us = Almacen.getInstance().buscarUbicacionesParaDespachar(p);
+		us = p.despachar();
 		for (Ubicacion u : us)
 		{
 			UbicacionDTO udto = new UbicacionDTO(u.getCalle(), u.getBloque(), u.getEstanteria(), u.getEstante(), u.getPosicion(), u.getCantidadActual());
 			udtos.add(udto);
 		}
-		p.setEstado(EstadoPedido.Despachado);
-		p.facturar();
-		p.update();
 		return udtos;
 	}
-
-	/*private void facturarPedido(Pedido p) {
-		Factura f = new Factura();
-		List<ItemFactura> ifas = new ArrayList<ItemFactura>();
-		f.setCliente(p.getCliente());
-		if (p.getCliente().isR_inscripto())
-			f.setTipo(TipoFactura.A);
-		else
-			f.setTipo(TipoFactura.B);
-		for (DetallePedido dp : p.getDetalle())
-		{
-			ItemFactura ifa = new ItemFactura();
-			ifa.setCantidad(dp.getCantidad());
-			ifa.setProducto(dp.getProducto());
-			ifa.setSubtotal(ifa.getProducto().getPrecio()*ifa.getCantidad());
-			ifas.add(ifa);
-		}
-		f.setItems(ifas);
-		f.setTotal(f.calcularTotal());
-		p.setFactura(f);
-		p.update();		
-	}*/
-
 
 	
 	public List<PedidoDTO> listarPedidosPendientesDespacho(){
@@ -396,8 +318,8 @@ public class Controller {
 	}
 
 	
-	
-	/*public void cerrarOP(int nroOP){
+	/*
+	public void cerrarOP(int nroOP){
 		OrdenPedido op = AlmacenDAO.getInstance().findOPByNro(nroOP);
 		op.setEstado(EstadoOP.Completa);
 		op.updateMe();
@@ -433,8 +355,8 @@ public class Controller {
 			pedido.setEstado(EstadoPedido.PendienteDespacho);
 			pedido.update();
 		}
-	}*/
-	
+	}
+	*/
 	
 	
 	

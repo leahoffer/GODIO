@@ -19,6 +19,7 @@ import dto.ProductoDTO;
 import dto.UbicacionDTO;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
+import exception.ProductoException;
 @SuppressWarnings("unused")
 public class Almacen {
 
@@ -379,6 +380,18 @@ public class Almacen {
 	public Producto giveMeAProduct(String codbarras) {
 		return ProductoDAO.getInstance().findById(codbarras);
 		
+	}
+
+	public List<Producto> findAllProducts() {
+		try
+		{
+			return ProductoDAO.getInstance().findAll();
+		}
+		catch (ProductoException e) 
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	

@@ -23,6 +23,14 @@ public class CuentaCorriente {
 		this.condiciones = new ArrayList<Condicion>();
 	}
 	
+	public CuentaCorriente(float saldo, float limite) {
+		super();
+		this.movimientos = new ArrayList<MovimientoCC>();
+		this.condiciones = new ArrayList<Condicion>();
+		this.saldo = saldo;
+		this.limite = limite;
+	}
+
 	public int getId() {
 		return id;
 	}

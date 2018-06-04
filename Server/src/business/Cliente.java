@@ -17,6 +17,17 @@ public class Cliente {
 		
 	}
 
+	public Cliente(String cuit, String razon_social, String telefono, String direccion, boolean r_inscripto,
+			String condicionEsp) {
+		super();
+		this.cuit = cuit;
+		this.razon_social = razon_social;
+		this.telefono = telefono;
+		Direccion = direccion;
+		this.r_inscripto = r_inscripto;
+		this.condicionEsp = condicionEsp;
+	}
+
 	public String getCuit() {
 		return cuit;
 	}
