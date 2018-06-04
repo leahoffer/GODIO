@@ -11,7 +11,6 @@ public class BonificacionEntity extends CondicionEntity {
 
 	public BonificacionEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public float getMonto() {

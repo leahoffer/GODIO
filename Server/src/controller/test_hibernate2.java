@@ -2,6 +2,11 @@ package controller;
 
 import java.util.Date;
 
+import business.Cliente;
+import business.CuentaCorriente;
+import business.DetallePedido;
+import business.Pedido;
+import business.Producto;
 import dao.AlmacenDAO;
 import dao.ProductoDAO;
 import entity.UbicacionEntity;
@@ -49,8 +54,8 @@ public class test_hibernate2 {
 		p.setTotal_bruto(p.calcularTotal());
 		p.getDetalle().add(dp1);
 		p.getDetalle().add(dp2);
-		p.createMe();*/
-		
+		p.saveOrUpdate();
+		*/
 		String calle;
 		int bloque = 1;
 		int estanteria = 1;
@@ -67,7 +72,7 @@ public class test_hibernate2 {
 		 * 6 hasta 7 -> F
 		 * 7 hasta 8 -> G
 		 * */
-		for (bloque = 7 ; bloque <= 8; bloque++)
+		for (bloque = 1 ; bloque <= 8; bloque++)
 		{
 			for (estanteria = 1; estanteria <6; estanteria++)
 			{
@@ -75,21 +80,101 @@ public class test_hibernate2 {
 				{
 					for (posicion = 1; posicion < 22; posicion++)
 					{
-						UbicacionEntity ue = new UbicacionEntity();
-						UbicacionId uid = new UbicacionId();
-						uid.setBloque(bloque);
-						uid.setCalle("G");
-						ue.setCantidadActual(0);
-						uid.setEstante(estante);
-						uid.setEstanteria(estanteria);
-						uid.setPosicion(posicion);
-						ue.setIdUbicacion(uid);
-						AlmacenDAO.getInstance().crearUbicacion(ue);
+						if (bloque == 1 || bloque ==2)
+						{
+							UbicacionEntity ue = new UbicacionEntity();
+							UbicacionId uid = new UbicacionId();
+							uid.setBloque(bloque);
+							uid.setCalle("A");
+							ue.setCantidadActual(0);
+							uid.setEstante(estante);
+							uid.setEstanteria(estanteria);
+							uid.setPosicion(posicion);
+							ue.setIdUbicacion(uid);
+							AlmacenDAO.getInstance().crearUbicacion(ue);
+						}
+						if (bloque == 2 || bloque == 3)
+						{
+							UbicacionEntity ue = new UbicacionEntity();
+							UbicacionId uid = new UbicacionId();
+							uid.setBloque(bloque);
+							uid.setCalle("B");
+							ue.setCantidadActual(0);
+							uid.setEstante(estante);
+							uid.setEstanteria(estanteria);
+							uid.setPosicion(posicion);
+							ue.setIdUbicacion(uid);
+							AlmacenDAO.getInstance().crearUbicacion(ue);
+						}
+						if (bloque == 3 || bloque == 4)
+						{
+							UbicacionEntity ue = new UbicacionEntity();
+							UbicacionId uid = new UbicacionId();
+							uid.setBloque(bloque);
+							uid.setCalle("C");
+							ue.setCantidadActual(0);
+							uid.setEstante(estante);
+							uid.setEstanteria(estanteria);
+							uid.setPosicion(posicion);
+							ue.setIdUbicacion(uid);
+							AlmacenDAO.getInstance().crearUbicacion(ue);
+						}
+						if (bloque == 4 || bloque == 5)
+						{
+							UbicacionEntity ue = new UbicacionEntity();
+							UbicacionId uid = new UbicacionId();
+							uid.setBloque(bloque);
+							uid.setCalle("D");
+							ue.setCantidadActual(0);
+							uid.setEstante(estante);
+							uid.setEstanteria(estanteria);
+							uid.setPosicion(posicion);
+							ue.setIdUbicacion(uid);
+							AlmacenDAO.getInstance().crearUbicacion(ue);
+						}
+						if (bloque == 5 || bloque == 6)
+						{
+							UbicacionEntity ue = new UbicacionEntity();
+							UbicacionId uid = new UbicacionId();
+							uid.setBloque(bloque);
+							uid.setCalle("E");
+							ue.setCantidadActual(0);
+							uid.setEstante(estante);
+							uid.setEstanteria(estanteria);
+							uid.setPosicion(posicion);
+							ue.setIdUbicacion(uid);
+							AlmacenDAO.getInstance().crearUbicacion(ue);
+						}
+						if (bloque == 6 || bloque == 7)
+						{
+							UbicacionEntity ue = new UbicacionEntity();
+							UbicacionId uid = new UbicacionId();
+							uid.setBloque(bloque);
+							uid.setCalle("F");
+							ue.setCantidadActual(0);
+							uid.setEstante(estante);
+							uid.setEstanteria(estanteria);
+							uid.setPosicion(posicion);
+							ue.setIdUbicacion(uid);
+							AlmacenDAO.getInstance().crearUbicacion(ue);
+						}
+						if (bloque == 7 || bloque == 8)
+						{
+							UbicacionEntity ue = new UbicacionEntity();
+							UbicacionId uid = new UbicacionId();
+							uid.setBloque(bloque);
+							uid.setCalle("G");
+							ue.setCantidadActual(0);
+							uid.setEstante(estante);
+							uid.setEstanteria(estanteria);
+							uid.setPosicion(posicion);
+							ue.setIdUbicacion(uid);
+							AlmacenDAO.getInstance().crearUbicacion(ue);
+						}
 					}
 				}
 			}
 		}
-		
 		
 	}
 }

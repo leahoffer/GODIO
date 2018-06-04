@@ -1,6 +1,5 @@
 package business;
 
-import controller.Almacen;
 import dao.AlmacenDAO;
 import enumeration.TipoMovimientoStock;
 

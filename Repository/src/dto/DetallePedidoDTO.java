@@ -17,7 +17,6 @@ public class DetallePedidoDTO implements Serializable {
 	
 	public DetallePedidoDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public float getSubtotal() {
 		return subtotal;

@@ -7,181 +7,77 @@ import java.util.List;
 import business.DetallePedido;
 import business.MovimientoReserva;
 import business.MovimientoStock;
-import business.OrdenPedido;
 import business.Pedido;
 import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
 import dao.ProductoDAO;
+import dto.ProductoDTO;
 import dto.UbicacionDTO;
-import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
-@SuppressWarnings("unused")
+import exception.ProductoException;
+
 public class Almacen {
 
 	private static Almacen instance;
 	private List<MovimientoStock> movimientos;
 	private List<Ubicacion> ubicaciones;
-	private List<Reserva> reservas;
-	
 	public static Almacen getInstance() {
 		if (instance == null)
 			instance = new Almacen();
 		return instance;
 	}
 	
+	
+	
 	private Almacen() {
 		this.ubicaciones = new ArrayList<Ubicacion>();
-		this.reservas = new ArrayList<Reserva>();
+		new ArrayList<Reserva>();
 		this.movimientos = new ArrayList<MovimientoStock>();
 	}
 
+	
+	
 	public void createReserva(Pedido p, DetallePedido dp, int cantidad) {
-		Reserva r = new Reserva();
-		Date fecha = new Date();
-		r.setCantidad(cantidad);
-		r.setCompleta(false);
-		r.setFecha(fecha);
-		r.setPedido(p);
-		r.setProducto(dp.getProducto());
+		Reserva r = new Reserva(dp.getProducto(), cantidad, p, false, new Date());
 		r.createMe();
 	}
 
-	public OrdenPedido buscarOPConDisponibilidad(Producto p) {
-		OrdenPedido op = AlmacenDAO.getInstance().buscarOPConDisponibilidad(p);
-		return op;
-	}
 
-
-	public void crearOrdenPedido(Pedido p, DetallePedido dp, int i) {
-		OrdenPedido op = new OrdenPedido();
-		op.setEstado(EstadoOP.Pendiente);
-		op.setPedidoOrigen(p);
-		op.setProducto(dp.getProducto());
-		op.setCantidadPedida(calcularCantidadAPedir(i, dp.getProducto()));
-		op.createMe();
-	}
-
-	private int calcularCantidadAPedir(int i, Producto producto) {
-		int cantidad = 0;
-		while (cantidad < i)
-		{
-			cantidad = cantidad + producto.getCantAComprar();
-		}
-		return cantidad;
-	}
-
-	public int devolverStockProducto(Producto producto) {
-		List<Ubicacion> ubicaciones = producto.getUbicaciones();
-		List<Reserva> reservas = AlmacenDAO.getInstance().reservasProducto(producto);
-		int cantidadStock = 0;
-		for (Ubicacion u : ubicaciones)
-		{
-			cantidadStock=cantidadStock+u.getCantidadActual();
-		}
-		for (Reserva r : reservas)
-		{
-			if (!r.isCompleta())
-			{
-				cantidadStock = cantidadStock - r.getCantidad();
-			}
-		}
-		return cantidadStock;
-		
-	}
-
-	public void updateOP(OrdenPedido op) {
-		AlmacenDAO.getInstance().updateOP(op);
-		
-	}
-
-	public void createOP(OrdenPedido op) {
-		AlmacenDAO.getInstance().createOP(op);
-		
-	}
+	
 
 	public Ubicacion traerUbicacion(String calle, int bloque, int estanteria, int estante, int posicion) {
 		for (Ubicacion u : this.ubicaciones)
 		{
 			if (u.getCalle().equals(calle) && u.getBloque()==bloque && u.getEstanteria()==estanteria && u.getEstante()==estante && u.getPosicion()==posicion)
-				return u;
-			
+				return u;	
 		}
-		Ubicacion u = new Ubicacion();
-		u.setCalle(calle);
-		u.setBloque(bloque);
-		u.setEstanteria(estanteria);
-		u.setEstante(estante);
-		u.setPosicion(posicion);
+		Ubicacion u = new Ubicacion(calle, bloque, estanteria, estante, posicion);
 		Ubicacion resultado = AlmacenDAO.getInstance().traerUbicacion(u);
 		return resultado;
 	}
 	
+	
+	
 	public List<UbicacionDTO> mostrarUbicaciones() {
-		// TODO Auto-generated method stub
-		List<Ubicacion> ubicaciones = this.traerUbicaciones();
+		List<Ubicacion> ubicaciones = traerUbicaciones();
 		List<UbicacionDTO> ubicacionesdto = new ArrayList<UbicacionDTO>();
 		for (Ubicacion u:ubicaciones)
-		{
-			UbicacionDTO udto = new UbicacionDTO();
-			udto.setBloque(u.getBloque());
-			udto.setCalle(u.getCalle());
-			udto.setCantidadActual(u.getCantidadActual());
-			udto.setEstante(u.getEstante());
-			udto.setEstanteria(u.getEstanteria());
-			udto.setPosicion(u.getPosicion());
-			ubicacionesdto.add(udto);
-		}
+			ubicacionesdto.add(u.toDTO());
 		return ubicacionesdto;
 	}
 
+	
+	
 	private List<Ubicacion> traerUbicaciones() {
-		// TODO Auto-generated method stub
 		return AlmacenDAO.getInstance().traerTodasLasUbicaciones();
 	}
 
-	public void retirarProductosAlmacen(Pedido pe) {
-		
-		int aux = 0;
-		for (DetallePedido dp:pe.getDetalle())
-		{
-			while (aux<dp.getCantidad())
-			{
-				for (Ubicacion u:dp.getProducto().getUbicaciones())
-				{
-					if(aux<dp.getCantidad())
-					{
-						if (u.getCantidadActual()>= dp.getCantidad())
-						{
-								aux=aux+dp.getCantidad();
-								u.setCantidadActual(u.getCantidadActual()-aux);
-								if(u.getCantidadActual()==0)
-								{
-									dp.getProducto().sacarUbicacion(u);
-								}
-								dp.getProducto().updateMe();
-							
-						}
-						else
-						{
-							aux=aux+u.getCantidadActual();
-							u.setCantidadActual(0);
-							dp.getProducto().sacarUbicacion(u);
-							dp.getProducto().updateMe();
-							
-						}
-					}
-				}
-			}
-		}
 	
-		
-		
-		
-		
-		
-		/*List<Ubicacion> us = new ArrayList<Ubicacion>();
+	
+	public List<Ubicacion> buscarUbicacionesParaDespachar(Pedido p) {
+		List<Ubicacion> us = new ArrayList<Ubicacion>();
 		for (DetallePedido dp : p.getDetalle())
 		{
 			//Obtengo todas las ubicaciones que tiene el producto
@@ -228,13 +124,12 @@ public class Almacen {
 			ms.setResponsable("N/A");
 			ms.save();
 		}
-		return us;*/
+		return us;
 	}
 
 
 	/*public void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad,
 			String responsable) {
-		// TODO Auto-generated method stub
 		MovimientoStock ms= new MovimientoStock();
 		Producto p = Controller.getInstance().buscarProducto(codbarra);
 		ms.setCantidad(cantidad);
@@ -340,23 +235,20 @@ public class Almacen {
 	}
 
 */
+	
+	
+	
+	@SuppressWarnings("unused")
 	private Ubicacion traerPrimeraUbicacionVacia() {
-		// TODO Auto-generated method stub
 		return AlmacenDAO.getInstance().traerPrimeraUbicacionVacia();
 	}
 
-	public void agregarAjusteStock(String producto, String tipo, UbicacionDTO udto, String motivo, int cantidad,
-			String responsable) {
-		// TODO Auto-generated method stub
-		Ubicacion u=new Ubicacion();
-		u.setBloque(udto.getBloque());
-		u.setCalle(udto.getCalle());
-		u.setEstante(udto.getEstante());
-		u.setEstanteria(udto.getEstanteria());
-		u.setPosicion(udto.getPosicion());
-		
+	
+	
+	public void agregarAjusteStock(String producto, String tipo, UbicacionDTO udto, String motivo, int cantidad, String responsable) {
+		Ubicacion u=new Ubicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());		
 		MovimientoStock ms= new MovimientoStock();
-		Producto p = Controller.getInstance().buscarProducto(producto);
+		Producto p = ProductoDAO.getInstance().findById(producto);
 		
 			for (Ubicacion ub:p.getUbicaciones())
 			{
@@ -403,79 +295,36 @@ public class Almacen {
 		
 	}
 
+	
+	
 	public Reserva convertirMovimientoReserva(MovimientoReserva mr, Producto p) {
-		Reserva r = new Reserva();
-		r.setCantidad(mr.getCantidad());
-		r.setCompleta(false);
-		r.setFecha(mr.getFecha());
-		r.setPedido(mr.getPedido());
-		r.setProducto(p);
+		Reserva r = new Reserva(p, mr.getCantidad(), mr.getPedido(), false, mr.getFecha());
 		return r;
 	}
 
-	public void ubicarProductoAlmacen(Producto producto, int cantidadPedida) {
-		// TODO Auto-generated method stub
-		MovimientoStock ms= new MovimientoStock();
-		ms.setCantidad(cantidadPedida);
-		ms.setMotivo("Cerrar Orden de Compra");
-		ms.setProducto(producto);
-		ms.setResponsable("Responsable");
-		ms.setTipo(TipoMovimientoStock.Compra);
-		this.movimientos.add(ms);
-		ms.save();
+	
+	
+	public Producto giveMeAProduct(String codbarras) {
+		return ProductoDAO.getInstance().findById(codbarras);
 		
-		List<Ubicacion> ubicacionesProd = producto.getUbicaciones();
-
-		int cantidad = cantidadPedida;
-		for (Ubicacion ub: ubicacionesProd)
-		{ 
-			if (ub.getCantidadActual()<producto.getCantPosicion())
-			{
-				if ((cantidad+ub.getCantidadActual())>producto.getCantPosicion())
-				{
-					cantidad=cantidad-(producto.getCantPosicion()-ub.getCantidadActual());
-					ub.setCantidadActual(producto.getCantPosicion());
-					producto.updateMe();
-				}
-			}
-		}
-		
-		Ubicacion u= this.traerPrimeraUbicacionVacia();
-		if (cantidad<producto.getCantPosicion())
-		{ 
-			u.setCantidadActual(cantidad);
-			producto.getUbicaciones().add(u);
-			producto.updateMe();
-		}
-		else
-		{ 
-			u.setCantidadActual(producto.getCantPosicion());
-			cantidad = cantidad - producto.getCantPosicion();
-			producto.getUbicaciones().add(u);
-			producto.updateMe();
-			
-			while (cantidad>=producto.getCantPosicion())
-			{ 
-				Ubicacion uaux =this.traerPrimeraUbicacionVacia();
-				uaux.setCantidadActual(producto.getCantPosicion());
-				cantidad = cantidad - producto.getCantPosicion();
-				producto.getUbicaciones().add(uaux);
-				producto.updateMe();
-			}
-			if (cantidad>0)
-			{ 	Ubicacion uaux =this.traerPrimeraUbicacionVacia();
-				uaux.setCantidadActual(cantidad);
-				producto.getUbicaciones().add(uaux);
-				producto.updateMe();
-			}
-
-			
-		}
 	}
 
-	public void completarReservas(Pedido p) {
-		// TODO Auto-generated method stub
-		
+	
+
+	public ProductoDTO mostrarProducto(String codbarras) {
+		Producto p = Almacen.getInstance().giveMeAProduct(codbarras);
+		return p.toDTO();
+	}
+
+	
+	
+	public List<ProductoDTO> listarProductos() throws ProductoException
+	{
+		List<Producto> ps = ProductoDAO.getInstance().findAll();
+		List <ProductoDTO> prodsvo = new ArrayList<ProductoDTO>();
+		for (Producto p : ps) 
+			prodsvo.add(p.toDTO());		
+		return prodsvo;
 	}
 
 	

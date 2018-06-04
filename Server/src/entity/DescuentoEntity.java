@@ -11,7 +11,6 @@ public class DescuentoEntity extends CondicionEntity {
 
 	public DescuentoEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public float getPorcentaje() {

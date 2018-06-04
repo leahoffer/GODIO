@@ -58,7 +58,6 @@ public class FacturaDTO implements Serializable{
 	public FacturaDTO() {
 		super();
 		items= new ArrayList<ItemFacturaDTO>();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

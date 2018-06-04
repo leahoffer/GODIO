@@ -31,9 +31,11 @@ public class ventanaPrincipal {
 	private String rol;
     private ventanaPrincipal vent;
 	private JFrame ventana;
+	@SuppressWarnings("unused")
 	private JPanel panel2;
 	
 	
+	@SuppressWarnings("static-access")
 	public ventanaPrincipal( String user) {
 		
 		
@@ -103,6 +105,15 @@ public class ventanaPrincipal {
 		mntmBajaCliente.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent arg0) {
 				new BajaCliente(vent);				
+			}
+		});
+		
+		JMenuItem mntmCondEspecial = new JMenuItem("Modificar Cond. Especial");
+		mnNewMenu.add(mntmCondEspecial);
+		mntmCondEspecial.setFont(new Font("Tahoma", Font.BOLD, 11));
+		mntmCondEspecial.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent arg0) {
+				new ModificarCondicionEspecial(vent);				
 			}
 		});
 	

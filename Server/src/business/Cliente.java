@@ -17,6 +17,17 @@ public class Cliente {
 		
 	}
 
+	public Cliente(String cuit, String razon_social, String telefono, String direccion, boolean r_inscripto,
+			String condicionEsp) {
+		super();
+		this.cuit = cuit;
+		this.razon_social = razon_social;
+		this.telefono = telefono;
+		Direccion = direccion;
+		this.r_inscripto = r_inscripto;
+		this.condicionEsp = condicionEsp;
+	}
+
 	public String getCuit() {
 		return cuit;
 	}
@@ -113,7 +124,6 @@ public class Cliente {
 	}
 
 	public void saveOrUpdate() {
-		// TODO Auto-generated method stub
 		ClienteDAO.getInstance().createOrUpdate(this);
 	}
 
@@ -127,6 +137,16 @@ public class Cliente {
 		cdto.setRazon_social(this.razon_social);
 		cdto.setTelefono(this.telefono);
 		return cdto;
+	}
+	
+	public void modify(String c, String rs, String t, String d, boolean ri, String ce) {
+		this.cuit = c;
+		this.razon_social = rs;
+		this.telefono = t;
+		this.Direccion = d;
+		this.r_inscripto = ri;
+		this.condicionEsp = ce;
+		this.updateMe();
 	}
 	
 }

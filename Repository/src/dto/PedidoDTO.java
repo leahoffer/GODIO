@@ -27,7 +27,6 @@ public class PedidoDTO implements Serializable{
 	private List<CondicionDTO> condicionesAplicadas;
 	public PedidoDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 

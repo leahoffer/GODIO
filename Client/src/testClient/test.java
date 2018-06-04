@@ -21,7 +21,6 @@ import exception.ProductoException;
 public class test {
 
 	public static void main(String[] args) throws RemoteException, ProductoException {
-		// TODO Auto-generated method stub
 
 	    
 	    
@@ -38,7 +37,7 @@ public class test {
 		String entradaTeclado = "";
 
         Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
-
+        
         entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner
 		
         if (entradaTeclado.equals("0"))
@@ -69,7 +68,6 @@ public class test {
 				BusinessDelegate.getInstance().crearCliente(cliente);
 				System.out.println("Cliente Creado Con Éxito!");
 			} catch (ClienteException e) {
-				// TODO Auto-generated catch block
 				System.out.println(	e.getMessage());
 			}
 			
@@ -102,7 +100,6 @@ public class test {
 				c.setTelefono("Telefono Modificado");
 				BusinessDelegate.getInstance().modificarCliente(c);
 			} catch (ClienteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  
@@ -167,7 +164,6 @@ public class test {
 					BusinessDelegate.getInstance().crearPedido(pedido);
 					
 				} catch (ClienteException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
@@ -200,17 +196,14 @@ public class test {
 		        	{
 		        		System.out.print("Pedido no Autorizado");
 		        	}
+		        Escaner.close();
 			}
 			 if (entradaTeclado.equals("8"))
 				{
 				 	BusinessDelegate.getInstance().completarOP(3);
 				 	System.out.print("Orden de Pedido cerrada.");
 				}
-			 if (entradaTeclado.equals("9"))
-				{
-				 	BusinessDelegate.getInstance().despacharPedido(3);
-				 	System.out.print("Pedido despachado.");
-				}
+
 	}
 			 
 

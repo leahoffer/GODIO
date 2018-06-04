@@ -74,15 +74,8 @@ public class ProductoDAO {
 		
 		for (Ubicacion u : p.getUbicaciones())
 		{
-			UbicacionEntity ue = new UbicacionEntity();
-			UbicacionId uid = new UbicacionId();
-			uid.setBloque(u.getBloque());
-			uid.setCalle(u.getCalle());
-			uid.setEstante(u.getEstante());
-			uid.setEstanteria(u.getEstanteria());
-			uid.setPosicion(u.getPosicion());
-			ue.setIdUbicacion(uid);
-			ue.setCantidadActual(u.getCantidadActual());
+			UbicacionId uid = new UbicacionId(u.getCalle(), u.getBloque(), u.getEstanteria(), u.getEstante(), u.getPosicion());
+			UbicacionEntity ue = new UbicacionEntity(uid, u.getCantidadActual());
 			ues.add(ue);
 		}
 		pe.setUbicaciones(ues);
@@ -104,16 +97,18 @@ public class ProductoDAO {
 		return le;
 	}
 
-	public List<ProductoEntity> findAll() throws ProductoException {
-		// TODO Auto-generated method stub
-		
+	public List<Producto> findAll() throws ProductoException {
 		try
 		{
+			List<Producto> ps = new ArrayList<Producto>();
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<ProductoEntity> lista = (List<ProductoEntity>)s.createQuery("from ProductoEntity").list();
-			return lista;
+			for (ProductoEntity pe : lista)
+				ps.add(productoToNegocio(pe));
+			return ps;
 		}
 		catch (Exception e)
 		{

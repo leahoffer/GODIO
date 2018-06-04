@@ -42,6 +42,16 @@ public class UbicacionId implements Serializable{
 	public void setPosicion(int posicion) {
 		this.posicion = posicion;
 	}
+	public UbicacionId(String calle, int bloque, int estanteria, int estante, int posicion) {
+		super();
+		this.calle = calle;
+		this.bloque = bloque;
+		this.estanteria = estanteria;
+		this.estante = estante;
+		this.posicion = posicion;
+	}
+	public UbicacionId() {
+	}
 
 	
 	

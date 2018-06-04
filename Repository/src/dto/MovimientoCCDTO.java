@@ -36,7 +36,6 @@ public class MovimientoCCDTO implements Serializable {
 	}
 	public MovimientoCCDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

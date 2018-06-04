@@ -76,10 +76,6 @@ public class Factura {
 		}
 		return total;
 	}
-	public void saveMe() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 	
