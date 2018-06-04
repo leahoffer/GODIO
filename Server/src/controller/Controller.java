@@ -41,6 +41,7 @@ public class Controller {
 
 	private static Controller instance;
 	private List<Cliente> clientes;
+	private List<Pedido> pedidos;
 	
 	
 	public static Controller getInstance() {
@@ -50,11 +51,8 @@ public class Controller {
 	}
 	
 	private Controller() {
-		/**
-		 * Ver si no tenemos ganas de crearlo con algo particular, o lo creamos así vacío sin nada.
-		 * Pero es Singleton así que sale constructor privado
-		 */
 		clientes = new ArrayList<Cliente>();
+		pedidos = new ArrayList<Pedido>();
 	}
 
 	public void crearCliente(ClienteDTO c) throws ClienteException  {
@@ -75,9 +73,9 @@ public class Controller {
 		List<DetallePedido> detalles = new ArrayList<DetallePedido>();
 		for (DetallePedidoDTO ddto : p.getDetalle())
 		{ 
-			DetallePedido pedc = new DetallePedido(ddto.getCantidad(), ProductoDAO.getInstance().findById(ddto.getProducto().getCodBarras()));
-			pedc.calcularSubTotal();
-			detalles.add(pedc);
+			DetallePedido dp = new DetallePedido(ddto.getCantidad(), Almacen.getInstance().giveMeAProduct(ddto.getProducto().getCodBarras()));
+			dp.calcularSubTotal();
+			detalles.add(dp);
 		}
 		Pedido pedido = new Pedido();
 		pedido.setDetalle(detalles);
@@ -126,36 +124,7 @@ public class Controller {
 		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
 		List<Pedido> ps = PedidoDAO.getInstance().traerPedidosPendientes();
 		for (Pedido p : ps)
-		{
-			PedidoDTO pdto = new PedidoDTO();
-			List<DetallePedidoDTO> dpdtos = new ArrayList<DetallePedidoDTO>();
-			pdto.setAclaracionEspecial(p.getAclaracionEspecial());
-			pdto.setDespachable(p.isDespachable());
-			pdto.setDir_entrega(p.getDir_entrega());
-			pdto.setEstado(p.getEstado().toString());
-			pdto.setFecha(p.getFecha());
-			pdto.setFecha_despacho(p.getFecha_despacho());
-			pdto.setMotivoEstado(p.getMotivoEstado());
-			pdto.setNroPedido(p.getNroPedido());
-			pdto.setTotal_bruto(p.getTotal_bruto());
-			for (DetallePedido dp : p.getDetalle())
-			{
-				DetallePedidoDTO dpdto = new DetallePedidoDTO();
-				ProductoDTO prdto = new ProductoDTO();
-				dpdto.setCantidad(dp.getCantidad());
-				dpdto.setSubtotal(dp.getSubtotal());
-				prdto.setCantAComprar(dp.getProducto().getCantAComprar());
-				prdto.setCantPosicion(dp.getProducto().getCantPosicion());
-				prdto.setCodBarras(dp.getProducto().getCodBarras());
-				prdto.setDescripcion(dp.getProducto().getDescripcion());
-				prdto.setEstado(dp.getProducto().getEstado().toString());
-				prdto.setPresentacion(dp.getProducto().getPresentacion().toString());
-				dpdto.setProducto(prdto);
-				dpdtos.add(dpdto);
-			}
-			pdto.setDetalle(dpdtos);
-			pdtos.add(pdto);
-		}
+			pdtos.add(p.toDTO());
 		return pdtos;
 	}
 	

@@ -12,6 +12,14 @@ public class Reserva {
 	private Pedido pedido;
 	private boolean completa;
 	private Date fecha;
+	public Reserva(Producto producto, int cantidad, Pedido pedido, boolean completa, Date fecha) {
+		super();
+		this.producto = producto;
+		this.cantidad = cantidad;
+		this.pedido = pedido;
+		this.completa = completa;
+		this.fecha = fecha;
+	}
 	public Reserva() {
 		this.producto = new Producto();
 		this.pedido = new Pedido();

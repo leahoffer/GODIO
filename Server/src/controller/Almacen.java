@@ -41,68 +41,12 @@ public class Almacen {
 	}
 
 	public void createReserva(Pedido p, DetallePedido dp, int cantidad) {
-		Reserva r = new Reserva();
-		Date fecha = new Date();
-		r.setCantidad(cantidad);
-		r.setCompleta(false);
-		r.setFecha(fecha);
-		r.setPedido(p);
-		r.setProducto(dp.getProducto());
+		Reserva r = new Reserva(dp.getProducto(), cantidad, p, false, new Date());
 		r.createMe();
 	}
 
-	public OrdenPedido buscarOPConDisponibilidad(Producto p) {
-		OrdenPedido op = Compras.getInstance().buscarOPConDisponibilidad(p);
-		return op;
-	}
 
-
-	public void crearOrdenPedido(Pedido p, DetallePedido dp, int i) {
-		OrdenPedido op = new OrdenPedido();
-		op.setEstado(EstadoOP.Pendiente);
-		op.setPedidoOrigen(p);
-		op.setProducto(dp.getProducto());
-		op.setCantidadPedida(calcularCantidadAPedir(i, dp.getProducto()));
-		op.createMe();
-	}
-
-	private int calcularCantidadAPedir(int i, Producto producto) {
-		int cantidad = 0;
-		while (cantidad < i)
-		{
-			cantidad = cantidad + producto.getCantAComprar();
-		}
-		return cantidad;
-	}
-
-	public int devolverStockProducto(Producto producto) {
-		List<Ubicacion> ubicaciones = producto.getUbicaciones();
-		List<Reserva> reservas = AlmacenDAO.getInstance().reservasProducto(producto);
-		int cantidadStock = 0;
-		for (Ubicacion u : ubicaciones)
-		{
-			cantidadStock=cantidadStock+u.getCantidadActual();
-		}
-		for (Reserva r : reservas)
-		{
-			if (!r.isCompleta())
-			{
-				cantidadStock = cantidadStock - r.getCantidad();
-			}
-		}
-		return cantidadStock;
-		
-	}
-
-	public void updateOP(OrdenPedido op) {
-		ComprasDAO.getInstance().updateOP(op);
-		
-	}
-
-	public void createOP(OrdenPedido op) {
-		ComprasDAO.getInstance().createOP(op);
-		
-	}
+	
 
 	public Ubicacion traerUbicacion(String calle, int bloque, int estanteria, int estante, int posicion) {
 		for (Ubicacion u : this.ubicaciones)

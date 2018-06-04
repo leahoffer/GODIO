@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import business.DetallePedido;
 import business.MovimientoReserva;
 import business.OrdenPedido;
 import business.Pedido;
@@ -70,7 +71,36 @@ public class Compras {
 	}
 
 	public OrdenPedido buscarOPConDisponibilidad(Producto p) {
-		return ComprasDAO.getInstance().buscarOPConDisponibilidad(p);
+		OrdenPedido op = ComprasDAO.getInstance().buscarOPConDisponibilidad(p);
+		return op;
 	}
 	
+	public void crearOrdenPedido(Pedido p, DetallePedido dp, int i) {
+		OrdenPedido op = new OrdenPedido();
+		op.setEstado(EstadoOP.Pendiente);
+		op.setPedidoOrigen(p);
+		op.setProducto(dp.getProducto());
+		op.setCantidadPedida(calcularCantidadAPedir(i, dp.getProducto()));
+		op.createMe();
+	}
+	
+	private int calcularCantidadAPedir(int i, Producto producto) {
+		int cantidad = 0;
+		while (cantidad < i)
+		{
+			cantidad = cantidad + producto.getCantAComprar();
+		}
+		return cantidad;
+	}
+	
+	
+	public void updateOP(OrdenPedido op) {
+		ComprasDAO.getInstance().updateOP(op);
+		
+	}
+
+	public void createOP(OrdenPedido op) {
+		ComprasDAO.getInstance().createOP(op);
+		
+	}
 }

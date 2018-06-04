@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import controller.Almacen;
+import controller.Compras;
 import dao.PedidoDAO;
 import dto.BonificacionDTO;
 import dto.CondicionDTO;
@@ -217,7 +218,7 @@ public class Pedido {
 		boolean resultado = true;
 		for (DetallePedido dp : this.getDetalle())
 		{
-			int sd = Almacen.getInstance().devolverStockProducto(dp.getProducto());
+			int sd = dp.getProducto().devolverStockProducto();
 			//Si tengo Stock disponible, reservo y listo. Almacén se encarga de updatear el stock y eso.
 			if (sd>dp.getCantidad())
 			{
@@ -230,7 +231,7 @@ public class Pedido {
 				if (sd > 0)
 				{
 					Almacen.getInstance().createReserva(this, dp, sd);
-					OrdenPedido op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+					OrdenPedido op = Compras.getInstance().buscarOPConDisponibilidad(dp.getProducto());
 					//Todo esto mientras haya una OP con disponibilidad. Sino voy a tener que hacer una nueva de 0 y reservarle el 100%
 					if (op != null)
 					{
@@ -246,8 +247,8 @@ public class Pedido {
 							op.agregarMovimientoReserva(reservadoOP, this);
 							op.setEstado(EstadoOP.Reservada);
 							op.updateMe();
-							Almacen.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd-reservadoOP);
-							op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+							Compras.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd-reservadoOP);
+							op = Compras.getInstance().buscarOPConDisponibilidad(dp.getProducto());
 							op.agregarMovimientoReserva(dp.getCantidad()-sd-reservadoOP, this);
 						}
 					}
@@ -255,15 +256,15 @@ public class Pedido {
 					else 
 					{
 						//Creo que esto está bien... que el crearOrdenPedido no genere el movimientoReserva.
-						Almacen.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd);
-						op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+						Compras.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd);
+						op = Compras.getInstance().buscarOPConDisponibilidad(dp.getProducto());
 						op.agregarMovimientoReserva(dp.getCantidad()-sd, this);
 					}
 				}
 				//Si no puedo completar, y aparte no hay NADA de stock, voy directamente a ver si tengo para reservarle a una OP
 				else if (sd == 0)
 				{
-					OrdenPedido op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+					OrdenPedido op = Compras.getInstance().buscarOPConDisponibilidad(dp.getProducto());
 					//Si hay una OP con disponibilidad...
 					if (op != null)
 					{
@@ -279,16 +280,16 @@ public class Pedido {
 							op.agregarMovimientoReserva(reservadoOP,this);
 							op.setEstado(EstadoOP.Reservada);
 							op.updateMe();
-							Almacen.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-reservadoOP);
-							op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+							Compras.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-reservadoOP);
+							op = Compras.getInstance().buscarOPConDisponibilidad(dp.getProducto());
 							op.agregarMovimientoReserva(dp.getCantidad()-sd-reservadoOP, this);
 						}
 					}
 					//No solo no tengo nada de stock sino que no tengo OP con disponibilidad. Caso más horrible.
 					else
 					{
-						Almacen.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd);
-						op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+						Compras.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd);
+						op = Compras.getInstance().buscarOPConDisponibilidad(dp.getProducto());
 						op.agregarMovimientoReserva(dp.getCantidad(), this);
 					}
 				}

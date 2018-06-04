@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import controller.Almacen;
+import controller.Compras;
 import dao.AlmacenDAO;
 import enumeration.EstadoOP;
 
@@ -103,7 +104,7 @@ public class OrdenPedido {
 	}
 
 	public void updateMe() {
-		Almacen.getInstance().updateOP(this);
+		Compras.getInstance().updateOP(this);
 		
 	}
 
@@ -118,7 +119,7 @@ public class OrdenPedido {
 	}
 
 	public void createMe() {
-		Almacen.getInstance().createOP(this);		
+		Compras.getInstance().createOP(this);		
 	}
 	
 	

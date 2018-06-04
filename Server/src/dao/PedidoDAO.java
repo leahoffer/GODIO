@@ -53,8 +53,6 @@ public class PedidoDAO {
 		}
 	}
 	
-	
-
 	public PedidoEntity pedidoToEntity(Pedido ped) {
 		ClienteEntity ce = ClienteDAO.getInstance().clienteToEntity(ped.getCliente());
 		PedidoEntity pe = new PedidoEntity();
