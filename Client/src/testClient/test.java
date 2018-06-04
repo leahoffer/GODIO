@@ -189,7 +189,7 @@ public class test {
 		        entrada = entradaEscaner.nextLine ();
 		        if (entrada.equals("SI"))
 		        	{
-		        		BusinessDelegate.getInstance().autorizarPedido(4);
+		        		BusinessDelegate.getInstance().autorizarPedido(3);
 		        		System.out.print("Pedido Autorizado!");
 		        	}
 		        else
@@ -203,6 +203,12 @@ public class test {
 				 	BusinessDelegate.getInstance().completarOP(3);
 				 	System.out.print("Orden de Pedido cerrada.");
 				}
+			 
+			 if (entradaTeclado.equals("9"))
+			 {
+				 BusinessDelegate.getInstance().despacharPedido(3);
+				 System.out.print("Pedido despachado.");
+			 }
 
 	}
 			 

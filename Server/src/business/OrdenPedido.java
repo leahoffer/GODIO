@@ -32,6 +32,8 @@ public class OrdenPedido {
 		this.pedidoOrigen = p;
 		this.producto = pr;
 		this.cantidadPedida = calcularCantidadAPedir(i, pr);
+		this.ultimosTresProv = new ArrayList<Proveedor>();
+		this.movReserva = new ArrayList<MovimientoReserva>();
 	}
 	
 	
@@ -143,6 +145,98 @@ public class OrdenPedido {
 	public void cerrar() {
 		this.estado = EstadoOP.Completa;
 		this.updateMe();
+		Producto p=this.getProducto();
+		int cantidad = this.getCantidadPedida();
+		
+		if (p.getUbicaciones().isEmpty())
+		{
+			Ubicacion u= Almacen.getInstance().traerPrimeraUbicacionVacia();
+			if (cantidad<p.getCantPosicion())
+			{ 
+				u.setCantidadActual(cantidad);
+				p.getUbicaciones().add(u);
+				p.updateMe();
+			}
+			else
+			{ 
+				u.setCantidadActual(p.getCantPosicion());
+				int cantaux = cantidad - p.getCantPosicion();
+				p.getUbicaciones().add(u);
+				p.updateMe();
+				
+				while (cantaux>=p.getCantPosicion())
+				{ 
+					Ubicacion uaux =Almacen.getInstance().traerPrimeraUbicacionVacia();
+					uaux.setCantidadActual(p.getCantPosicion());
+					cantaux = cantaux - p.getCantPosicion();
+					p.getUbicaciones().add(uaux);
+					p.updateMe();
+				}
+				if (cantaux>0)
+				{ 	Ubicacion uaux =Almacen.getInstance().traerPrimeraUbicacionVacia();
+					uaux.setCantidadActual(p.getCantPosicion());
+					u.setCantidadActual(cantaux);
+					p.getUbicaciones().add(uaux);
+					p.updateMe();
+				}
+
+				
+			}
+			
+		}
+		else
+		{ 
+			List<Ubicacion> ubicacionesProd = p.getUbicaciones();
+			int cantaux2 = cantidad;
+			for (Ubicacion ub: ubicacionesProd)
+			{ 
+				if (ub.getCantidadActual()<p.getCantPosicion())
+				{
+					if ((cantaux2+ub.getCantidadActual())>p.getCantPosicion())
+					{
+						cantaux2=cantaux2-ub.getCantidadActual();
+						ub.setCantidadActual(p.getCantPosicion());
+						p.getUbicaciones().add(ub);
+						p.updateMe();
+						
+					}
+				}
+			}
+			Ubicacion u= Almacen.getInstance().traerPrimeraUbicacionVacia();
+			if (cantaux2<p.getCantPosicion())
+			{ 
+				u.setCantidadActual(cantidad);
+				p.getUbicaciones().add(u);
+				p.updateMe();
+			}
+			else
+			{ 
+				u.setCantidadActual(p.getCantPosicion());
+				cantaux2 = cantaux2 - p.getCantPosicion();
+				p.getUbicaciones().add(u);
+				p.updateMe();
+				
+				while (cantaux2>=p.getCantPosicion())
+				{ 
+					Ubicacion uaux =Almacen.getInstance().traerPrimeraUbicacionVacia();
+					uaux.setCantidadActual(p.getCantPosicion());
+					cantaux2 = cantaux2 - p.getCantPosicion();
+					p.getUbicaciones().add(uaux);
+					p.updateMe();
+				}
+				if (cantaux2>0)
+				{ 	Ubicacion uaux =Almacen.getInstance().traerPrimeraUbicacionVacia();
+					uaux.setCantidadActual(cantaux2);
+					p.getUbicaciones().add(uaux);
+					p.updateMe();
+				}
+
+				
+			}
+		}
+		
+		
+		
 		if (!this.movReserva.isEmpty())
 		{
 			for (MovimientoReserva mr : this.movReserva)
@@ -153,6 +247,8 @@ public class OrdenPedido {
 				revalidarPedido(mr.getPedido());
 			}
 		}
+		this.updateMe();
+		
 		
 	}
 	

@@ -8,6 +8,17 @@ public class ItemFactura {
 	private int cantidad;
 	private Producto producto;
 	
+	public ItemFactura(float subtotal, int cantidad, Producto producto) {
+		super();
+		this.subtotal = subtotal;
+		this.cantidad = cantidad;
+		this.producto = producto;
+	}
+
+	public ItemFactura() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void calcularSubtotal()
 	{
 		subtotal=producto.getPrecio()*cantidad;

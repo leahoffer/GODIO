@@ -238,8 +238,8 @@ public class Almacen {
 	
 	
 	
-	@SuppressWarnings("unused")
-	private Ubicacion traerPrimeraUbicacionVacia() {
+	
+	public Ubicacion traerPrimeraUbicacionVacia() {
 		return AlmacenDAO.getInstance().traerPrimeraUbicacionVacia();
 	}
 

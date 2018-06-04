@@ -14,6 +14,17 @@ public class Factura {
 	private float total;
 	private List<ItemFactura> items;
 	private float cancelado;
+	
+	
+	public Factura(int nro, TipoFactura tipo, Cliente cliente, float total, List<ItemFactura> items, float cancelado) {
+		super();
+		this.nro = nro;
+		this.tipo = tipo;
+		this.cliente = cliente;
+		this.total = total;
+		this.items = new ArrayList<ItemFactura>();
+		this.cancelado = cancelado;
+	}
 	public Factura() {
 		this.cliente = new Cliente();
 		this.items = new ArrayList<ItemFactura>();
