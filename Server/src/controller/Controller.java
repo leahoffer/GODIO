@@ -50,11 +50,15 @@ public class Controller {
 		return instance;
 	}
 	
+	
+	
 	private Controller() {
 		clientes = new ArrayList<Cliente>();
 		pedidos = new ArrayList<Pedido>();
 	}
 
+	
+	
 	public void crearCliente(ClienteDTO c) throws ClienteException  {
 		if(ClienteDAO.getInstance().findByCuit(c.getCuit()) == null)
 		{
@@ -66,6 +70,8 @@ public class Controller {
 		else
 			throw new ClienteException("Cliente ya creado");
 	}
+	
+	
 	
 	public void crearPedido (PedidoDTO p) throws ClienteException, ProductoException
 	{
@@ -92,15 +98,8 @@ public class Controller {
 		
 	}
 
-
-	public List<ProductoDTO> listarProductos() throws ProductoException
-	{
-		List<Producto> ps = Almacen.getInstance().findAllProducts();
-		List <ProductoDTO> prodsvo = new ArrayList<ProductoDTO>();
-		for (Producto p : ps) 
-			prodsvo.add(p.toDTO());		
-		return prodsvo;
-	}
+	
+	
 	
 	private Cliente buscarCliente (String cuit) throws ClienteException
 	{
@@ -114,11 +113,15 @@ public class Controller {
 		return cliente;
 	}
 	
+	
+	
 	@Override
 	public boolean equals(Object obj) {
 		return super.equals(obj);
 	}
 
+	
+	
 	public List<PedidoDTO> listarPedidosPendientes ()
 	{
 		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
@@ -127,6 +130,8 @@ public class Controller {
 			pdtos.add(p.toDTO());
 		return pdtos;
 	}
+	
+	
 	
 	public String validarCreditoCliente(int nropedido) 
 	{
@@ -137,6 +142,8 @@ public class Controller {
 		else
 			return "El Cliente "+c.getRazon_social()+" CUIT "+c.getCuit()+" no tiene límite suficiente para hacer este pedido. Autorizar (SI/NO)?";
 	}
+	
+	
 	
 	public void autorizarPedido (int nro)
 	{
@@ -240,13 +247,16 @@ public class Controller {
 		return resultado;
 	}*/
 
+	
+	
 	public ClienteDTO mostrarCliente(String cuit) throws ClienteException {
 			Cliente c= this.buscarCliente(cuit);
 			return c.toDTO();
 	}
 
+	
+	
 	public void modificarCliente(ClienteDTO cdto) throws ClienteException {
-		// TODO Auto-generated method stub
 		Cliente c= this.buscarCliente(cdto.getCuit());
 		c.modify(cdto.getCuit(), cdto.getRazon_social(), cdto.getTelefono(), cdto.getDireccion(), cdto.isR_inscripto(), cdto.getCondicionEsp());
 		//No tiene en cuenta ni cuenta corriente ni Movimientos. Es solo para updatear datos personales//	
@@ -254,11 +264,10 @@ public class Controller {
 	}
 
 
-	public ProductoDTO mostrarProducto(String codbarras) {
-		// TODO Auto-generated method stub
-		Producto p = Almacen.getInstance().giveMeAProduct(codbarras);
-		return p.toDTO();
-	}
+	
+	
+	
+	
 	
 	public List<UbicacionDTO> despacharPedido (PedidoDTO pdto)
 	{
@@ -275,6 +284,7 @@ public class Controller {
 	}
 
 	
+	
 	public List<PedidoDTO> listarPedidosPendientesDespacho(){
 		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
 		List<Pedido> pps = PedidoDAO.getInstance().traerPedidosPendientesDespacho();
@@ -286,46 +296,6 @@ public class Controller {
 		return pdtos;
 	}
 
-	
-	/*
-	public void cerrarOP(int nroOP){
-		OrdenPedido op = AlmacenDAO.getInstance().findOPByNro(nroOP);
-		op.setEstado(EstadoOP.Completa);
-		op.updateMe();
-		if (!op.getMovReserva().isEmpty())
-		{
-			for (MovimientoReserva mr : op.getMovReserva())
-			{
-				Reserva r = Almacen.getInstance().convertirMovimientoReserva(mr, op.getProducto());
-				r.createMe();
-				mr.setCompleta(true);
-				revalidarPedido(mr.getPedido());
-			}
-		}
-		
-	}
-
-	private void revalidarPedido(Pedido pedido) {
-		boolean completoONo = true;
-		List<OrdenPedido> ordenesPendientes = AlmacenDAO.getInstance().buscarOPSPendientesOReservadas();
-		if(!ordenesPendientes.isEmpty())
-		{
-			for (OrdenPedido op : ordenesPendientes)
-			{
-				for (MovimientoReserva mr : op.getMovReserva())
-				{
-					if (mr.getPedido().getNroPedido() == pedido.getNroPedido())
-						completoONo = false;
-				}
-			}
-		}
-		if (completoONo)
-		{
-			pedido.setEstado(EstadoPedido.PendienteDespacho);
-			pedido.update();
-		}
-	}
-	*/
 	
 	
 	

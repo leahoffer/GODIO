@@ -104,6 +104,7 @@ public class ProductoDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<ProductoEntity> lista = (List<ProductoEntity>)s.createQuery("from ProductoEntity").list();
 			for (ProductoEntity pe : lista)
 				ps.add(productoToNegocio(pe));

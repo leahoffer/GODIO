@@ -147,7 +147,6 @@ public class PedidoEntity {
 
 	public PedidoEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

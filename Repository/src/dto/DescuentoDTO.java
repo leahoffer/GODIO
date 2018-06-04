@@ -17,7 +17,6 @@ public class DescuentoDTO extends CondicionDTO implements Serializable{
 	}
 	public DescuentoDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 }

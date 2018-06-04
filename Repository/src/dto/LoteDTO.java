@@ -29,7 +29,6 @@ public class LoteDTO implements Serializable{
 		this.precioventa = precioventa;
 	}
 	public LoteDTO() {
-		// TODO Auto-generated constructor stub
 	}
 	public float getPrecio() {
 		return precio;

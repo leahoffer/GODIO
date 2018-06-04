@@ -9,7 +9,6 @@ public abstract class Condicion {
 	
 	public Condicion() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getCondicion() {

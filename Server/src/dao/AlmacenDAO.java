@@ -16,13 +16,11 @@ import business.Ubicacion;
 import entity.MovimientoReservaEntity;
 import entity.MovimientoStockEntity;
 import entity.OrdenPedidoEntity;
-import entity.ProductoEntity;
 import entity.ReservaEntity;
 import entity.UbicacionEntity;
 import entity.UbicacionId;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
-import exception.ProductoException;
 import hibernate.HibernateUtil;
 
 public class AlmacenDAO {
@@ -82,6 +80,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<MovimientoStockEntity> mses = (List<MovimientoStockEntity>)s.createQuery("from MovimientoStockEntity mse where mse.producto.codBarras = '" + p.getCodBarras()+"'").list();
 			for (MovimientoStockEntity mse : mses)
 			{
@@ -110,6 +109,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List <ReservaEntity> res = (List<ReservaEntity>) s.createQuery("from ReservaEntity re where producto.codBarras = '"+p.getCodBarras()+"'").list();
 			for (ReservaEntity re : res)
 			{
@@ -275,13 +275,13 @@ public class AlmacenDAO {
 		}
 	}
 	public List<Ubicacion> traerTodasLasUbicaciones() {
-		// TODO Auto-generated method stub
 		try
 		{
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
-			List<UbicacionEntity> lista = s.createQuery("from UbicacionEntity").list();
+			@SuppressWarnings("unchecked")
+			List<UbicacionEntity> lista = (List<UbicacionEntity>) s.createQuery("from UbicacionEntity").list();
 			List<Ubicacion> listafinal = new ArrayList<Ubicacion>();			
 			for (UbicacionEntity ue: lista)
 			{ 
@@ -299,7 +299,6 @@ public class AlmacenDAO {
 		return null;
 	}
 	private Ubicacion UbicacionToNegocio(UbicacionEntity ue) {
-		// TODO Auto-generated method stub
 		Ubicacion u = new Ubicacion();
 		u.setBloque(ue.getIdUbicacion().getBloque());
 		u.setCalle(ue.getIdUbicacion().getCalle());
@@ -310,11 +309,11 @@ public class AlmacenDAO {
 		return u;
 	}
 	public Ubicacion traerPrimeraUbicacionVacia() {
-		// TODO Auto-generated method stub
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.openSession();
 		s.beginTransaction();
-		List<UbicacionEntity> lista = s.createQuery("from UbicacionEntity ue where ue.cantidadActual=0").list();
+		@SuppressWarnings("unchecked")
+		List<UbicacionEntity> lista = (List<UbicacionEntity>) s.createQuery("from UbicacionEntity ue where ue.cantidadActual=0").list();
 		List<Ubicacion> listafinal = new ArrayList<Ubicacion>();			
 		for (UbicacionEntity ue: lista)
 		{ 
@@ -371,6 +370,7 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.beginTransaction();
+			@SuppressWarnings("unchecked")
 			List<OrdenPedidoEntity> ordenes = (List<OrdenPedidoEntity>) s.createQuery("from OrdenPedidoEntity ope where ope.estado='Pendiente' or ope.estado='Reservada'").list();
 			for (OrdenPedidoEntity ope : ordenes)
 			{

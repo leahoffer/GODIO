@@ -17,7 +17,6 @@ public class BonificacionDTO extends CondicionDTO implements Serializable{
 	}
 	public BonificacionDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

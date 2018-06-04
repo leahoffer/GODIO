@@ -64,7 +64,6 @@ public class ClienteDTO implements Serializable{
 	
 	public ClienteDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	

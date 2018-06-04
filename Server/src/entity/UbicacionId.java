@@ -51,7 +51,6 @@ public class UbicacionId implements Serializable{
 		this.posicion = posicion;
 	}
 	public UbicacionId() {
-		// TODO Auto-generated constructor stub
 	}
 
 	

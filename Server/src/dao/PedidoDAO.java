@@ -47,7 +47,6 @@ public class PedidoDAO {
 			System.out.println("Pedido guardado!");
 			s.flush();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println("Error al guardar el Pedido");
 			e.printStackTrace();
 		}
@@ -127,6 +126,7 @@ public class PedidoDAO {
 			List<Pedido> ps = new ArrayList<Pedido>();
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
+			@SuppressWarnings("unchecked")
 			List <PedidoEntity> pes = (List<PedidoEntity>) s.createQuery("from PedidoEntity pe where pe.estado = 'PendienteAutorizacion'").list();
 			for (PedidoEntity pe : pes)
 			{
@@ -245,6 +245,7 @@ public class PedidoDAO {
 			List<Pedido> ps = new ArrayList<Pedido>();
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
+			@SuppressWarnings("unchecked")
 			List <PedidoEntity> pes = (List<PedidoEntity>) s.createQuery("from PedidoEntity pe where pe.estado = 'PendienteDespacho'").list();
 			for (PedidoEntity pe : pes)
 			{

@@ -62,7 +62,6 @@ public class Ubicacion {
 		return udto;
 	}
 	public boolean soyLaUbicacion(Ubicacion ub) {
-		// TODO Auto-generated method stub
 		if (ub.getBloque()==this.bloque)
 		{
 			if (ub.getCalle().equalsIgnoreCase(this.getCalle()))
@@ -79,8 +78,20 @@ public class Ubicacion {
 				}
 			}
 		}
-		
 		return false;
 	}
+	public Ubicacion(String calle, int bloque, int estanteria, int estante, int posicion) {
+		super();
+		this.calle = calle;
+		this.bloque = bloque;
+		this.estanteria = estanteria;
+		this.estante = estante;
+		this.posicion = posicion;
+	}
+	public Ubicacion() {
+	}
+	
+	
+	
 	
 }

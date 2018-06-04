@@ -13,7 +13,6 @@ import dto.DescuentoDTO;
 import dto.DetallePedidoDTO;
 import dto.FacturaDTO;
 import dto.PedidoDTO;
-import dto.UbicacionDTO;
 import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
 import enumeration.TipoFactura;
@@ -164,7 +163,6 @@ public class Pedido {
 
 
 	public void saveOrUpdate() {
-		// TODO Auto-generated method stub
 		PedidoDAO.getInstance().createOrUpdate(this);
 	}
 

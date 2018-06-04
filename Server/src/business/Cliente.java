@@ -124,7 +124,6 @@ public class Cliente {
 	}
 
 	public void saveOrUpdate() {
-		// TODO Auto-generated method stub
 		ClienteDAO.getInstance().createOrUpdate(this);
 	}
 

@@ -1,7 +1,6 @@
 package businessdelegate;
 
 import java.rmi.Naming;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
@@ -48,7 +47,6 @@ public class BusinessDelegate implements TDABusiness {
 
 	@Override
 	public void crearPedido(PedidoDTO p) throws RemoteException, ClienteException, ProductoException {
-		// TODO Auto-generated method stub
 		RemoteObject.crearPedido(p);
 	}
 
@@ -64,43 +62,35 @@ public class BusinessDelegate implements TDABusiness {
 	}
 
 	public ClienteDTO traerCliente(String cuit) throws RemoteException, ClienteException {
-		// TODO Auto-generated method stub
 		return RemoteObject.traerCliente(cuit);
 	}
 
 	public void modificarCliente(ClienteDTO c) throws RemoteException, ClienteException {
-		// TODO Auto-generated method stub
 		RemoteObject.modificarCliente(c);
 	}
 
 	public ProductoDTO mostrarProducto(String codbarras) throws RemoteException {
-		// TODO Auto-generated method stub
 		return RemoteObject.mostrarProducto(codbarras);
 	}
 
 	public List<UbicacionDTO> traerUbicaciones() throws RemoteException {
-		// TODO Auto-generated method stub
 		return RemoteObject.traerUbicaciones();
 	}
 
 	public void agregarAjusteStock(String producto, String tipo, UbicacionDTO u, String motivo, int cantidad,
 			String responsable) throws RemoteException {
-		// TODO Auto-generated method stub
 		RemoteObject.agregarAjusteStock(producto, tipo, u, motivo, cantidad, responsable);
 	}
 
 	public void autorizarPedido(int nropedido) throws RemoteException {
-		// TODO Auto-generated method stub
 		RemoteObject.autorizarPedido(nropedido);
 	}
 
 	public String validarCreditoCliente(int nropedido) throws RemoteException {
-		// TODO Auto-generated method stub
 		return RemoteObject.validarCreditoCliente(nropedido);
 	}
 
 	public void completarOP(int nro) throws RemoteException {
-		// TODO Auto-generated method stub
 		RemoteObject.completarOP(nro);
 	}
 

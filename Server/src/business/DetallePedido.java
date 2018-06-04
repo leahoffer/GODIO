@@ -16,7 +16,6 @@ public class DetallePedido {
 
 	public DetallePedido() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public float getSubtotal() {
 		return subtotal;

@@ -21,7 +21,6 @@ import exception.ProductoException;
 public class test {
 
 	public static void main(String[] args) throws RemoteException, ProductoException {
-		// TODO Auto-generated method stub
 
 	    
 	    
@@ -68,7 +67,6 @@ public class test {
 				BusinessDelegate.getInstance().crearCliente(cliente);
 				System.out.println("Cliente Creado Con Éxito!");
 			} catch (ClienteException e) {
-				// TODO Auto-generated catch block
 				System.out.println(	e.getMessage());
 			}
 			
@@ -101,7 +99,6 @@ public class test {
 				c.setTelefono("Telefono Modificado");
 				BusinessDelegate.getInstance().modificarCliente(c);
 			} catch (ClienteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			  
@@ -166,7 +163,6 @@ public class test {
 					BusinessDelegate.getInstance().crearPedido(pedido);
 					
 				} catch (ClienteException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				

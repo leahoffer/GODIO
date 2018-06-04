@@ -7,39 +7,38 @@ import java.util.List;
 import business.DetallePedido;
 import business.MovimientoReserva;
 import business.MovimientoStock;
-import business.OrdenPedido;
 import business.Pedido;
 import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
-import dao.ComprasDAO;
 import dao.ProductoDAO;
 import dto.ProductoDTO;
 import dto.UbicacionDTO;
-import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
 import exception.ProductoException;
-@SuppressWarnings("unused")
+
 public class Almacen {
 
 	private static Almacen instance;
 	private List<MovimientoStock> movimientos;
 	private List<Ubicacion> ubicaciones;
-	private List<Reserva> reservas;
-	
 	public static Almacen getInstance() {
 		if (instance == null)
 			instance = new Almacen();
 		return instance;
 	}
 	
+	
+	
 	private Almacen() {
 		this.ubicaciones = new ArrayList<Ubicacion>();
-		this.reservas = new ArrayList<Reserva>();
+		new ArrayList<Reserva>();
 		this.movimientos = new ArrayList<MovimientoStock>();
 	}
 
+	
+	
 	public void createReserva(Pedido p, DetallePedido dp, int cantidad) {
 		Reserva r = new Reserva(dp.getProducto(), cantidad, p, false, new Date());
 		r.createMe();
@@ -52,21 +51,16 @@ public class Almacen {
 		for (Ubicacion u : this.ubicaciones)
 		{
 			if (u.getCalle().equals(calle) && u.getBloque()==bloque && u.getEstanteria()==estanteria && u.getEstante()==estante && u.getPosicion()==posicion)
-				return u;
-			
+				return u;	
 		}
-		Ubicacion u = new Ubicacion();
-		u.setCalle(calle);
-		u.setBloque(bloque);
-		u.setEstanteria(estanteria);
-		u.setEstante(estante);
-		u.setPosicion(posicion);
+		Ubicacion u = new Ubicacion(calle, bloque, estanteria, estante, posicion);
 		Ubicacion resultado = AlmacenDAO.getInstance().traerUbicacion(u);
 		return resultado;
 	}
 	
+	
+	
 	public List<UbicacionDTO> mostrarUbicaciones() {
-		// TODO Auto-generated method stub
 		List<Ubicacion> ubicaciones = this.traerUbicaciones();
 		List<UbicacionDTO> ubicacionesdto = new ArrayList<UbicacionDTO>();
 		for (Ubicacion u:ubicaciones)
@@ -83,11 +77,14 @@ public class Almacen {
 		return ubicacionesdto;
 	}
 
+	
+	
 	private List<Ubicacion> traerUbicaciones() {
-		// TODO Auto-generated method stub
 		return AlmacenDAO.getInstance().traerTodasLasUbicaciones();
 	}
 
+	
+	
 	public List<Ubicacion> buscarUbicacionesParaDespachar(Pedido p) {
 		List<Ubicacion> us = new ArrayList<Ubicacion>();
 		for (DetallePedido dp : p.getDetalle())
@@ -142,7 +139,6 @@ public class Almacen {
 
 	/*public void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad,
 			String responsable) {
-		// TODO Auto-generated method stub
 		MovimientoStock ms= new MovimientoStock();
 		Producto p = Controller.getInstance().buscarProducto(codbarra);
 		ms.setCantidad(cantidad);
@@ -248,14 +244,13 @@ public class Almacen {
 	}
 
 */
+	@SuppressWarnings("unused")
 	private Ubicacion traerPrimeraUbicacionVacia() {
-		// TODO Auto-generated method stub
 		return AlmacenDAO.getInstance().traerPrimeraUbicacionVacia();
 	}
 
 	public void agregarAjusteStock(String producto, String tipo, UbicacionDTO udto, String motivo, int cantidad,
 			String responsable) {
-		// TODO Auto-generated method stub
 		Ubicacion u=new Ubicacion();
 		u.setBloque(udto.getBloque());
 		u.setCalle(udto.getCalle());
@@ -336,6 +331,20 @@ public class Almacen {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public ProductoDTO mostrarProducto(String codbarras) {
+		Producto p = Almacen.getInstance().giveMeAProduct(codbarras);
+		return p.toDTO();
+	}
+
+	public List<ProductoDTO> listarProductos() throws ProductoException
+	{
+		List<Producto> ps = Almacen.getInstance().findAllProducts();
+		List <ProductoDTO> prodsvo = new ArrayList<ProductoDTO>();
+		for (Producto p : ps) 
+			prodsvo.add(p.toDTO());		
+		return prodsvo;
 	}
 
 	

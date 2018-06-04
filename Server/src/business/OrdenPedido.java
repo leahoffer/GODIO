@@ -109,7 +109,6 @@ public class OrdenPedido {
 	}
 
 	public int disponible() {
-		// TODO Auto-generated method stub
 		int reservas = 0;
 		for (MovimientoReserva mr : this.getMovReserva())
 		{

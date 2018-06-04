@@ -52,7 +52,6 @@ public class RemitoEntity {
 	}
 	public RemitoEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

@@ -16,7 +16,6 @@ import exception.ProductoException;
 public class test_hibernate {
 
 	public static void main(String[] args) throws RemoteException, ClienteException, ProductoException {
-		// TODO Auto-generated method stub
 
 /*		ClienteDTO cliente=new ClienteDTO();
 		cliente.setCuentaCorriente(new CuentaCorrienteDTO());
@@ -43,7 +42,6 @@ public class test_hibernate {
 		try {
 			Controller.getInstance().crearCliente(cliente);
 		} catch (ClienteException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 		}
 		System.out.println("Cliente Creado Con Éxito!");*/
