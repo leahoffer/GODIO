@@ -7,7 +7,9 @@ import java.util.List;
 import controller.Almacen;
 import controller.Compras;
 import dao.AlmacenDAO;
+import dao.ComprasDAO;
 import enumeration.EstadoOP;
+import enumeration.EstadoPedido;
 
 @SuppressWarnings("unused")
 public class OrdenPedido {
@@ -23,6 +25,23 @@ public class OrdenPedido {
 	public OrdenPedido() {
 		this.ultimosTresProv = new ArrayList<Proveedor>();
 		this.movReserva = new ArrayList<MovimientoReserva>();
+	}
+
+	public OrdenPedido(Pedido p, Producto pr, int i) {
+		this.estado = EstadoOP.Pendiente;
+		this.pedidoOrigen = p;
+		this.producto = pr;
+		this.cantidadPedida = calcularCantidadAPedir(i, pr);
+	}
+	
+	
+	private int calcularCantidadAPedir(int i, Producto producto) {
+		int cantidad = 0;
+		while (cantidad < i)
+		{
+			cantidad = cantidad + producto.getCantAComprar();
+		}
+		return cantidad;
 	}
 
 	public int getNro() {
@@ -119,6 +138,44 @@ public class OrdenPedido {
 
 	public void createMe() {
 		Compras.getInstance().createOP(this);		
+	}
+
+	public void cerrar() {
+		this.estado = EstadoOP.Completa;
+		this.updateMe();
+		if (!this.movReserva.isEmpty())
+		{
+			for (MovimientoReserva mr : this.movReserva)
+			{
+				Reserva r = Almacen.getInstance().convertirMovimientoReserva(mr, this.producto);
+				r.createMe();
+				mr.setCompleta(true);
+				revalidarPedido(mr.getPedido());
+			}
+		}
+		
+	}
+	
+	
+	private void revalidarPedido(Pedido pedido) {
+		boolean completoONo = true;
+		List<OrdenPedido> ordenesPendientes = ComprasDAO.getInstance().buscarOPSPendientesOReservadas();
+		if(!ordenesPendientes.isEmpty())
+		{
+			for (OrdenPedido op : ordenesPendientes)
+			{
+				for (MovimientoReserva mr : op.getMovReserva())
+				{
+					if (mr.getPedido().getNroPedido() == pedido.getNroPedido())
+						completoONo = false;
+				}
+			}
+		}
+		if (completoONo)
+		{
+			pedido.setEstado(EstadoPedido.PendienteDespacho);
+			pedido.update();
+		}
 	}
 	
 	

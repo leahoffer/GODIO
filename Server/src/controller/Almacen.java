@@ -61,19 +61,10 @@ public class Almacen {
 	
 	
 	public List<UbicacionDTO> mostrarUbicaciones() {
-		List<Ubicacion> ubicaciones = this.traerUbicaciones();
+		List<Ubicacion> ubicaciones = traerUbicaciones();
 		List<UbicacionDTO> ubicacionesdto = new ArrayList<UbicacionDTO>();
 		for (Ubicacion u:ubicaciones)
-		{
-			UbicacionDTO udto = new UbicacionDTO();
-			udto.setBloque(u.getBloque());
-			udto.setCalle(u.getCalle());
-			udto.setCantidadActual(u.getCantidadActual());
-			udto.setEstante(u.getEstante());
-			udto.setEstanteria(u.getEstanteria());
-			udto.setPosicion(u.getPosicion());
-			ubicacionesdto.add(udto);
-		}
+			ubicacionesdto.add(u.toDTO());
 		return ubicacionesdto;
 	}
 
@@ -244,20 +235,18 @@ public class Almacen {
 	}
 
 */
+	
+	
+	
 	@SuppressWarnings("unused")
 	private Ubicacion traerPrimeraUbicacionVacia() {
 		return AlmacenDAO.getInstance().traerPrimeraUbicacionVacia();
 	}
 
-	public void agregarAjusteStock(String producto, String tipo, UbicacionDTO udto, String motivo, int cantidad,
-			String responsable) {
-		Ubicacion u=new Ubicacion();
-		u.setBloque(udto.getBloque());
-		u.setCalle(udto.getCalle());
-		u.setEstante(udto.getEstante());
-		u.setEstanteria(udto.getEstanteria());
-		u.setPosicion(udto.getPosicion());
-		
+	
+	
+	public void agregarAjusteStock(String producto, String tipo, UbicacionDTO udto, String motivo, int cantidad, String responsable) {
+		Ubicacion u=new Ubicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());		
 		MovimientoStock ms= new MovimientoStock();
 		Producto p = ProductoDAO.getInstance().findById(producto);
 		
@@ -306,41 +295,32 @@ public class Almacen {
 		
 	}
 
+	
+	
 	public Reserva convertirMovimientoReserva(MovimientoReserva mr, Producto p) {
-		Reserva r = new Reserva();
-		r.setCantidad(mr.getCantidad());
-		r.setCompleta(false);
-		r.setFecha(mr.getFecha());
-		r.setPedido(mr.getPedido());
-		r.setProducto(p);
+		Reserva r = new Reserva(p, mr.getCantidad(), mr.getPedido(), false, mr.getFecha());
 		return r;
 	}
 
+	
+	
 	public Producto giveMeAProduct(String codbarras) {
 		return ProductoDAO.getInstance().findById(codbarras);
 		
 	}
 
-	public List<Producto> findAllProducts() {
-		try
-		{
-			return ProductoDAO.getInstance().findAll();
-		}
-		catch (ProductoException e) 
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
+	
 
 	public ProductoDTO mostrarProducto(String codbarras) {
 		Producto p = Almacen.getInstance().giveMeAProduct(codbarras);
 		return p.toDTO();
 	}
 
+	
+	
 	public List<ProductoDTO> listarProductos() throws ProductoException
 	{
-		List<Producto> ps = Almacen.getInstance().findAllProducts();
+		List<Producto> ps = ProductoDAO.getInstance().findAll();
 		List <ProductoDTO> prodsvo = new ArrayList<ProductoDTO>();
 		for (Producto p : ps) 
 			prodsvo.add(p.toDTO());		

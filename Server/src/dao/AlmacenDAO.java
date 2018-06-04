@@ -7,19 +7,14 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import business.MovimientoReserva;
 import business.MovimientoStock;
-import business.OrdenPedido;
 import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
-import entity.MovimientoReservaEntity;
 import entity.MovimientoStockEntity;
-import entity.OrdenPedidoEntity;
 import entity.ReservaEntity;
 import entity.UbicacionEntity;
 import entity.UbicacionId;
-import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
 import hibernate.HibernateUtil;
 
@@ -32,7 +27,11 @@ public class AlmacenDAO {
 			instance = new AlmacenDAO();
 		return instance;
 	}
+	
 	private AlmacenDAO() {}
+	
+	
+	
 	public void createReserva(Reserva reserva) {
 		try 
 		{
@@ -49,6 +48,9 @@ public class AlmacenDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 	//NO ASIGNA NUMERO POR LAS DUDAS PORQUE CUANDO CREO NO TIENE NUMERO AAAA
 	public ReservaEntity reservaToEntity(Reserva r) {
 		ReservaEntity re = new ReservaEntity();
@@ -61,6 +63,8 @@ public class AlmacenDAO {
 		return re;
 	}
 	
+	
+	
 	public Reserva reservaToNegocio(ReservaEntity re){
 		Reserva r = new Reserva();
 		r.setCantidad(re.getCantidad());
@@ -72,6 +76,8 @@ public class AlmacenDAO {
 		r.setProducto(ProductoDAO.getInstance().productoToNegocio(re.getProducto()));
 		return r;
 	}
+	
+	
 	
 	public List<MovimientoStock> movimientosStockProducto(Producto p) {
 		List<MovimientoStock> mss = new ArrayList<MovimientoStock>();
@@ -102,6 +108,8 @@ public class AlmacenDAO {
 		}
 	}
 	
+	
+	
 	public List<Reserva> reservasProducto(Producto p) {
 		List<Reserva> rs = new ArrayList<Reserva>();
 		try
@@ -126,70 +134,6 @@ public class AlmacenDAO {
 	}
 	
 	
-	/*public void createOP(OrdenPedido op) {
-		try
-		{
-			OrdenPedidoEntity ope = new OrdenPedidoEntity();
-			ope.setCantidadPedida(op.getCantidadPedida());
-			ope.setEstado(op.getEstado().toString());
-			ope.setPedidoOrigen(PedidoDAO.getInstance().pedidoToEntity(op.getPedidoOrigen()));
-			ope.setProducto(ProductoDAO.getInstance().productoToEntity(op.getProducto()));
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session s = sf.openSession();
-			s.beginTransaction();
-			s.save(ope);
-			s.getTransaction().commit();
-			s.flush();
-			s.close();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-	}
-	public void updateOP(OrdenPedido op) {
-		try
-		{
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session s = sf.openSession();
-			s.beginTransaction();
-			s.update(ordenPedidoToEntity(op));
-			s.getTransaction().commit();
-			s.flush();
-			s.close();
-			
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-	}
-	private OrdenPedidoEntity ordenPedidoToEntity(OrdenPedido op) {
-		OrdenPedidoEntity ope = new OrdenPedidoEntity();
-		List<MovimientoReservaEntity> mres = new ArrayList<MovimientoReservaEntity>();
-		ope.setCantidadPedida(op.getCantidadPedida());
-		ope.setEstado(op.getEstado().toString());
-		ope.setNro(op.getNro());
-		ope.setPedidoOrigen(PedidoDAO.getInstance().pedidoToEntity(op.getPedidoOrigen()));
-		ope.setProducto(ProductoDAO.getInstance().productoToEntity(op.getProducto()));
-		for (MovimientoReserva mr : op.getMovReserva())
-		{
-			MovimientoReservaEntity mre = new MovimientoReservaEntity();
-			java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
-			mre.setCantidad(mr.getCantidad());
-			mre.setCompleta(mr.isCompleta());
-			mre.setFecha(sqlDate);
-			mre.setPedido(PedidoDAO.getInstance().pedidoToEntity(mr.getPedido()));
-			if (mr.getNro() != 0)
-				mre.setNro(mr.getNro());
-			mres.add(mre);
-		}
-		ope.setMovReserva(mres);
-		return ope;
-	}*/
-	
 	
 	/*
 	 * SOLO PARA INICIALIZAR. USAR UN TEST PARA CREAR SI NO LAS TENES EN LA BASE
@@ -212,6 +156,8 @@ public class AlmacenDAO {
 		
 	}
 	
+	
+	
 	public void saveMovimientoStock(MovimientoStock movimientoStock) {
 		try
 		{
@@ -231,6 +177,8 @@ public class AlmacenDAO {
 		
 	}
 	
+	
+	
 	private MovimientoStockEntity movimientoStockToEntity(MovimientoStock ms) {
 		MovimientoStockEntity mse = new MovimientoStockEntity();
 		mse.setCantidad(ms.getCantidad());
@@ -240,6 +188,8 @@ public class AlmacenDAO {
 		mse.setTipo(ms.getTipo().toString());
 		return mse;
 	}
+	
+	
 	
 	public Ubicacion traerUbicacion(Ubicacion u) {
 		try
@@ -259,6 +209,8 @@ public class AlmacenDAO {
 		
 	}
 	
+	
+	
 	public void updateUbicacion(Ubicacion u) {
 		try
 		{
@@ -274,6 +226,9 @@ public class AlmacenDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
 	public List<Ubicacion> traerTodasLasUbicaciones() {
 		try
 		{
@@ -298,16 +253,17 @@ public class AlmacenDAO {
 		}
 		return null;
 	}
+	
+	
+	
 	private Ubicacion UbicacionToNegocio(UbicacionEntity ue) {
-		Ubicacion u = new Ubicacion();
-		u.setBloque(ue.getIdUbicacion().getBloque());
-		u.setCalle(ue.getIdUbicacion().getCalle());
+		Ubicacion u = new Ubicacion(ue.getIdUbicacion().getCalle(), ue.getIdUbicacion().getBloque(), ue.getIdUbicacion().getEstanteria(), ue.getIdUbicacion().getEstante(), ue.getIdUbicacion().getPosicion());
 		u.setCantidadActual(ue.getCantidadActual());
-		u.setEstante(ue.getIdUbicacion().getEstante());
-		u.setEstanteria(ue.getIdUbicacion().getEstanteria());
-		u.setPosicion(ue.getIdUbicacion().getPosicion());
 		return u;
 	}
+	
+	
+	
 	public Ubicacion traerPrimeraUbicacionVacia() {
 		SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session s = sf.openSession();
@@ -324,70 +280,6 @@ public class AlmacenDAO {
 		return listafinal.get(0);
 		
 	}
-	public OrdenPedido findOPByNro(int nroOP) {
-		try
-		{
-			OrdenPedidoEntity op;
-			OrdenPedido resultado;
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session s = sf.openSession();
-			s.beginTransaction();
-			op = (OrdenPedidoEntity) s.get(OrdenPedidoEntity.class, nroOP);
-			resultado = ordenPedidoToNegocio(op);
-			s.close();
-			return resultado;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
-	private OrdenPedido ordenPedidoToNegocio(OrdenPedidoEntity ope) {
-		OrdenPedido op = new OrdenPedido();
-		op.setCantidadPedida(ope.getCantidadPedida());
-		op.setEstado(EstadoOP.valueOf(ope.getEstado()));
-		op.setNro(ope.getNro());
-		op.setPedidoOrigen(PedidoDAO.getInstance().pedidoToNegocio(ope.getPedidoOrigen()));
-		op.setProducto(ProductoDAO.getInstance().productoToNegocio(ope.getProducto()));
-		for (MovimientoReservaEntity mre : ope.getMovReserva())
-		{
-			MovimientoReserva mr = new MovimientoReserva();
-			mr.setCantidad(mre.getCantidad());
-			mr.setCompleta(mre.isCompleta());
-			java.util.Date fecha = new java.util.Date(mre.getFecha().getTime());
-			mr.setFecha(fecha);
-			mr.setNro(mre.getNro());
-			mr.setPedido(PedidoDAO.getInstance().pedidoToNegocio(mre.getPedido()));
-			op.getMovReserva().add(mr);
-		}
-		return op;
-	}
-	public List<OrdenPedido> buscarOPSPendientesOReservadas() {
-		try
-		{
-			List<OrdenPedido> resultado = new ArrayList<OrdenPedido>();
-			SessionFactory sf = HibernateUtil.getSessionFactory();
-			Session s = sf.openSession();
-			s.beginTransaction();
-			@SuppressWarnings("unchecked")
-			List<OrdenPedidoEntity> ordenes = (List<OrdenPedidoEntity>) s.createQuery("from OrdenPedidoEntity ope where ope.estado='Pendiente' or ope.estado='Reservada'").list();
-			for (OrdenPedidoEntity ope : ordenes)
-			{
-				resultado.add(ordenPedidoToNegocio(ope));
-			}
-			return resultado;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-
-
-
 	
 	
 	
