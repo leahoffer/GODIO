@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import org.hibernate.transaction.BTMTransactionManagerLookup;
-
 import dto.CuentaCorrienteDTO;
 
 public class AltaCuentaCorriente {
