@@ -36,7 +36,7 @@ public class test {
 		String entradaTeclado = "";
 
         Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
-
+        
         entradaTeclado = entradaEscaner.nextLine (); //Invocamos un método sobre un objeto Scanner
 		
         if (entradaTeclado.equals("0"))
@@ -195,12 +195,14 @@ public class test {
 		        	{
 		        		System.out.print("Pedido no Autorizado");
 		        	}
+		        Escaner.close();
 			}
 			 if (entradaTeclado.equals("8"))
 				{
 				 	BusinessDelegate.getInstance().completarOP(6);
 				 	System.out.print("Orden de Pedido cerrada.");
 				}
+		entradaEscaner.close();
 	}
 			 
 

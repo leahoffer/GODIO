@@ -21,6 +21,7 @@ public class AutorizarPedido {
 	private JTextField textField;
 	private JLabel lblNewLabel_3;
 	private JLabel label;
+	@SuppressWarnings("unused")
 	private JLabel label_1;
 	private JLabel label_2;
 	private JLabel label_3;

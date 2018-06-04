@@ -96,7 +96,8 @@ public class AutorizarDespacho {
 			public void actionPerformed(ActionEvent arg0) {
 				 int i = 0;
 				 int[] fromindex = itemList.getSelectedIndices();
-		            Object[] from = itemList.getSelectedValues();
+		            @SuppressWarnings("deprecation")
+					Object[] from = itemList.getSelectedValues();
 
 		            for(i = 0; i < from.length; i++)
 		            {
@@ -120,7 +121,8 @@ public class AutorizarDespacho {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				 int i = 0;
-				 Object[] to = listaDespachosList.getSelectedValues();
+				 @SuppressWarnings("deprecation")
+				Object[] to = listaDespachosList.getSelectedValues();
 		            int[] toindex = listaDespachosList.getSelectedIndices();
 		            
 		          
