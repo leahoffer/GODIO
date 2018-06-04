@@ -129,4 +129,14 @@ public class Cliente {
 		return cdto;
 	}
 	
+	public void modify(String c, String rs, String t, String d, boolean ri, String ce) {
+		this.cuit = c;
+		this.razon_social = rs;
+		this.telefono = t;
+		this.Direccion = d;
+		this.r_inscripto = ri;
+		this.condicionEsp = ce;
+		this.updateMe();
+	}
+	
 }

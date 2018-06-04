@@ -13,7 +13,9 @@ import business.Producto;
 import business.Reserva;
 import business.Ubicacion;
 import dao.AlmacenDAO;
+import dao.ComprasDAO;
 import dao.ProductoDAO;
+import dto.ProductoDTO;
 import dto.UbicacionDTO;
 import enumeration.EstadoOP;
 import enumeration.TipoMovimientoStock;
@@ -49,7 +51,7 @@ public class Almacen {
 	}
 
 	public OrdenPedido buscarOPConDisponibilidad(Producto p) {
-		OrdenPedido op = AlmacenDAO.getInstance().buscarOPConDisponibilidad(p);
+		OrdenPedido op = Compras.getInstance().buscarOPConDisponibilidad(p);
 		return op;
 	}
 
@@ -92,12 +94,12 @@ public class Almacen {
 	}
 
 	public void updateOP(OrdenPedido op) {
-		AlmacenDAO.getInstance().updateOP(op);
+		ComprasDAO.getInstance().updateOP(op);
 		
 	}
 
 	public void createOP(OrdenPedido op) {
-		AlmacenDAO.getInstance().createOP(op);
+		ComprasDAO.getInstance().createOP(op);
 		
 	}
 
@@ -317,7 +319,7 @@ public class Almacen {
 		u.setPosicion(udto.getPosicion());
 		
 		MovimientoStock ms= new MovimientoStock();
-		Producto p = Controller.getInstance().buscarProducto(producto);
+		Producto p = ProductoDAO.getInstance().findById(producto);
 		
 			for (Ubicacion ub:p.getUbicaciones())
 			{
@@ -372,6 +374,11 @@ public class Almacen {
 		r.setPedido(mr.getPedido());
 		r.setProducto(p);
 		return r;
+	}
+
+	public Producto giveMeAProduct(String codbarras) {
+		return ProductoDAO.getInstance().findById(codbarras);
+		
 	}
 
 	

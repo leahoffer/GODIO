@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import controller.Almacen;
 import dao.PedidoDAO;
 import dto.BonificacionDTO;
 import dto.CondicionDTO;
@@ -11,7 +12,9 @@ import dto.DescuentoDTO;
 import dto.DetallePedidoDTO;
 import dto.FacturaDTO;
 import dto.PedidoDTO;
+import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
+import enumeration.TipoFactura;
 
 public class Pedido {
 
@@ -36,6 +39,8 @@ public class Pedido {
 		this.detalle = new ArrayList<DetallePedido>();
 		this.condicionesAplicadas = new ArrayList<Condicion>();
 	}
+	
+	
 
 	public int getNroPedido() {
 		return nroPedido;
@@ -206,7 +211,116 @@ public class Pedido {
 		return pdto;
 	}
 
-	
+	public boolean validarCompletarPedido() 
+	{
+		boolean resultado = true;
+		for (DetallePedido dp : this.getDetalle())
+		{
+			int sd = Almacen.getInstance().devolverStockProducto(dp.getProducto());
+			//Si tengo Stock disponible, reservo y listo. Almacén se encarga de updatear el stock y eso.
+			if (sd>dp.getCantidad())
+			{
+				Almacen.getInstance().createReserva(this, dp, dp.getCantidad());
+			}
+			//Sino...
+			else
+			{
+				//Si no puedo completar, pero el stock disponible es mayor a 0, primero reservo lo que queda y después creo OP nueva
+				if (sd > 0)
+				{
+					Almacen.getInstance().createReserva(this, dp, sd);
+					OrdenPedido op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+					//Todo esto mientras haya una OP con disponibilidad. Sino voy a tener que hacer una nueva de 0 y reservarle el 100%
+					if (op != null)
+					{
+						//Si tiene disponible el total de lo que falta, que lo reserve de ahí.
+						if (op.calcularDisponible(dp.getCantidad()-sd))
+						{
+							op.agregarMovimientoReserva(dp.getCantidad()-sd, this);
+						}
+						//Sino, reservo de esa OP lo que le quede y le digo al Almacén que cree una nueva por el restante
+						else
+						{
+							int reservadoOP = op.disponible();
+							op.agregarMovimientoReserva(reservadoOP, this);
+							op.setEstado(EstadoOP.Reservada);
+							op.updateMe();
+							Almacen.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd-reservadoOP);
+							op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+							op.agregarMovimientoReserva(dp.getCantidad()-sd-reservadoOP, this);
+						}
+					}
+					//Tengo stock, aunque no suficiente, pero no tenog OPs con disponibilidad para reservar
+					else 
+					{
+						//Creo que esto está bien... que el crearOrdenPedido no genere el movimientoReserva.
+						Almacen.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd);
+						op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+						op.agregarMovimientoReserva(dp.getCantidad()-sd, this);
+					}
+				}
+				//Si no puedo completar, y aparte no hay NADA de stock, voy directamente a ver si tengo para reservarle a una OP
+				else if (sd == 0)
+				{
+					OrdenPedido op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+					//Si hay una OP con disponibilidad...
+					if (op != null)
+					{
+						//Si la OP tiene disponible para reservarle el total, de lujo
+						if (op.calcularDisponible(dp.getCantidad()))
+						{
+							op.agregarMovimientoReserva(dp.getCantidad(), this);
+						}
+						//Sino, le reservo lo que le quede y aparte creo una nueva
+						else
+						{
+							int reservadoOP = op.disponible();
+							op.agregarMovimientoReserva(reservadoOP,this);
+							op.setEstado(EstadoOP.Reservada);
+							op.updateMe();
+							Almacen.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-reservadoOP);
+							op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+							op.agregarMovimientoReserva(dp.getCantidad()-sd-reservadoOP, this);
+						}
+					}
+					//No solo no tengo nada de stock sino que no tengo OP con disponibilidad. Caso más horrible.
+					else
+					{
+						Almacen.getInstance().crearOrdenPedido(this, dp, dp.getCantidad()-sd);
+						op = Almacen.getInstance().buscarOPConDisponibilidad(dp.getProducto());
+						op.agregarMovimientoReserva(dp.getCantidad(), this);
+					}
+				}
+				resultado = false;
+			}
+		}
+		return resultado;
+	}
+
+
+
+	public void facturar() {
+		Factura f = new Factura();
+		List<ItemFactura> ifas = new ArrayList<ItemFactura>();
+		f.setCliente(this.getCliente());
+		if (this.getCliente().isR_inscripto())
+			f.setTipo(TipoFactura.A);
+		else
+			f.setTipo(TipoFactura.B);
+		for (DetallePedido dp : this.getDetalle())
+		{
+			ItemFactura ifa = new ItemFactura();
+			ifa.setCantidad(dp.getCantidad());
+			ifa.setProducto(dp.getProducto());
+			ifa.setSubtotal(ifa.getProducto().getPrecio()*ifa.getCantidad());
+			ifas.add(ifa);
+		}
+		f.setItems(ifas);
+		f.setTotal(f.calcularTotal());
+		this.setFactura(f);
+		this.update();		
+	}
+			
 	
 	
 	

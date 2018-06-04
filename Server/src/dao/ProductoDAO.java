@@ -74,15 +74,8 @@ public class ProductoDAO {
 		
 		for (Ubicacion u : p.getUbicaciones())
 		{
-			UbicacionEntity ue = new UbicacionEntity();
-			UbicacionId uid = new UbicacionId();
-			uid.setBloque(u.getBloque());
-			uid.setCalle(u.getCalle());
-			uid.setEstante(u.getEstante());
-			uid.setEstanteria(u.getEstanteria());
-			uid.setPosicion(u.getPosicion());
-			ue.setIdUbicacion(uid);
-			ue.setCantidadActual(u.getCantidadActual());
+			UbicacionId uid = new UbicacionId(u.getCalle(), u.getBloque(), u.getEstanteria(), u.getEstante(), u.getPosicion());
+			UbicacionEntity ue = new UbicacionEntity(uid, u.getCantidadActual());
 			ues.add(ue);
 		}
 		pe.setUbicaciones(ues);

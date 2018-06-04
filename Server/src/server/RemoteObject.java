@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import controller.Almacen;
+import controller.Compras;
 import controller.Controller;
 import dto.ClienteDTO;
 import dto.PedidoDTO;
@@ -18,10 +19,12 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 
 	private static final long serialVersionUID = 1L;
 	private Controller controlador;
+	private Compras compras;
 
 	protected RemoteObject() throws RemoteException {
 		super();
-		controlador= Controller.getInstance();
+		controlador = Controller.getInstance();
+		compras = Compras.getInstance();
 	}
 
 	public void crearCliente(ClienteDTO cliente) throws ClienteException 
@@ -86,7 +89,13 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 	@Override
 	public void completarOP(int nro) throws RemoteException {
 		// TODO Auto-generated method stub
-		controlador.cerrarOP(nro);
+		compras.cerrarOP(nro);
+	}
+
+	@Override
+	public void despacharPedido(PedidoDTO pdto) throws RemoteException {
+		// TODO Auto-generated method stub
+		
 	}
 
 

@@ -1,6 +1,7 @@
 package businessdelegate;
 
 import java.rmi.Naming;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
@@ -101,6 +102,12 @@ public class BusinessDelegate implements TDABusiness {
 	public void completarOP(int nro) throws RemoteException {
 		// TODO Auto-generated method stub
 		RemoteObject.completarOP(nro);
+	}
+
+
+	public void despacharPedido(PedidoDTO pdto) throws RemoteException {
+		RemoteObject.despacharPedido(pdto);
+		
 	}
 
 

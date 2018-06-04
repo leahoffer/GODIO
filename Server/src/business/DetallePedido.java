@@ -4,6 +4,11 @@ import dto.DetallePedidoDTO;
 
 public class DetallePedido {
 	
+	public DetallePedido(int cantidad, Producto producto) {
+		super();
+		this.cantidad = cantidad;
+		this.producto = producto;
+	}
 	private int id;
 	private  float subtotal;
 	private int  cantidad;

@@ -107,15 +107,11 @@ public class Controller {
 	public void crearPedido (PedidoDTO p) throws ClienteException, ProductoException
 	{
 		//Calendar  hoy = Calendar.getInstance();
-		
 		Cliente cliente = buscarCliente(p.getCliente().getCuit());
 		List<DetallePedido> detalles = new ArrayList<DetallePedido>();
 		for (DetallePedidoDTO ddto : p.getDetalle())
 		{ 
-			DetallePedido pedc = new DetallePedido();
-			Producto prod = this.buscarProducto(ddto.getProducto().getCodBarras());
-			pedc.setCantidad(ddto.getCantidad());
-			pedc.setProducto(prod);
+			DetallePedido pedc = new DetallePedido(ddto.getCantidad(), ProductoDAO.getInstance().findById(ddto.getProducto().getCodBarras()));
 			pedc.calcularSubTotal();
 			detalles.add(pedc);
 		}
@@ -136,11 +132,11 @@ public class Controller {
 		
 	}
 	
-	public Producto buscarProducto(String codBarras) {
+	/*public Producto buscarProducto(String codBarras) {
 		// TODO Auto-generated method stub
 		Producto p = ProductoDAO.getInstance().findById(codBarras);
 		return p;
-	}
+	}*/
 
 	public List<ProductoDTO> listarProductos() throws ProductoException
 	{
@@ -151,11 +147,7 @@ public class Controller {
 		
 		for (ProductoEntity pe : prods)
 		{ 
-			ProductoDTO p= new ProductoDTO();
-			p.setCodBarras(pe.getCodBarras());
-			p.setMarca(pe.getMarca());
-			p.setDescripcion(pe.getDescripcion());
-			p.setEstado(pe.getEstado());
+			ProductoDTO p= new ProductoDTO(pe.getCodBarras(), pe.getMarca(), pe.getDescripcion(), pe.getEstado(), pe.getTamaño(), pe.getUnidad(), pe.getPrecio(), pe.getPresentacion());
 			prodsvo.add(p);
 		}
 		
@@ -170,52 +162,13 @@ public class Controller {
 			if (clie.getCuit().equals(cuit));
 				return clie; //Busqueda en memoria.
 		}
-		
-		//Los DAO reciben y devuelven objetos de negocio
-		Cliente cliente = ClienteDAO.getInstance().findByCuit(cuit);
-		
-	/*	ClienteDTO cli = new ClienteDTO();
-		CuentaCorrienteDTO cta = new CuentaCorrienteDTO();
-		List<CondicionDTO> conds = new ArrayList<CondicionDTO>(); 
-		*//** Comento esto para que no putee por ahora, porque solo falta ver la herencia. Después se puede descomentar**//*
-		for (Condicion c :cliente.getCuentaCorriente().getCondiciones())
-		{
-			if (c instanceof Bonificacion)
-			{
-				BonificacionDTO b = new BonificacionDTO();
-				b.setCondicion(c.getCondicion());
-				b.setMonto(((Bonificacion) c).getMonto());
-				conds.add(b);
-			}
-			else if (c instanceof Descuento)
-			{
-				DescuentoDTO d = new DescuentoDTO();
-				d.setCondicion(c.getCondicion());
-				d.setPorcentaje(((Descuento) c).getPorcentaje());
-				conds.add(d);
-			}
-		}
-		
-		cta.setCondiciones(conds);
-		cli.setCondicionEsp(cliente.getCondicionEsp());
-		cli.setCuentaCorriente(cta);
-		cli.setCuit(cliente.getCuit());
-		cli.setDireccion(cliente.getDireccion());
-		cli.setR_inscripto(cli.isR_inscripto()); 
-		cli.setRazon_social(cli.getRazon_social());
-		cli.setTelefono(cli.getTelefono());
-		clientes.add(cli);
-		return cli;
-	*/	
-		
+		Cliente cliente = ClienteDAO.getInstance().findByCuit(cuit);		
 		clientes.add(cliente);
 		return cliente;
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		
 		return super.equals(obj);
 	}
 
@@ -270,7 +223,7 @@ public class Controller {
 	public void autorizarPedido (int nro)
 	{
 		Pedido p = PedidoDAO.getInstance().findByNro(nro);
-		if (validarCompletarPedido(p))
+		if (p.validarCompletarPedido())
 		{
 			p.setEstado(EstadoPedido.PendienteDespacho);
 			p.update();
@@ -282,8 +235,8 @@ public class Controller {
 		}
 	}
 
-	//FALTA COMPLETAAAAARRRRRR
-	private boolean validarCompletarPedido(Pedido p) 
+	
+	/*private boolean validarCompletarPedido(Pedido p) 
 	{
 		boolean resultado = true;
 		for (DetallePedido dp : p.getDetalle())
@@ -367,48 +320,26 @@ public class Controller {
 			}
 		}
 		return resultado;
-	}
+	}*/
 
 	public ClienteDTO mostrarCliente(String cuit) throws ClienteException {
-		// TODO Auto-generated method stub
-		
 			Cliente c= this.buscarCliente(cuit);
-			ClienteDTO cdto= new ClienteDTO();
-			cdto.setCuit(c.getCuit());
-			cdto.setDireccion(c.getDireccion());
-			cdto.setR_inscripto(c.isR_inscripto());
-			cdto.setRazon_social(c.getRazon_social());
-			cdto.setTelefono(c.getTelefono());
-			cdto.setCondicionEsp(c.getCondicionEsp());
-		return cdto;
+			return c.toDTO();
 	}
 
 	public void modificarCliente(ClienteDTO cdto) throws ClienteException {
 		// TODO Auto-generated method stub
 		Cliente c= this.buscarCliente(cdto.getCuit());
-		c.setCondicionEsp(cdto.getCondicionEsp());
-		c.setDireccion(cdto.getDireccion());
-		c.setR_inscripto(cdto.isR_inscripto());
-		c.setRazon_social(cdto.getRazon_social());
-		c.setTelefono(cdto.getTelefono());
+		c.modify(cdto.getCuit(), cdto.getRazon_social(), cdto.getTelefono(), cdto.getDireccion(), cdto.isR_inscripto(), cdto.getCondicionEsp());
 		//No tiene en cuenta ni cuenta corriente ni Movimientos. Es solo para updatear datos personales//	
-		ClienteDAO.getInstance().update(c);
+		// modify hace un update a si mismo.
 	}
 
 
-	/*public void agregarMovimientoStock(String codBarra, UbicacionDTO udto, String responsable, int cantidad)
-	{
-		Ubicacion u = Almacen.getInstance().traerUbicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());
-		
-	}*/
-
 	public ProductoDTO mostrarProducto(String codbarras) {
 		// TODO Auto-generated method stub
-		Producto p = this.buscarProducto(codbarras);
-		ProductoDTO pdto = new ProductoDTO();
-		pdto.setCodBarras(p.getCodBarras());
-		pdto.setDescripcion(p.getDescripcion());
-		return pdto;
+		Producto p = Almacen.getInstance().giveMeAProduct(codbarras);
+		return p.toDTO();
 	}
 	
 	public List<UbicacionDTO> despacharPedido (PedidoDTO pdto)
@@ -420,22 +351,16 @@ public class Controller {
 		us = Almacen.getInstance().buscarUbicacionesParaDespachar(p);
 		for (Ubicacion u : us)
 		{
-			UbicacionDTO udto = new UbicacionDTO();
-			udto.setBloque(u.getBloque());
-			udto.setCalle(u.getCalle());
-			udto.setCantidadActual(u.getCantidadActual());
-			udto.setEstante(u.getEstante());
-			udto.setEstanteria(u.getEstanteria());
-			udto.setPosicion(u.getPosicion());
+			UbicacionDTO udto = new UbicacionDTO(u.getCalle(), u.getBloque(), u.getEstanteria(), u.getEstante(), u.getPosicion(), u.getCantidadActual());
 			udtos.add(udto);
 		}
 		p.setEstado(EstadoPedido.Despachado);
-		facturarPedido(p);
+		p.facturar();
 		p.update();
 		return udtos;
 	}
 
-	private void facturarPedido(Pedido p) {
+	/*private void facturarPedido(Pedido p) {
 		Factura f = new Factura();
 		List<ItemFactura> ifas = new ArrayList<ItemFactura>();
 		f.setCliente(p.getCliente());
@@ -455,7 +380,7 @@ public class Controller {
 		f.setTotal(f.calcularTotal());
 		p.setFactura(f);
 		p.update();		
-	}
+	}*/
 
 
 	
@@ -470,12 +395,9 @@ public class Controller {
 		return pdtos;
 	}
 
-	private List<Pedido> traerPedidosPendientesDespacho() {
-		return PedidoDAO.getInstance().traerPedidosPendientesDespacho();
-
-	}
 	
-	public void cerrarOP(int nroOP){
+	
+	/*public void cerrarOP(int nroOP){
 		OrdenPedido op = AlmacenDAO.getInstance().findOPByNro(nroOP);
 		op.setEstado(EstadoOP.Completa);
 		op.updateMe();
@@ -511,7 +433,7 @@ public class Controller {
 			pedido.setEstado(EstadoPedido.PendienteDespacho);
 			pedido.update();
 		}
-	}
+	}*/
 	
 	
 	

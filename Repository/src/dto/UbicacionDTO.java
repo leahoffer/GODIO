@@ -57,5 +57,17 @@ public class UbicacionDTO implements Serializable {
 	public void setCantidadActual(int cantidadActual) {
 		this.cantidadActual = cantidadActual;
 	}
+
+	public UbicacionDTO(String calle, int bloque, int estanteria, int estante, int posicion, int cantidadActual) {
+		super();
+		this.calle = calle;
+		this.bloque = bloque;
+		this.estanteria = estanteria;
+		this.estante = estante;
+		this.posicion = posicion;
+		this.cantidadActual = cantidadActual;
+	}
+	
+	
 	
 }

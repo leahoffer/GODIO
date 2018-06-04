@@ -2,6 +2,11 @@ package controller;
 
 import java.util.Date;
 
+import business.Cliente;
+import business.CuentaCorriente;
+import business.DetallePedido;
+import business.Pedido;
+import business.Producto;
 import dao.AlmacenDAO;
 import dao.ProductoDAO;
 import entity.UbicacionEntity;
@@ -49,8 +54,8 @@ public class test_hibernate2 {
 		p.setTotal_bruto(p.calcularTotal());
 		p.getDetalle().add(dp1);
 		p.getDetalle().add(dp2);
-		p.createMe();*/
-		
+		p.saveOrUpdate();
+		*/
 		String calle;
 		int bloque = 1;
 		int estanteria = 1;
@@ -89,7 +94,6 @@ public class test_hibernate2 {
 				}
 			}
 		}
-		
 		
 	}
 }
