@@ -103,6 +103,11 @@ public class BusinessDelegate implements TDABusiness {
 		RemoteObject.completarOP(nro);
 	}
 
+	public void despacharPedido(int nro) throws RemoteException {
+		// TODO Auto-generated method stub
+		RemoteObject.despacharPedido(nro);
+	}
+
 
 
 }

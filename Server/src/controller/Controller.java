@@ -411,14 +411,14 @@ public class Controller {
 		return pdto;
 	}
 	
-	public List<UbicacionDTO> despacharPedido (PedidoDTO pdto)
+	public void despacharPedido (int nropedido)
 	{
 		List<UbicacionDTO> udtos = new ArrayList<UbicacionDTO>();
 		List<Ubicacion> us;
-		Pedido p = PedidoDAO.getInstance().findByNro(pdto.getNroPedido());
+		Pedido p = PedidoDAO.getInstance().findByNro(nropedido);
 		//buscarUbicacionesParaDespachar se va a encargar de crear los movimientos y de actualizar las ubicaciones que encuentre y devuelva
-		us = Almacen.getInstance().buscarUbicacionesParaDespachar(p);
-		for (Ubicacion u : us)
+		Almacen.getInstance().retirarProductosAlmacen(p);
+		/*for (Ubicacion u : us)
 		{
 			UbicacionDTO udto = new UbicacionDTO();
 			udto.setBloque(u.getBloque());
@@ -428,11 +428,11 @@ public class Controller {
 			udto.setEstanteria(u.getEstanteria());
 			udto.setPosicion(u.getPosicion());
 			udtos.add(udto);
-		}
+		}*/
 		p.setEstado(EstadoPedido.Despachado);
-		facturarPedido(p);
+		//Almacen.getInstance().completarReservas(p);
+		//facturarPedido(p);
 		p.update();
-		return udtos;
 	}
 
 	private void facturarPedido(Pedido p) {
@@ -479,6 +479,7 @@ public class Controller {
 		OrdenPedido op = AlmacenDAO.getInstance().findOPByNro(nroOP);
 		op.setEstado(EstadoOP.Completa);
 		op.updateMe();
+		Almacen.getInstance().ubicarProductoAlmacen(op.getProducto(), op.getCantidadPedida());
 		if (!op.getMovReserva().isEmpty())
 		{
 			for (MovimientoReserva mr : op.getMovReserva())

@@ -36,6 +36,8 @@ public interface TDABusiness extends Remote {
 
 	public abstract void completarOP(int nro) throws RemoteException;
 
+	public abstract void despacharPedido(int nro) throws RemoteException;
+
 
 	
 			

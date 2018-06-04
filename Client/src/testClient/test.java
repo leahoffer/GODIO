@@ -34,6 +34,7 @@ public class test {
 		System.out.println("Presione 6 para Agregar un movimiento de stock del producto CodBarra1");
 		System.out.println("Presione 7 para Autorizar Pedido");
 		System.out.println("Presione 8 para Cerrar una OP");
+		System.out.println("Presione 9 para Despachar un Pedido");
 		String entradaTeclado = "";
 
         Scanner entradaEscaner = new Scanner (System.in); //Creación de un objeto Scanner
@@ -135,7 +136,7 @@ public class test {
 
 				
 				DetallePedidoDTO detalle= new DetallePedidoDTO();
-				detalle.setCantidad(1500);
+				detalle.setCantidad(300);
 				detalle.setSubtotal(0);
 				detalle.setProducto(producto);
 				
@@ -181,18 +182,18 @@ public class test {
 				u.setEstante(1);
 				u.setEstanteria(1);
 				u.setPosicion(1);
-				BusinessDelegate.getInstance().agregarAjusteStock("CodBarra1", "AjustePos", u, "Motivo Movimiento", 8, "Responsable");
+				BusinessDelegate.getInstance().agregarAjusteStock("CodBarra1", "AjustePos", u, "Motivo Movimiento", 100, "Responsable");
 			
 			}
 			if (entradaTeclado.equals("7"))
 			{
-				System.out.println(BusinessDelegate.getInstance().validarCreditoCliente(11));
+				System.out.println(BusinessDelegate.getInstance().validarCreditoCliente(3));
 				String entrada = "";
 		        Scanner Escaner = new Scanner (System.in); 
 		        entrada = entradaEscaner.nextLine ();
 		        if (entrada.equals("SI"))
 		        	{
-		        		BusinessDelegate.getInstance().autorizarPedido(11);
+		        		BusinessDelegate.getInstance().autorizarPedido(4);
 		        		System.out.print("Pedido Autorizado!");
 		        	}
 		        else
@@ -202,8 +203,13 @@ public class test {
 			}
 			 if (entradaTeclado.equals("8"))
 				{
-				 	BusinessDelegate.getInstance().completarOP(6);
+				 	BusinessDelegate.getInstance().completarOP(3);
 				 	System.out.print("Orden de Pedido cerrada.");
+				}
+			 if (entradaTeclado.equals("9"))
+				{
+				 	BusinessDelegate.getInstance().despacharPedido(3);
+				 	System.out.print("Pedido despachado.");
 				}
 	}
 			 
