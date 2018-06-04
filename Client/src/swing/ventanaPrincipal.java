@@ -31,9 +31,11 @@ public class ventanaPrincipal {
 	private String rol;
     private ventanaPrincipal vent;
 	private JFrame ventana;
+	@SuppressWarnings("unused")
 	private JPanel panel2;
 	
 	
+	@SuppressWarnings("static-access")
 	public ventanaPrincipal( String user) {
 		
 		

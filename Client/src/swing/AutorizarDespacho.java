@@ -23,11 +23,14 @@ public class AutorizarDespacho {
 	
 	private JButton buttonAutorizar;
 	
+	@SuppressWarnings("rawtypes")
 	private JList itemList, listaDespachosList;
-	 private DefaultListModel listaDespachos, items;
+	 @SuppressWarnings("rawtypes")
+	private DefaultListModel listaDespachos, items;
    private  JButton buttonin, buttonout;
 
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public AutorizarDespacho(ventanaPrincipal p){
 		
 		ventana = p;
@@ -91,10 +94,10 @@ public class AutorizarDespacho {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				 int i = 0;
 				 int[] fromindex = itemList.getSelectedIndices();
-		            Object[] from = itemList.getSelectedValues();
+		            @SuppressWarnings("deprecation")
+					Object[] from = itemList.getSelectedValues();
 
 		            for(i = 0; i < from.length; i++)
 		            {
@@ -117,9 +120,9 @@ public class AutorizarDespacho {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				 int i = 0;
-				 Object[] to = listaDespachosList.getSelectedValues();
+				 @SuppressWarnings("deprecation")
+				Object[] to = listaDespachosList.getSelectedValues();
 		            int[] toindex = listaDespachosList.getSelectedIndices();
 		            
 		          
@@ -143,7 +146,6 @@ public class AutorizarDespacho {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -160,7 +162,8 @@ public class AutorizarDespacho {
     // In this method, we create a square JPanel of a colour and set size
     // specified by the arguments.
 
-    private JPanel createSquareJPanel(Color color, int size) {
+    @SuppressWarnings("unused")
+	private JPanel createSquareJPanel(Color color, int size) {
         JPanel tempPanel = new JPanel();
         tempPanel.setBackground(color);
         tempPanel.setMinimumSize(new Dimension(size, size));

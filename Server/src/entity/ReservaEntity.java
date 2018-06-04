@@ -25,7 +25,6 @@ public class ReservaEntity {
 	private Date fecha;
 	public ReservaEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public int getNumero() {
 		return numero;

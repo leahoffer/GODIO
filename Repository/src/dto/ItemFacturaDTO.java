@@ -18,7 +18,6 @@ public class ItemFacturaDTO implements Serializable{
 	private ProductoDTO producto;
 	public ItemFacturaDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public float getSubtotal() {
 		return subtotal;

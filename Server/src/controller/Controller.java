@@ -46,6 +46,7 @@ public class Controller {
 
 	private static Controller instance;
 	private List<Cliente> clientes;
+	private List<Pedido> pedidos;
 	
 	
 	public static Controller getInstance() {
@@ -54,78 +55,40 @@ public class Controller {
 		return instance;
 	}
 	
+	
+	
 	private Controller() {
-		/**
-		 * Ver si no tenemos ganas de crearlo con algo particular, o lo creamos así vacío sin nada.
-		 * Pero es Singleton así que sale constructor privado
-		 */
 		clientes = new ArrayList<Cliente>();
+		pedidos = new ArrayList<Pedido>();
 	}
 
+	
+	
 	public void crearCliente(ClienteDTO c) throws ClienteException  {
-		/**
-		 * Creo un método para que me deje crear el RO y esas otras cosas
-		 */
-		
-			if(ClienteDAO.getInstance().findByCuit(c.getCuit()) == null)
-			{
-
-				Cliente cliente=new Cliente();
-				CuentaCorriente cc= new CuentaCorriente();
-				Bonificacion boni  = new Bonificacion();
-				Bonificacion boni2 = new Bonificacion();
-				
-
-				cc.setId(c.getCuentaCorriente().getId());
-				cc.setLimite(c.getCuentaCorriente().getLimite());
-				cc.setSaldo(c.getCuentaCorriente().getSaldo());
-				
-				cliente.setCondicionEsp(c.getCondicionEsp());
-				cliente.setCuentaCorriente(cc);
-				cliente.setCuit(c.getCuit());
-				cliente.setDireccion(c.getDireccion());
-				cliente.setR_inscripto(c.isR_inscripto());
-				cliente.setRazon_social(c.getRazon_social());
-				cliente.setTelefono(c.getTelefono());
-			
-				boni.setCondicion("Condicion 1");
-				boni.setMonto(150);
-				
-				boni2.setCondicion("Condicion 2");
-				boni2.setMonto(200);
-				
-				List<Condicion> condi = new ArrayList<Condicion>();
-				condi.add(boni);
-				condi.add(boni2);
-				
-				cliente.getCuentaCorriente().setCondiciones(condi);
-				
-				
-				cliente.saveOrUpdate();
-			}
-			else
-				throw new ClienteException("Cliente ya creado");
-		
-		
+		if(ClienteDAO.getInstance().findByCuit(c.getCuit()) == null)
+		{
+			Cliente cliente=new Cliente(c.getCuit(), c.getRazon_social(), c.getTelefono(), c.getDireccion(), c.isR_inscripto(), c.getCondicionEsp());
+			CuentaCorriente cc= new CuentaCorriente(c.getCuentaCorriente().getSaldo(), c.getCuentaCorriente().getLimite());
+			cliente.setCuentaCorriente(cc);
+			cliente.saveOrUpdate();
+		}
+		else
+			throw new ClienteException("Cliente ya creado");
 	}
+	
+	
 	
 	public void crearPedido (PedidoDTO p) throws ClienteException, ProductoException
 	{
-		//Calendar  hoy = Calendar.getInstance();
-		
 		Cliente cliente = buscarCliente(p.getCliente().getCuit());
 		List<DetallePedido> detalles = new ArrayList<DetallePedido>();
 		for (DetallePedidoDTO ddto : p.getDetalle())
 		{ 
-			DetallePedido pedc = new DetallePedido();
-			Producto prod = this.buscarProducto(ddto.getProducto().getCodBarras());
-			pedc.setCantidad(ddto.getCantidad());
-			pedc.setProducto(prod);
-			pedc.calcularSubTotal();
-			detalles.add(pedc);
+			DetallePedido dp = new DetallePedido(ddto.getCantidad(), Almacen.getInstance().giveMeAProduct(ddto.getProducto().getCodBarras()));
+			dp.calcularSubTotal();
+			detalles.add(dp);
 		}
-		
-		Pedido pedido=new Pedido();
+		Pedido pedido = new Pedido();
 		pedido.setDetalle(detalles);
 		pedido.calcularTotal();
 		pedido.setAclaracionEspecial(p.getAclaracionEspecial());
@@ -136,37 +99,12 @@ public class Controller {
 		pedido.setEstado(EstadoPedido.valueOf("PendienteAutorizacion"));
 		pedido.setFecha(p.getFecha());
 		pedido.setMotivoEstado(p.getMotivoEstado());
-		
 		pedido.saveOrUpdate();
 		
 	}
-	
-	public Producto buscarProducto(String codBarras) {
-		// TODO Auto-generated method stub
-		Producto p = ProductoDAO.getInstance().findById(codBarras);
-		return p;
-	}
 
-	public List<ProductoDTO> listarProductos() throws ProductoException
-	{
-		List<ProductoEntity> prods = new ArrayList<ProductoEntity>();
-		prods=ProductoDAO.getInstance().findAll();
-		
-		List <ProductoDTO> prodsvo = new ArrayList<ProductoDTO>();
-		
-		for (ProductoEntity pe : prods)
-		{ 
-			ProductoDTO p= new ProductoDTO();
-			p.setCodBarras(pe.getCodBarras());
-			p.setMarca(pe.getMarca());
-			p.setDescripcion(pe.getDescripcion());
-			p.setEstado(pe.getEstado());
-			prodsvo.add(p);
-		}
-		
-		return prodsvo;
 	
-	}
+	
 	
 	private Cliente buscarCliente (String cuit) throws ClienteException
 	{
@@ -174,6 +112,7 @@ public class Controller {
 		{
 			if (clie.getCuit().equals(cuit));
 				return clie; //Busqueda en memoria.
+<<<<<<< HEAD
 		}*/
 		
 		//Los DAO reciben y devuelven objetos de negocio
@@ -213,54 +152,33 @@ public class Controller {
 		return cli;
 	*/	
 		
+
+		
+		
+
 		clientes.add(cliente);
 		return cliente;
 	}
 	
+	
+	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		
 		return super.equals(obj);
 	}
 
+	
+	
 	public List<PedidoDTO> listarPedidosPendientes ()
 	{
 		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
 		List<Pedido> ps = PedidoDAO.getInstance().traerPedidosPendientes();
 		for (Pedido p : ps)
-		{
-			PedidoDTO pdto = new PedidoDTO();
-			List<DetallePedidoDTO> dpdtos = new ArrayList<DetallePedidoDTO>();
-			pdto.setAclaracionEspecial(p.getAclaracionEspecial());
-			pdto.setDespachable(p.isDespachable());
-			pdto.setDir_entrega(p.getDir_entrega());
-			pdto.setEstado(p.getEstado().toString());
-			pdto.setFecha(p.getFecha());
-			pdto.setFecha_despacho(p.getFecha_despacho());
-			pdto.setMotivoEstado(p.getMotivoEstado());
-			pdto.setNroPedido(p.getNroPedido());
-			pdto.setTotal_bruto(p.getTotal_bruto());
-			for (DetallePedido dp : p.getDetalle())
-			{
-				DetallePedidoDTO dpdto = new DetallePedidoDTO();
-				ProductoDTO prdto = new ProductoDTO();
-				dpdto.setCantidad(dp.getCantidad());
-				dpdto.setSubtotal(dp.getSubtotal());
-				prdto.setCantAComprar(dp.getProducto().getCantAComprar());
-				prdto.setCantPosicion(dp.getProducto().getCantPosicion());
-				prdto.setCodBarras(dp.getProducto().getCodBarras());
-				prdto.setDescripcion(dp.getProducto().getDescripcion());
-				prdto.setEstado(dp.getProducto().getEstado().toString());
-				prdto.setPresentacion(dp.getProducto().getPresentacion().toString());
-				dpdto.setProducto(prdto);
-				dpdtos.add(dpdto);
-			}
-			pdto.setDetalle(dpdtos);
-			pdtos.add(pdto);
-		}
+			pdtos.add(p.toDTO());
 		return pdtos;
 	}
+	
+	
 	
 	public String validarCreditoCliente(int nropedido) 
 	{
@@ -272,10 +190,12 @@ public class Controller {
 			return "El Cliente "+c.getRazon_social()+" CUIT "+c.getCuit()+" no tiene límite suficiente para hacer este pedido. Autorizar (SI/NO)?";
 	}
 	
+	
+	
 	public void autorizarPedido (int nro)
 	{
 		Pedido p = PedidoDAO.getInstance().findByNro(nro);
-		if (validarCompletarPedido(p))
+		if (p.validarCompletarPedido())
 		{
 			p.setEstado(EstadoPedido.PendienteDespacho);
 			p.update();
@@ -287,8 +207,8 @@ public class Controller {
 		}
 	}
 
-	//FALTA COMPLETAAAAARRRRRR
-	private boolean validarCompletarPedido(Pedido p) 
+	
+	/*private boolean validarCompletarPedido(Pedido p) 
 	{
 		boolean resultado = true;
 		for (DetallePedido dp : p.getDetalle())
@@ -372,6 +292,7 @@ public class Controller {
 			}
 		}
 		return resultado;
+<<<<<<< HEAD
 	}
 
 	public ClienteDTO mostrarCliente(String cuit) throws ClienteException {
@@ -416,64 +337,47 @@ public class Controller {
 	{
 		Ubicacion u = Almacen.getInstance().traerUbicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());
 		
+=======
+>>>>>>> branch 'master' of https://github.com/leahoffer/GODIO.git
 	}*/
 
-	public ProductoDTO mostrarProducto(String codbarras) {
-		// TODO Auto-generated method stub
-		Producto p = this.buscarProducto(codbarras);
-		ProductoDTO pdto = new ProductoDTO();
-		pdto.setCodBarras(p.getCodBarras());
-		pdto.setDescripcion(p.getDescripcion());
-		return pdto;
+	
+	
+	public ClienteDTO mostrarCliente(String cuit) throws ClienteException {
+			Cliente c= this.buscarCliente(cuit);
+			return c.toDTO();
 	}
+
+	
+	
+	public void modificarCliente(ClienteDTO cdto) throws ClienteException {
+		Cliente c= this.buscarCliente(cdto.getCuit());
+		c.modify(cdto.getCuit(), cdto.getRazon_social(), cdto.getTelefono(), cdto.getDireccion(), cdto.isR_inscripto(), cdto.getCondicionEsp());
+		//No tiene en cuenta ni cuenta corriente ni Movimientos. Es solo para updatear datos personales//	
+		// modify hace un update a si mismo.
+	}
+
+
+	
+	
+	
+	
 	
 	public List<UbicacionDTO> despacharPedido (PedidoDTO pdto)
 	{
 		List<UbicacionDTO> udtos = new ArrayList<UbicacionDTO>();
 		List<Ubicacion> us;
 		Pedido p = PedidoDAO.getInstance().findByNro(pdto.getNroPedido());
-		//buscarUbicacionesParaDespachar se va a encargar de crear los movimientos y de actualizar las ubicaciones que encuentre y devuelva
-		us = Almacen.getInstance().buscarUbicacionesParaDespachar(p);
+		us = p.despachar();
 		for (Ubicacion u : us)
 		{
-			UbicacionDTO udto = new UbicacionDTO();
-			udto.setBloque(u.getBloque());
-			udto.setCalle(u.getCalle());
-			udto.setCantidadActual(u.getCantidadActual());
-			udto.setEstante(u.getEstante());
-			udto.setEstanteria(u.getEstanteria());
-			udto.setPosicion(u.getPosicion());
+			UbicacionDTO udto = new UbicacionDTO(u.getCalle(), u.getBloque(), u.getEstanteria(), u.getEstante(), u.getPosicion(), u.getCantidadActual());
 			udtos.add(udto);
 		}
-		p.setEstado(EstadoPedido.Despachado);
-		facturarPedido(p);
-		p.update();
 		return udtos;
 	}
 
-	private void facturarPedido(Pedido p) {
-		Factura f = new Factura();
-		List<ItemFactura> ifas = new ArrayList<ItemFactura>();
-		f.setCliente(p.getCliente());
-		if (p.getCliente().isR_inscripto())
-			f.setTipo(TipoFactura.A);
-		else
-			f.setTipo(TipoFactura.B);
-		for (DetallePedido dp : p.getDetalle())
-		{
-			ItemFactura ifa = new ItemFactura();
-			ifa.setCantidad(dp.getCantidad());
-			ifa.setProducto(dp.getProducto());
-			ifa.setSubtotal(ifa.getProducto().getPrecio()*ifa.getCantidad());
-			ifas.add(ifa);
-		}
-		f.setItems(ifas);
-		f.setTotal(f.calcularTotal());
-		p.setFactura(f);
-		p.update();		
-	}
-
-
+	
 	
 	public List<PedidoDTO> listarPedidosPendientesDespacho(){
 		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
@@ -486,49 +390,6 @@ public class Controller {
 		return pdtos;
 	}
 
-	private List<Pedido> traerPedidosPendientesDespacho() {
-		return PedidoDAO.getInstance().traerPedidosPendientesDespacho();
-
-	}
-	
-	public void cerrarOP(int nroOP){
-		OrdenPedido op = AlmacenDAO.getInstance().findOPByNro(nroOP);
-		op.setEstado(EstadoOP.Completa);
-		op.updateMe();
-		if (!op.getMovReserva().isEmpty())
-		{
-			for (MovimientoReserva mr : op.getMovReserva())
-			{
-				Reserva r = Almacen.getInstance().convertirMovimientoReserva(mr, op.getProducto());
-				r.createMe();
-				mr.setCompleta(true);
-				revalidarPedido(mr.getPedido());
-			}
-		}
-		
-	}
-
-	private void revalidarPedido(Pedido pedido) {
-		boolean completoONo = true;
-		List<OrdenPedido> ordenesPendientes = AlmacenDAO.getInstance().buscarOPSPendientesOReservadas();
-		if(!ordenesPendientes.isEmpty())
-		{
-			for (OrdenPedido op : ordenesPendientes)
-			{
-				for (MovimientoReserva mr : op.getMovReserva())
-				{
-					if (mr.getPedido().getNroPedido() == pedido.getNroPedido())
-						completoONo = false;
-				}
-			}
-		}
-		if (completoONo)
-		{
-			pedido.setEstado(EstadoPedido.PendienteDespacho);
-			pedido.update();
-		}
-	}
-	
 	
 	
 	

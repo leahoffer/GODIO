@@ -29,6 +29,12 @@ public class UbicacionEntity {
 	public void setCantidadActual(int cantidadActual) {
 		this.cantidadActual = cantidadActual;
 	}
+
+	public UbicacionEntity(UbicacionId idUbicacion, int cantidadActual) {
+		super();
+		this.idUbicacion = idUbicacion;
+		this.cantidadActual = cantidadActual;
+	}
 	
 	
 	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import dao.AlmacenDAO;
 import dao.ProductoDAO;
 import dto.ProductoDTO;
 import dto.UbicacionDTO;
@@ -168,6 +169,21 @@ public class Producto{
 		return prdto;
 	}
 	
-	
+	public int devolverStockProducto() {
+		List<Reserva> reservas = AlmacenDAO.getInstance().reservasProducto(this);
+		int cantidadStock = 0;
+		for (Ubicacion u : this.ubicaciones)
+		{
+			cantidadStock=cantidadStock+u.getCantidadActual();
+		}
+		for (Reserva r : reservas)
+		{
+			if (!r.isCompleta())
+			{
+				cantidadStock = cantidadStock - r.getCantidad();
+			}
+		}
+		return cantidadStock;
+	}
 	
 }

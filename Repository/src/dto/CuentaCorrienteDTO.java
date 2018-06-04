@@ -50,7 +50,6 @@ public class CuentaCorrienteDTO implements Serializable {
 		super();
 		movimientos = new ArrayList<MovimientoCCDTO>();
 		condiciones = new ArrayList<CondicionDTO>();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

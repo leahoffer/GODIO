@@ -40,7 +40,6 @@ public class ItemRemitoEntity {
 
 	public ItemRemitoEntity() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

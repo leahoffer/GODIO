@@ -6,9 +6,19 @@ import java.util.List;
 
 public class ProductoDTO implements Serializable {
 
-	/**
-	 * 
-	 */
+	public ProductoDTO(String codBarras, String marca, String descripcion, String estado, float tamaño, int unidad,
+			float precio, String presentacion) {
+		super();
+		this.codBarras = codBarras;
+		this.marca = marca;
+		this.descripcion = descripcion;
+		this.estado = estado;
+		this.tamaño = tamaño;
+		this.unidad = unidad;
+		this.precio = precio;
+		this.presentacion = presentacion;
+	}
+
 	private static final long serialVersionUID = 839603259572067959L;
 	private String codBarras;
 	private String marca;
