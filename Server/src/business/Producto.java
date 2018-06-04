@@ -185,5 +185,20 @@ public class Producto{
 		}
 		return cantidadStock;
 	}
+
+	public void eliminarUbicacionesEnCero() {
+		// TODO Auto-generated method stub
+		for (int i=0; i<this.getUbicaciones().size(); i++)
+		{
+			if (this.getUbicaciones().get(i).getCantidadActual()==0)
+			{
+				this.getUbicaciones().remove(i);
+				i--;
+			}
+		}
+		this.updateMe();
+	}
+
+	
 	
 }

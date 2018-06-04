@@ -74,9 +74,57 @@ public class Almacen {
 		return AlmacenDAO.getInstance().traerTodasLasUbicaciones();
 	}
 
+	public List<Ubicacion> buscarUbicacionesParaDespachar (Pedido p)
+	{
+		List<Ubicacion> us = new ArrayList<Ubicacion>();
+		for (DetallePedido dp : p.getDetalle())
+		{
+			int aux=0;
+			for (Ubicacion u: dp.getProducto().getUbicaciones())
+			{
+				if (aux < dp.getCantidad())
+				{
+					if(u.getCantidadActual() >= dp.getCantidad()-aux)
+					{
+						//Actualizo la cantidadActual, restando lo que necesito sacar
+						u.setCantidadActual(u.getCantidadActual()-(dp.getCantidad()-aux));
+						us.add(u);
+						dp.getProducto().updateMe();
+						aux = aux + (dp.getCantidad()-aux);
+					}
+					//Si la Ubicacion que estoy analizando no tiene el total de lo que me falta sacar, saco todo lo que hay en la ubicación, desasocio y aumento el aux en el total de lo que tenía la posición
+					else
+					{
+						us.add(u);
+						aux = aux + u.getCantidadActual();
+						u.setCantidadActual(0);
+						dp.getProducto().updateMe();
+					}
+				}
+			}
+			dp.getProducto().eliminarUbicacionesEnCero();
+			MovimientoStock ms = new MovimientoStock();
+			ms.setCantidad(dp.getCantidad());
+			ms.setMotivo("Venta");
+			ms.setTipo(TipoMovimientoStock.Venta);
+			ms.setProducto(dp.getProducto());
+			ms.setResponsable("N/A");
+			ms.save();
+			List<Reserva> reservas = AlmacenDAO.getInstance().reservasProducto(dp.getProducto());
+			for (Reserva r: reservas)
+			{
+				if (r.getPedido().getNroPedido()==p.getNroPedido())
+				{
+					r.setCompleta(true);
+					r.updateMe();
+				}
+			}
+		}
+		
+		return us;
+	}
 	
-	
-	public List<Ubicacion> buscarUbicacionesParaDespachar(Pedido p) {
+	/*public List<Ubicacion> buscarUbicacionesParaDespachar(Pedido p) {
 		List<Ubicacion> us = new ArrayList<Ubicacion>();
 		for (DetallePedido dp : p.getDetalle())
 		{
@@ -87,7 +135,7 @@ public class Almacen {
 			for (Ubicacion u : ubicaciones)
 			{
 				//Mientras no haya encontrado el total que me pide el DetallePedido...
-				while (aux < dp.getCantidad())
+				if (aux < dp.getCantidad())
 				{
 					//Si la Ubicacion que estoy analizando tiene el total de lo que me falta sacar, saco todo (si me queda en 0 desasocio) y aumento el aux en la cantidad sacada
 					if(u.getCantidadActual() >= dp.getCantidad()-aux)
@@ -97,10 +145,6 @@ public class Almacen {
 						int cantidadASacar = (dp.getCantidad()-aux);
 						//Actualizo la cantidadActual, restando lo que necesito sacar
 						u.setCantidadActual(cantidadPosicion-cantidadASacar);
-						if(u.getCantidadActual()==0)
-						{
-							dp.getProducto().sacarUbicacion(u);
-						}
 						u.update();
 						us.add(u);
 						aux = aux + cantidadASacar;
@@ -112,10 +156,10 @@ public class Almacen {
 						aux = aux + u.getCantidadActual();
 						u.setCantidadActual(0);
 						u.update();
-						dp.getProducto().sacarUbicacion(u);
 					}
 				}
 			}
+			dp.getProducto().eliminarUbicacionesEnCero();
 			MovimientoStock ms = new MovimientoStock();
 			ms.setCantidad(dp.getCantidad());
 			ms.setMotivo("Venta");
@@ -125,7 +169,7 @@ public class Almacen {
 			ms.save();
 		}
 		return us;
-	}
+	}*/
 
 
 	/*public void agregarMovimientoStock(String codbarra, String tipoajuste, String motivo, int cantidad,

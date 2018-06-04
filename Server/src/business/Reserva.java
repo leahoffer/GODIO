@@ -65,6 +65,10 @@ public class Reserva {
 		AlmacenDAO.getInstance().createReserva(this);
 		
 	}
+	public void updateMe() {
+		// TODO Auto-generated method stub
+		AlmacenDAO.getInstance().updateReserva(this);
+	}
 	
 	
 	

@@ -218,8 +218,6 @@ public class AlmacenDAO {
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			s.update(ue);
-			s.flush();
-			s.close();
 		}
 		catch (Exception e)
 		{
@@ -279,6 +277,21 @@ public class AlmacenDAO {
 		}
 		return listafinal.get(0);
 		
+	}
+
+	public void updateReserva(Reserva r) {
+		// TODO Auto-generated method stub
+		try
+		{
+			ReservaEntity re= this.reservaToEntity(r);
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.update(re);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	
