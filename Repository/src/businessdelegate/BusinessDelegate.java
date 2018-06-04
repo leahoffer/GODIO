@@ -93,6 +93,10 @@ public class BusinessDelegate implements TDABusiness {
 	public void completarOP(int nro) throws RemoteException {
 		RemoteObject.completarOP(nro);
 	}
+	
+	public List<PedidoDTO> listarPedidosPendientes() throws RemoteException {
+		return RemoteObject.listarPedidosPendientes();
+	}
 
 
 	public void despacharPedido(PedidoDTO pdto) throws RemoteException {

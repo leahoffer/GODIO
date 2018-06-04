@@ -89,6 +89,11 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 	public void despacharPedido(PedidoDTO pdto) throws RemoteException {
 		controlador.despacharPedido(pdto);
 	}
+	
+	@Override
+	public  List<PedidoDTO> listarPedidosPendientes() throws RemoteException  {
+		return controlador.listarPedidosPendientes();
+	}
 
 
 	

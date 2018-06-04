@@ -1,16 +1,17 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import business.Bonificacion;
 import business.Cliente;
 import business.Condicion;
 import business.CuentaCorriente;
+import business.Descuento;
 import business.DetallePedido;
 import business.Factura;
 import business.ItemFactura;
+import business.MovimientoCC;
 import business.MovimientoReserva;
 import business.OrdenPedido;
 import business.Pedido;
@@ -22,16 +23,20 @@ import dao.ClienteDAO;
 import dao.PedidoDAO;
 import dao.ProductoDAO;
 import dto.ClienteDTO;
+import dto.CondicionDTO;
 import dto.CuentaCorrienteDTO;
 import dto.DetallePedidoDTO;
+import dto.MovimientoCCDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
 import dto.UbicacionDTO;
+import entity.BonificacionEntity;
+import entity.CondicionEntity;
+import entity.DescuentoEntity;
+import entity.MovimientoCCEntity;
 import entity.ProductoEntity;
 import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
-import enumeration.EstadoProducto;
-import enumeration.Presentacion;
 import enumeration.TipoFactura;
 import exception.ClienteException;
 import exception.ProductoException;
@@ -103,12 +108,54 @@ public class Controller {
 	
 	private Cliente buscarCliente (String cuit) throws ClienteException
 	{
-		for (Cliente clie : clientes)
+	/*	for (Cliente clie : clientes)
 		{
 			if (clie.getCuit().equals(cuit));
 				return clie; //Busqueda en memoria.
+<<<<<<< HEAD
+		}*/
+		
+		//Los DAO reciben y devuelven objetos de negocio
+		Cliente cliente = ClienteDAO.getInstance().findByCuit(cuit);
+		
+	/*	ClienteDTO cli = new ClienteDTO();
+		CuentaCorrienteDTO cta = new CuentaCorrienteDTO();
+		List<CondicionDTO> conds = new ArrayList<CondicionDTO>(); 
+		*//** Comento esto para que no putee por ahora, porque solo falta ver la herencia. Después se puede descomentar**//*
+		for (Condicion c :cliente.getCuentaCorriente().getCondiciones())
+		{
+			if (c instanceof Bonificacion)
+			{
+				BonificacionDTO b = new BonificacionDTO();
+				b.setCondicion(c.getCondicion());
+				b.setMonto(((Bonificacion) c).getMonto());
+				conds.add(b);
+			}
+			else if (c instanceof Descuento)
+			{
+				DescuentoDTO d = new DescuentoDTO();
+				d.setCondicion(c.getCondicion());
+				d.setPorcentaje(((Descuento) c).getPorcentaje());
+				conds.add(d);
+			}
 		}
-		Cliente cliente = ClienteDAO.getInstance().findByCuit(cuit);		
+		
+		cta.setCondiciones(conds);
+		cli.setCondicionEsp(cliente.getCondicionEsp());
+		cli.setCuentaCorriente(cta);
+		cli.setCuit(cliente.getCuit());
+		cli.setDireccion(cliente.getDireccion());
+		cli.setR_inscripto(cli.isR_inscripto()); 
+		cli.setRazon_social(cli.getRazon_social());
+		cli.setTelefono(cli.getTelefono());
+		clientes.add(cli);
+		return cli;
+	*/	
+		
+
+		
+		
+
 		clientes.add(cliente);
 		return cliente;
 	}
@@ -245,6 +292,53 @@ public class Controller {
 			}
 		}
 		return resultado;
+<<<<<<< HEAD
+	}
+
+	public ClienteDTO mostrarCliente(String cuit) throws ClienteException {
+		// TODO Auto-generated method stub
+		
+			Cliente c= this.buscarCliente(cuit);
+			CuentaCorrienteDTO cc = new CuentaCorrienteDTO();
+			List<MovimientoCCDTO> mccs = new ArrayList<MovimientoCCDTO>();
+			List<CondicionDTO> cs = new ArrayList<CondicionDTO>();
+			
+			
+			ClienteDTO cdto= new ClienteDTO();
+			cdto.setCuit(c.getCuit());
+			cdto.setDireccion(c.getDireccion());
+			cdto.setR_inscripto(c.isR_inscripto());
+			cdto.setRazon_social(c.getRazon_social());
+			cdto.setTelefono(c.getTelefono());
+			cdto.setCondicionEsp(c.getCondicionEsp());
+			
+			cc.setLimite(c.getCuentaCorriente().getLimite());
+			cc.setSaldo(c.getCuentaCorriente().getSaldo());
+			cc.setId(c.getCuentaCorriente().getId());
+			cdto.setCuentaCorriente(cc);
+		
+		return cdto;
+	}
+
+	public void modificarCliente(ClienteDTO cdto) throws ClienteException {
+		// TODO Auto-generated method stub
+		Cliente c= this.buscarCliente(cdto.getCuit());
+		c.setCondicionEsp(cdto.getCondicionEsp());
+		c.setDireccion(cdto.getDireccion());
+		c.setR_inscripto(cdto.isR_inscripto());
+		c.setRazon_social(cdto.getRazon_social());
+		c.setTelefono(cdto.getTelefono());
+		//No tiene en cuenta ni cuenta corriente ni Movimientos. Es solo para updatear datos personales//	
+		ClienteDAO.getInstance().update(c);
+	}
+
+
+	/*public void agregarMovimientoStock(String codBarra, UbicacionDTO udto, String responsable, int cantidad)
+	{
+		Ubicacion u = Almacen.getInstance().traerUbicacion(udto.getCalle(), udto.getBloque(), udto.getEstanteria(), udto.getEstante(), udto.getPosicion());
+		
+=======
+>>>>>>> branch 'master' of https://github.com/leahoffer/GODIO.git
 	}*/
 
 	

@@ -38,6 +38,8 @@ public interface TDABusiness extends Remote {
 	
 	public abstract void despacharPedido(PedidoDTO pdto) throws RemoteException;
 
+	public abstract List<PedidoDTO> listarPedidosPendientes() throws RemoteException;
+
 
 	
 			

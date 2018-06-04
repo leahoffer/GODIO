@@ -107,6 +107,15 @@ public class ventanaPrincipal {
 				new BajaCliente(vent);				
 			}
 		});
+		
+		JMenuItem mntmCondEspecial = new JMenuItem("Modificar Cond. Especial");
+		mnNewMenu.add(mntmCondEspecial);
+		mntmCondEspecial.setFont(new Font("Tahoma", Font.BOLD, 11));
+		mntmCondEspecial.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent arg0) {
+				new ModificarCondicionEspecial(vent);				
+			}
+		});
 	
 		
 		JMenu menu = new JMenu("Autorizar");

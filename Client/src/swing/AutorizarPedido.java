@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import businessdelegate.BusinessDelegate;
+
 
 
 public class AutorizarPedido {
@@ -19,7 +21,7 @@ public class AutorizarPedido {
 	private ventanaPrincipal ventana;
 	private JPanel contentPane;
 	private JTextField textField;
-	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_3; 
 	private JLabel label;
 	@SuppressWarnings("unused")
 	private JLabel label_1;
@@ -48,7 +50,7 @@ public class AutorizarPedido {
 		btnNewButton_2.setBounds(327, 302, 104, 31);
 		contentPane.add(btnNewButton_2);
 		
-		JLabel lblBuscar = new JLabel("Buscar: ");
+		JLabel lblBuscar = new JLabel("Pedido: ");
 		lblBuscar.setForeground(Color.BLACK);
 		lblBuscar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblBuscar.setBounds(39, 135, 57, 21);
@@ -125,12 +127,17 @@ public class AutorizarPedido {
 		contentPane.add(label_4);
 		
 		
-		JButton btnNewButton_1 = new JButton("Ir");
-		btnNewButton_1.setBounds(286, 127, 46, 25);
+		JButton btnNewButton_1 = new JButton("Seleccionar Pedido");
+		btnNewButton_1.setBounds(286, 127, 106, 25);
 		contentPane.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				
+				/*
+				try {
+					if(!textField.getText().trim().isEmpty()){
+					   pedido = BusinessDelegate.getInstance().listarPedidosPendientes();*/
 				/*try {
 					if(!textField.getText().trim().isEmpty()){
 						Cliente cl = Controlador.getInstancia().buscarCliente(textField.getText());
@@ -184,7 +191,7 @@ public class AutorizarPedido {
 				}*/
 					JOptionPane.showMessageDialog(null, "El cliente ha sido dado de baja", "Éxito", JOptionPane.INFORMATION_MESSAGE); //Borrar Luego.
 				else
-					JOptionPane.showMessageDialog(null, "Debe ingresar un CUIT", "Warning", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Debe ingresar un Nro de Pedido", "Warning", JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		
