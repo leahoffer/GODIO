@@ -64,7 +64,7 @@ public listaPedidos (){
     
     
     try {
-	pedidos = BusinessDelegate.getInstance().listarPedidosPendientes();
+	pedidos = BusinessDelegate.getInstance().listarPedidosPendientes(rol);
 	} catch (RemoteException e1) {
 		// TODO Auto-generated catch block
 		JOptionPane.showMessageDialog(null, "Error de Conexión", "Error", JOptionPane.ERROR_MESSAGE);

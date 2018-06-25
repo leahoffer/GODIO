@@ -120,14 +120,14 @@ public class PedidoDAO {
 		return fe;
 	}
 
-	public List<Pedido> traerPedidosPendientes() {
+	public List<Pedido> traerPedidosPendientes(String cuit) {
 		try
 		{
 			List<Pedido> ps = new ArrayList<Pedido>();
 			SessionFactory sf = HibernateUtil.getSessionFactory();
 			Session s = sf.openSession();
 			@SuppressWarnings("unchecked")
-			List <PedidoEntity> pes = (List<PedidoEntity>) s.createQuery("from PedidoEntity pe where pe.estado = 'PendienteAutorizacion'").list();
+			List <PedidoEntity> pes = (List<PedidoEntity>) s.createQuery("from PedidoEntity pe where pe.estado = 'PendienteAutorizacion' and pe.cliente.cuit ='"+cuit+"'").list();
 			for (PedidoEntity pe : pes)
 			{
 				Pedido p = pedidoToNegocio(pe);

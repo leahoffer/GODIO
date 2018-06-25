@@ -122,8 +122,8 @@ public class test {
 				pedido.setAclaracionEspecial("Aclaración Especial");
 				pedido.setTotal_bruto(0);
 				
-				/*ProductoDTO producto=new ProductoDTO();
-				producto.setCodBarras("CodBarra1");*/
+				ProductoDTO producto=new ProductoDTO();
+				producto.setCodBarras("CodBarra1");
 				ProductoDTO producto2=new ProductoDTO();
 				producto2.setCodBarras("CodBarra2");
 				/*ProductoDTO producto3=new ProductoDTO();
@@ -132,10 +132,10 @@ public class test {
 				producto4.setCodBarras("CodBarra4");*/
 
 				
-				/*DetallePedidoDTO detalle= new DetallePedidoDTO();
+				DetallePedidoDTO detalle= new DetallePedidoDTO();
 				detalle.setCantidad(4200);
 				detalle.setSubtotal(0);
-				detalle.setProducto(producto);*/
+				detalle.setProducto(producto);
 				
 				DetallePedidoDTO detalle2= new DetallePedidoDTO();
 				detalle2.setCantidad(133);
@@ -153,7 +153,7 @@ public class test {
 				detalle4.setProducto(producto4);*/
 				
 				List<DetallePedidoDTO> detalles = new ArrayList<DetallePedidoDTO>();
-				/*detalles.add(detalle);*/
+				detalles.add(detalle);
 				detalles.add(detalle2);
 				/*detalles.add(detalle3);
 				detalles.add(detalle4);*/
@@ -209,6 +209,16 @@ public class test {
 				 BusinessDelegate.getInstance().despacharPedido(3);
 				 System.out.print("Pedido despachado.");
 			 }
+			 
+			 if (entradaTeclado.equals("10"))
+			 {
+				 List<PedidoDTO> pedidos = BusinessDelegate.getInstance().listarPedidosPendientes("Cuit1");
+				 for (PedidoDTO p: pedidos)
+				 {
+					 System.out.println(p.getNroPedido());
+				 }
+			 }
+
 
 	}
 			 

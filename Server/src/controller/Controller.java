@@ -169,10 +169,10 @@ public class Controller {
 
 	
 	
-	public List<PedidoDTO> listarPedidosPendientes ()
+	public List<PedidoDTO> listarPedidosPendientes (String cuit)
 	{
 		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
-		List<Pedido> ps = PedidoDAO.getInstance().traerPedidosPendientes();
+		List<Pedido> ps = PedidoDAO.getInstance().traerPedidosPendientes(cuit);
 		for (Pedido p : ps)
 			pdtos.add(p.toDTO());
 		return pdtos;
