@@ -1,6 +1,6 @@
 package servlet;
 
-import HttpServlet;
+import javax.servlet.http.HttpServlet;
 
 public class Servlet extends HttpServlet {
 
