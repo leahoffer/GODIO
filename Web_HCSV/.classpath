@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="Client/src"/>
-	<classpathentry kind="src" path="Repository/src"/>
-	<classpathentry kind="src" path="Server/src"/>
-	<classpathentry kind="src" path="Web/src"/>
-	<classpathentry kind="lib" path="Server/lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="Server/lib/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="Server/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="Server/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="Server/lib/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="Server/lib/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="Server/lib/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="Server/lib/hibernate3.jar"/>
-	<classpathentry kind="lib" path="Server/lib/javassist-3.4.GA.jar"/>
-	<classpathentry kind="lib" path="Server/lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="Server/lib/jtds-1.2.5.jar"/>
-	<classpathentry kind="lib" path="Server/lib/slf4j-api-1.5.6.jar"/>
-	<classpathentry kind="lib" path="Server/lib/slf4j-simple-1.5.6.jar"/>
+	<classpathentry kind="src" path="Prueba_Servlet/src"/>
+	<classpathentry kind="lib" path="Prueba_Servlet/WebContent/WEB-INF/lib/jtds-1.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Mauricio/Downloads/syntheticaGreenDream_2.9.7/syntheticaGreenDream.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mauricio/Downloads/synthetica_2.31.0_eval/synthetica.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mauricio/Downloads/syntheticaBlueLight_2.9.4/syntheticaBlueLight.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mauricio/Downloads/syntheticaMauveMetallic_2.9.5/syntheticaMauveMetallic.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Mauricio/Downloads/syntheticaOrangeMetallic_2.9.5/syntheticaOrangeMetallic.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="D:/apache-tomcat-8.0.52/lib/annotations-api.jar"/>
 	<classpathentry kind="lib" path="D:/apache-tomcat-8.0.52/lib/catalina.jar"/>
 	<classpathentry kind="lib" path="D:/apache-tomcat-8.0.52/lib/catalina-ant.jar"/>
@@ -47,5 +29,5 @@
 	<classpathentry kind="lib" path="D:/apache-tomcat-8.0.52/lib/tomcat-util-scan.jar"/>
 	<classpathentry kind="lib" path="D:/apache-tomcat-8.0.52/lib/tomcat-websocket.jar"/>
 	<classpathentry kind="lib" path="D:/apache-tomcat-8.0.52/lib/websocket-api.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="Prueba_Servlet/build/classes"/>
 </classpath>
