@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import businessdelegate.BusinessDelegate;
 import dto.PedidoDTO;
 
-public class Servlet extends HttpServlet {
+public class BuscarPedidosPendientes extends HttpServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public Servlet() {
+	public BuscarPedidosPendientes() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
