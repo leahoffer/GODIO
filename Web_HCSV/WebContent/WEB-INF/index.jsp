@@ -4,7 +4,7 @@
 <html>
 
 <head>
-<link rel=”stylesheet” type=”text/css” href=”css/bootstrap.css” />
+<link href=”css/bootstrap.css” rel=”stylesheet” type=”text/css”/>
 <script type=”text/javascript” src=”js/bootstrap.js”></script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
