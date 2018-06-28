@@ -22,7 +22,12 @@ public class test {
 
 	public static void main(String[] args) throws RemoteException, ProductoException {
 
-	    
+	    /*    <label for="country">Aclaraciones especiales</label>
+    <select id="country" name="country">
+      <option value="australia">Australia</option>
+      <option value="canada">Canada</option>
+      <option value="usa">USA</option>
+    </select>*/
 	    
 		System.out.println("Presione 0 para Test de RMI");
 		System.out.println("Presione 1 para Ingresar Cliente");
@@ -119,7 +124,6 @@ public class test {
 				pedido.setDir_entrega("Dir Entrega");
 				pedido.setFecha(new Date());
 				pedido.setMotivoEstado("Motivo Estado");
-				pedido.setAclaracionEspecial("Aclaración Especial");
 				pedido.setTotal_bruto(0);
 				
 				ProductoDTO producto=new ProductoDTO();

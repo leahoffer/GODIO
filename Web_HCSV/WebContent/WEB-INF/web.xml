@@ -31,4 +31,16 @@
 		<servlet-name>BuscarPedidosPendientes</servlet-name>
 		<url-pattern>/BuscarPedidosPendientes</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>CrearPedido</display-name>
+		<servlet-name>CrearPedido</servlet-name>
+		<servlet-class>servlet.CrearPedido</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CrearPedido</servlet-name>
+		<url-pattern>/CrearPedido</url-pattern>
+	</servlet-mapping>
 </web-app>

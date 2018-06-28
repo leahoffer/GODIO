@@ -1,6 +1,7 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class PedidoDTO implements Serializable{
 	private List<CondicionDTO> condicionesAplicadas;
 	public PedidoDTO() {
 		super();
+		detalle = new ArrayList<DetallePedidoDTO>();
+		condicionesAplicadas = new ArrayList<CondicionDTO>();
 	}
 	
 
