@@ -216,11 +216,11 @@ public class test {
 			 
 			 if (entradaTeclado.equals("10"))
 			 {
-				 List<PedidoDTO> pedidos = BusinessDelegate.getInstance().listarPedidosPendientes("Cuit1");
+				/* List<PedidoDTO> pedidos = BusinessDelegate.getInstance().listarPedidosPendientes("Cuit1");
 				 for (PedidoDTO p: pedidos)
 				 {
 					 System.out.println(p.getNroPedido());
-				 }
+				 }*/
 			 }
 
 
