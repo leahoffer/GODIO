@@ -78,46 +78,7 @@ input[type=submit]:hover {
 <div class="title">
 	  <h2>Solicitar un Pedido</h2>
 		</div>
-<form action="/Web_HCSV/CrearPedido">
-    <label for="cuit">CUIT</label>
-    <input type="text" id="cuit" name="cuit" placeholder="Su número de CUIT">
-	<br></br>
-    <label for="direccion">Dirección de Entrega</label>
-    <input type="text" id="direccion" name="direccion" placeholder="La dirección donde quiere recibir el pedido">
-<br></br>
- 	<label for="aclaracion">Aclaraciones Especiales</label>
-    <input type="text" id="aclaracion" name="aclaracion" placeholder="Aclaraciones sobre el pedido">
-  <br></br>
-  <br></br>
-   <label for="detalles">DETALLES</label>
-   <hr></hr>
-    <br></br>
-  <div class="two-col">
-    <div class="col1">
-    <%@ page import="java.util.*" %>
-   <%@ page import="businessdelegate.BusinessDelegate" %>
-    <%@ page import="dto.ProductoDTO" %>
-  <%
-	
-  		List<ProductoDTO> productos= BusinessDelegate.getInstance().listarProductosDisponibles();
- 			
-	%>
-        <label for="producto">Producto</label>
-        <select id="producto" name="producto">
-      <%  for(ProductoDTO p: productos){ %>
-            <option><%= p.getCodBarras() %></option>
-        <% } %>
-    </select>
-    </div>
-
-    <div class="col2">
-        <label for="cantidad">Cantidad</label>
-        <input id="cantidad" name="cantidad" type="text">
-    </div>
-</div>
-    <br></br>
-    <input type="submit" value="Enviar Pedido">
-  </form>
+		<p> Pedido creado con éxito. </p>
 	</div>
 	
 <div id="copyright">

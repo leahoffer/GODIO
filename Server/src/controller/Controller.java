@@ -169,10 +169,10 @@ public class Controller {
 
 	
 	
-	public List<PedidoDTO> listarPedidosPendientes (String cuit)
+	public List<PedidoDTO> listarPedidosPendientes ()
 	{
 		List<PedidoDTO> pdtos = new ArrayList<PedidoDTO>();
-		List<Pedido> ps = PedidoDAO.getInstance().traerPedidosPendientes(cuit);
+		List<Pedido> ps = PedidoDAO.getInstance().traerPedidosPendientes();
 		for (Pedido p : ps)
 			pdtos.add(p.toDTO());
 		return pdtos;
@@ -180,14 +180,17 @@ public class Controller {
 	
 	
 	
-	public String validarCreditoCliente(int nropedido) 
+	public PedidoDTO validarCreditoCliente(int nropedido) 
 	{
 		Pedido p = PedidoDAO.getInstance().findByNro(nropedido);
 		Cliente c= p.getCliente();
+		PedidoDTO pdto = p.toDTO();
 		if(!c.excedeLimite(p.getTotal_bruto()))
-			return "El Cliente "+c.getRazon_social()+" CUIT "+c.getCuit()+" tiene límite suficiente para hacer este pedido. Autorizar (SI/NO)?";
+			pdto.setEstado("Autorizado");
 		else
-			return "El Cliente "+c.getRazon_social()+" CUIT "+c.getCuit()+" no tiene límite suficiente para hacer este pedido. Autorizar (SI/NO)?";
+			pdto.setEstado("Rechazado");
+		
+		return pdto;
 	}
 	
 	

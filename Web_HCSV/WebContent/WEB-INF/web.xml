@@ -43,4 +43,28 @@
 		<servlet-name>CrearPedido</servlet-name>
 		<url-pattern>/CrearPedido</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>ValidarCliente</display-name>
+		<servlet-name>ValidarCliente</servlet-name>
+		<servlet-class>servlet.ValidarCliente</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ValidarCliente</servlet-name>
+		<url-pattern>/ValidarCliente</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>Autorizar</display-name>
+		<servlet-name>Autorizar</servlet-name>
+		<servlet-class>servlet.Autorizar</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Autorizar</servlet-name>
+		<url-pattern>/Autorizar</url-pattern>
+	</servlet-mapping>
 </web-app>

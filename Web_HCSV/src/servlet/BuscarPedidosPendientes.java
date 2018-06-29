@@ -36,7 +36,7 @@ public class BuscarPedidosPendientes extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String cuit = req.getParameter("cliente");
-		List<PedidoDTO> pedidos = BusinessDelegate.getInstance().listarPedidosPendientes(cuit);
+		List<PedidoDTO> pedidos = BusinessDelegate.getInstance().listarPedidosPendientes();
 		 PrintWriter out = resp.getWriter();
 		 String title = "Listo Clubes";
 		 

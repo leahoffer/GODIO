@@ -86,7 +86,7 @@ public class BusinessDelegate implements TDABusiness {
 		RemoteObject.autorizarPedido(nropedido);
 	}
 
-	public String validarCreditoCliente(int nropedido) throws RemoteException {
+	public PedidoDTO validarCreditoCliente(int nropedido) throws RemoteException {
 		return RemoteObject.validarCreditoCliente(nropedido);
 	}
 
@@ -94,8 +94,8 @@ public class BusinessDelegate implements TDABusiness {
 		RemoteObject.completarOP(nro);
 	}
 	
-	public List<PedidoDTO> listarPedidosPendientes(String cuit) throws RemoteException {
-		return RemoteObject.listarPedidosPendientes(cuit);
+	public List<PedidoDTO> listarPedidosPendientes() throws RemoteException {
+		return RemoteObject.listarPedidosPendientes();
 	}
 
 

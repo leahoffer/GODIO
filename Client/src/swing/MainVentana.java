@@ -6,5 +6,4 @@ public class MainVentana {
 
 		new ventanaPrincipal("Administrador");
 	}
-
 }

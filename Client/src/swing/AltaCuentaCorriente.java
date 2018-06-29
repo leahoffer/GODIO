@@ -96,7 +96,7 @@ public class AltaCuentaCorriente {
 					try {
 						cuenta.setLimite(Float.parseFloat(limite.getText().toString()));
 						cuenta.setSaldo(Float.parseFloat(saldo.getText().toString()));
-						vent.getFrame().dispose();
+						
 					} catch (NumberFormatException e) {
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null, "Ingresar con el formato 1200.00", "Error", JOptionPane.ERROR_MESSAGE);

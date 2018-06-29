@@ -44,7 +44,7 @@ public class AltaCliente {
 		contentPane.add(lblAltaCliente);
 
 		JLabel lblNewLabel = new JLabel("Alta cliente");
-		lblNewLabel.setFont(new Font("Broadway", Font.BOLD, 20));
+		lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
 		lblNewLabel.setBounds(206, 20, 213, 56);
 		contentPane.add(lblNewLabel);
 
@@ -53,12 +53,12 @@ public class AltaCliente {
 		lblNombre.setBounds(32, 117, 61, 35);
 		contentPane.add(lblNombre);
 
-		JLabel lblDomicilio = new JLabel("<html>Domicilio: <font color = \"red\">*</font><html>");
+		JLabel lblDomicilio = new JLabel("<html>Domicilio: <html>");
 		lblDomicilio.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDomicilio.setBounds(32, 175, 177, 35);
 		contentPane.add(lblDomicilio);
 
-		JLabel lblMail = new JLabel("<html>Cond. Especial: <font color = \"red\">*</font><html>");
+		JLabel lblMail = new JLabel("<html>Cond. Especial: <html>");
 		lblMail.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblMail.setBounds(32, 237, 61, 35);
 		contentPane.add(lblMail);
@@ -68,12 +68,12 @@ public class AltaCliente {
 		lblApellido.setBounds(269, 117, 177, 35);
 		contentPane.add(lblApellido);
 
-		JLabel lblTelfono = new JLabel("<html>Teléfono: <font color = \"red\">*</font><html>");
+		JLabel lblTelfono = new JLabel("<html>Teléfono: <html>");
 		lblTelfono.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblTelfono.setBounds(269, 175, 177, 35);
 		contentPane.add(lblTelfono);
 
-		JLabel lblDNI = new JLabel("<html>Responsable Inscripto:<font color = \"red\">*</font><html>");
+		JLabel lblDNI = new JLabel("<html>Responsable Inscripto<html>");
 		lblDNI.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblDNI.setBounds(269, 237, 74, 35);
 		contentPane.add(lblDNI);
