@@ -85,9 +85,10 @@
 				line-height: 1.5em;
 				font-size: 1.3em;
 			}
-		
+			form select {
+			
+				}
 			form input.text,
-			form select,
 			form textarea
 			{
 				position: relative;

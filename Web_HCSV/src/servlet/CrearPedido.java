@@ -35,33 +35,42 @@ public class CrearPedido extends HttpServlet {
 		
 		PedidoDTO pedido=new PedidoDTO();
 		
-		pedido.setAclaracionEspecial(req.getParameter("aclaraciones"));
+		pedido.setAclaracionEspecial(req.getParameter("aclaracion"));
 		pedido.setCliente(cliente);
 		pedido.setDespachable(false);
 		pedido.setDir_entrega(req.getParameter("direccion"));
 		pedido.setFecha(new Date());
-		pedido.setMotivoEstado("Un motivo cualca");
+		pedido.setMotivoEstado("");
 		pedido.setTotal_bruto(0);
 		
-		ProductoDTO producto=new ProductoDTO();
-		producto.setCodBarras(req.getParameter("producto"));
-
-		
-		DetallePedidoDTO detalle= new DetallePedidoDTO();
-		detalle.setCantidad(Integer.parseInt(req.getParameter("cantidad")));
-		detalle.setSubtotal(0);
-		detalle.setProducto(producto);
-	
-
-		
-		List<DetallePedidoDTO> detalles = new ArrayList<DetallePedidoDTO>();
-		detalles.add(detalle);
-		
-		pedido.setDetalle(detalles);
-		
 		try {
+			List<ProductoDTO> totalproductos = BusinessDelegate.getInstance().listarProductosDisponibles();
+			List<DetallePedidoDTO> detalles = new ArrayList<DetallePedidoDTO>();
+			for (ProductoDTO pdto: totalproductos)
+			{
+				String id = "cantidad"+pdto.getCodBarras();
+				String cantidad = ""+req.getParameter(id);
+				if (!cantidad.equals(""))
+				{
+					ProductoDTO producto=new ProductoDTO();
+					producto.setCodBarras(pdto.getCodBarras());
+
+					DetallePedidoDTO detalle= new DetallePedidoDTO();
+					detalle.setCantidad(Integer.parseInt(cantidad));
+					detalle.setSubtotal(0);
+					detalle.setProducto(producto);
+					
+					detalles.add(detalle);
+				}
+				
+				
+			}
+			pedido.setDetalle(detalles);
 			BusinessDelegate.getInstance().crearPedido(pedido);
-		} catch (ClienteException | ProductoException e) {
+		} catch (ProductoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ClienteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

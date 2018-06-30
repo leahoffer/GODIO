@@ -23,7 +23,16 @@ Released   : 20140322
 <link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+    
+    <!-- BEGIN FOXYCART FILES -->
+    <script src="https://css-tricks.foxycart.com/files/foxycart_includes.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://css-tricks.foxycart.com/files/foxybox.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="https://css-tricks.foxycart.com/themes/standard/theme.foxybox.css" type="text/css" media="screen" charset="utf-8" />
+    <!-- END FOXYCART FILES -->
 
+    
+	<script type='text/javascript' src='js/order.js'></script>
 </head>
 
 <style>
@@ -78,10 +87,12 @@ input[type=submit]:hover {
 <div class="title">
 	  <h2>Solicitar un Pedido</h2>
 		</div>
-<form action="/Web_HCSV/CrearPedido">
+
+ <form action="/Web_HCSV/CrearPedido">
     <label for="cuit">CUIT</label>
     <input type="text" id="cuit" name="cuit" placeholder="Su número de CUIT">
 	<br></br>
+	
     <label for="direccion">Dirección de Entrega</label>
     <input type="text" id="direccion" name="direccion" placeholder="La dirección donde quiere recibir el pedido">
 <br></br>
@@ -89,39 +100,56 @@ input[type=submit]:hover {
     <input type="text" id="aclaracion" name="aclaracion" placeholder="Aclaraciones sobre el pedido">
   <br></br>
   <br></br>
+  
    <label for="detalles">DETALLES</label>
-   <hr></hr>
-    <br></br>
-  <div class="two-col">
-    <div class="col1">
-    <%@ page import="java.util.*" %>
+   <hr></hr> 
+    
+    
+    	<table id="order-table">
+    	    <tr>
+    	         <th>Codigo de Barras</th> 
+    	         <th>Cantidad Deseada</th>
+    	         <th>X</th>
+    	         <th>Precio por unidad</th>
+    	         <th>=</th>
+    	         <th style="text-align: right; padding-right: 30px;">Subtotal</th> 
+    	    </tr>
+    	      <%@ page import="java.util.*" %>
    <%@ page import="businessdelegate.BusinessDelegate" %>
     <%@ page import="dto.ProductoDTO" %>
   <%
-	
   		List<ProductoDTO> productos= BusinessDelegate.getInstance().listarProductosDisponibles();
- 			
 	%>
-        <label for="producto">Producto</label>
-        <select id="producto" name="producto">
-      <%  for(ProductoDTO p: productos){ %>
-            <option><%= p.getCodBarras() %></option>
+	  <%  for(ProductoDTO p: productos){ %>
+            <tr class="odd">
+                <td class="product-title"><%=p.getCodBarras() %></td>
+                <td class="num-pallets"><input type="text" class="num-pallets-input" id="cantidad<%=p.getCodBarras()%>" name="cantidad<%=p.getCodBarras()%>"></input></td>
+                <td class="times">X</td>
+                <td class="price-per-pallet">$<span><%=p.getPrecio() %></span></td>
+                <td class="equals">=</td>
+                <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" disabled="disabled"></input></td>
+            </tr>
         <% } %>
-    </select>
-    </div>
-
-    <div class="col2">
-        <label for="cantidad">Cantidad</label>
-        <input id="cantidad" name="cantidad" type="text">
-    </div>
-</div>
-    <br></br>
-    <input type="submit" value="Enviar Pedido">
+          
+            <tr>
+                <td colspan="6" style="text-align: right;">
+                    Subtotal Pedido: <input type="text" class="total-box" value="$0" id="product-subtotal" disabled="disabled"></input>
+                </td>
+            </tr>
+    	</table>
+    	
+     <input type="submit" value="Enviar Pedido"></input>
+     
   </form>
-	</div>
-	
-<div id="copyright">
-	<p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
 </div>
+</div>
+
+    	<div class="clear"></div>
+    	
+    
+    
+  
+
 </body>
+
 </html>
