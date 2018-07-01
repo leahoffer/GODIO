@@ -80,10 +80,10 @@ input[type=submit]:hover {
 		</div>
 	</div>
 </div>
+
 <div class="wrapper">
-	<div id="banner" class="container"><img src="images/banner.jpg" width="1200" height="500" alt="" /></div>
 	<div id="welcome" class="container">
-    	
+   	
 <div class="title">
 	  <h2>Solicitar un Pedido</h2>
 		</div>
@@ -102,9 +102,6 @@ input[type=submit]:hover {
   <br></br>
   
    <label for="detalles">DETALLES</label>
-   <hr></hr> 
-    
-    
     	<table id="order-table">
     	    <tr>
     	         <th>Codigo de Barras</th> 
@@ -114,10 +111,10 @@ input[type=submit]:hover {
     	         <th>=</th>
     	         <th style="text-align: right; padding-right: 30px;">Subtotal</th> 
     	    </tr>
-    	      <%@ page import="java.util.*" %>
+   <%@ page import="java.util.*" %>
    <%@ page import="businessdelegate.BusinessDelegate" %>
-    <%@ page import="dto.ProductoDTO" %>
-  <%
+   <%@ page import="dto.ProductoDTO" %>
+    <%
   		List<ProductoDTO> productos= BusinessDelegate.getInstance().listarProductosDisponibles();
 	%>
 	  <%  for(ProductoDTO p: productos){ %>
@@ -129,7 +126,7 @@ input[type=submit]:hover {
                 <td class="equals">=</td>
                 <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" disabled="disabled"></input></td>
             </tr>
-        <% } %>
+      <% } %>
           
             <tr>
                 <td colspan="6" style="text-align: right;">

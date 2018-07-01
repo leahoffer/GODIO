@@ -43,15 +43,13 @@ Released   : 20140322
 	</div>
 </div>
 <div class="wrapper">
-	<div id="banner" class="container"><img src="images/banner.jpg" width="1200" height="500" alt="" /></div>
 	<div id="welcome" class="container">
-    	
 		<div class="title">
-	  <h2>Líder en despacho de productos alimenticios</h2>
+	  		<h2>Líder en despacho de productos alimenticios</h2>
 		</div>
-		<%  %>
+	<div id="banner" class="container"><img src="images/banner.jpg" width="1200" height="500" alt="" /></div>	
 	</div>
-	
+</div>
 <div id="copyright">
 	<p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
 </div>
