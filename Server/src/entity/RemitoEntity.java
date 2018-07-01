@@ -13,17 +13,17 @@ public class RemitoEntity {
 
 	@Id
 	@GeneratedValue
-	private String nro;
+	private int nro;
 	@OneToMany
 	private List<ItemRemitoEntity> items;
 	@OneToOne
 	private ClienteEntity cliente;
 	private Date fecha;
 	private boolean despachado;
-	public String getNro() {
+	public int getNro() {
 		return nro;
 	}
-	public void setNro(String nro) {
+	public void setNro(int nro) {
 		this.nro = nro;
 	}
 	public List<ItemRemitoEntity> getItems() {
