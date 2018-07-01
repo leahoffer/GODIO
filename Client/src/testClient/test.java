@@ -204,7 +204,7 @@ public class test {
 			}
 			 if (entradaTeclado.equals("8"))
 				{
-				 	BusinessDelegate.getInstance().completarOP(2);
+				 	BusinessDelegate.getInstance().completarOP(1);
 				 	System.out.print("Orden de Pedido cerrada.");
 				}
 			 
