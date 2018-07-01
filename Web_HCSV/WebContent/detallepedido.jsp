@@ -58,7 +58,7 @@ Released   : 20140322
 <div class="title">
 	  <h2>Detalle del pedido</h2>
 		</div>
-
+<div id="ajax">
 					    <b>Saldo del cliente:</b> <%= pdto.getCliente().getCuentaCorriente().getSaldo() %><br></br>
 					    	<b> Límite de cuenta:</b> <%= pdto.getCliente().getCuentaCorriente().getLimite() %><br></br>
 					    	
@@ -98,10 +98,25 @@ Released   : 20140322
 
 						<p>El total del pedido es de <%= pdto.getTotal_bruto() %>$. El cliente<%=a %> tiene suficiente credito para realizar el pedido.</p><br></br>
 						<a href="/Web_HCSV/Autorizar">Autorizar</a>						
+						<br></br>
+						
+						<button type="button" onclick="loadDoc()">No Autorizar</button>
 
+</div>
 
-
-
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("ajax").innerHTML =
+      this.responseText;
+    }
+  };
+  xhttp.open("GET", "http://localhost:8080/Web_HCSV/mensajeautorizacion.txt", true);
+  xhttp.send();
+}
+</script>
 
 	</div>
 	
