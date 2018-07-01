@@ -66,6 +66,7 @@ Released   : 20140322
 							<table class="blueTable">
 							<thead>
 							<tr>
+								<th>Código de Barras</th>
 								<th>Producto</th>
 								<th>Cantidad</th>
 								<th>Subtotal</th>
@@ -73,16 +74,19 @@ Released   : 20140322
 							</thead>
 							<tfoot>
 								<tr>
-								<td colspan="3">
+								<td colspan="4">
 								</td>
 								</tr>
 							</tfoot>
 							<tbody>
 							
 							<% for(DetallePedidoDTO d: pdto.getDetalle()){ %>
+							<tr>
+							<td><%= d.getProducto().getCodBarras() %></td>
 							<td><%= d.getProducto().getDescripcion() %></td>
 							<td><%= d.getCantidad() %></td>
 							<td><%= d.getSubtotal() %></td>
+							</tr>
 						     <% } %>
 							</tbody>
 							</table>
@@ -93,7 +97,7 @@ Released   : 20140322
 							{a=" no";} %>
 
 						<p>El total del pedido es de <%= pdto.getTotal_bruto() %>$. El cliente<%=a %> tiene suficiente credito para realizar el pedido.</p><br></br>
-						<a href="/Web_HCSV/Autorizar">Autorizar.</a>						
+						<a href="/Web_HCSV/Autorizar">Autorizar</a>						
 
 
 

@@ -28,7 +28,7 @@ public class ValidarCliente extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-			PedidoDTO pedido = BusinessDelegate.getInstance().validarCreditoCliente(Integer.parseInt(req.getParameter("nro")));
+			PedidoDTO pedido = BusinessDelegate.getInstance().validarCreditoCliente(Integer.parseInt(req.getParameter("nroPedido")));
 			req.getSession().setAttribute("pedido", pedido);
 			RequestDispatcher view = req.getRequestDispatcher("detallepedido.jsp");
 			view.forward(req, resp);

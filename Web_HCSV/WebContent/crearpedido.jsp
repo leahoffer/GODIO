@@ -90,7 +90,7 @@ input[type=submit]:hover {
 
  <form action="/Web_HCSV/CrearPedido">
     <label for="cuit">CUIT</label>
-    <input type="text" id="cuit" name="cuit" placeholder="Su número de CUIT">
+    <input type="text" id="cuit" name="cuit" placeholder="Su número de CUIT" required  oninvalid="setCustomValidity('El CUIT no puede estar vacío.')">
 	<br></br>
 	
     <label for="direccion">Dirección de Entrega</label>

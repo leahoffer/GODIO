@@ -36,7 +36,7 @@ Released   : 20140322
 				<li><a href="index.jsp" accesskey="1" title="">Home</a></li>
 				<li><a href="nuevopedido.jsp" accesskey="2" title="">Nuevo Pedido</a></li>
 				<li class="active"><a href="autorizarpedido.jsp" accesskey="3" title="">Autorizacion</a></li>
-				<li><a href="#" accesskey="4" title="">Careers</a></li>
+				<li><a href="despacharpedido.jsp" accesskey="4" title="">Despachar</a></li>
 				<li><a href="#" accesskey="5" title="">Contact Us</a></li>
 			</ul>
 		</div>
@@ -56,11 +56,12 @@ Released   : 20140322
 				<tr>
 				<th>Cliente</th>
 				<th>Pedido</th>
+				<th></th>
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
-				<td colspan="2">
+				<td colspan="3">
 				</td>
 				</tr>
 			</tfoot>
@@ -72,21 +73,19 @@ Released   : 20140322
 			  <%
 				List<PedidoDTO> pedidos= BusinessDelegate.getInstance().listarPedidosPendientes();
 			 	 for(PedidoDTO p: pedidos){ %>
-				<tr data-toggle="modal" data-id="<%= p.getNroPedido() %>" data-target="#orderModal">
+				<tr>
 							<td>CUIT <%= p.getCliente().getCuit() %> - <%= p.getCliente().getRazon_social() %></td>
 							<td>NRO <%= p.getNroPedido() %> - DIR <%= p.getDir_entrega() %> - TOTAL <%= p.getTotal_bruto() %>$</td>
+							<td><form action="/Web_HCSV/ValidarCliente">
+									<input type="hidden" name="nroPedido" value="<%= p.getNroPedido() %>"> 
+								    <input type="submit" id="boton" value="Ver detalle">
+								    
+								    </form></td>
 			 	 </tr>
 			 	    <% } %>
 			</tbody>
 		</table> 	 
-		
-	<form action="/Web_HCSV/ValidarCliente">
-    <label for="cuit">Ingrese el pedido a autorizar:</label>
-    <input type="text" id="nro" name="nro" placeholder="Nro pedido...">
-    </input>
-    <input type="submit" value="Chequear Detalles">
-    </form>
-    
+
 
 
 
