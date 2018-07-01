@@ -100,7 +100,7 @@ Released   : 20140322
 						<a href="/Web_HCSV/Autorizar">Autorizar</a>						
 						<br></br>
 						
-						<button type="button" onclick="loadDoc()">No Autorizar</button>
+						<a href="#" onclick="loadDoc()">No Autorizar</button>
 
 </div>
 
