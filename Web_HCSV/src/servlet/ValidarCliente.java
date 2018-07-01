@@ -13,6 +13,11 @@ import dto.PedidoDTO;
 
 public class ValidarCliente extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2199042081906182759L;
+
 	public ValidarCliente() {
 		super();
 		// TODO Auto-generated constructor stub

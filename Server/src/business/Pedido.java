@@ -299,27 +299,7 @@ public class Pedido {
 
 
 
-	public void facturar() {
-		Factura f = new Factura();
-		List<ItemFactura> ifas = new ArrayList<ItemFactura>();
-		f.setCliente(this.getCliente());
-		if (this.getCliente().isR_inscripto())
-			f.setTipo(TipoFactura.A);
-		else
-			f.setTipo(TipoFactura.B);
-		for (DetallePedido dp : this.getDetalle())
-		{
-			ItemFactura ifa = new ItemFactura();
-			ifa.setCantidad(dp.getCantidad());
-			ifa.setProducto(dp.getProducto());
-			ifa.setSubtotal(ifa.getProducto().getPrecio()*ifa.getCantidad());
-			ifas.add(ifa);
-		}
-		f.setItems(ifas);
-		f.setTotal(f.calcularTotal());
-		this.setFactura(f);
-		this.update();		
-	}
+	
 
 
 
@@ -327,9 +307,20 @@ public class Pedido {
 		//buscarUbicacionesParaDespachar se va a encargar de crear los movimientos y de actualizar las ubicaciones que encuentre y devuelva
 		List<Ubicacion> us = Almacen.getInstance().buscarUbicacionesParaDespachar(this);
 		this.estado = EstadoPedido.Despachado;
-		//this.facturar();
+		this.factura = new Factura(this);
+		this.generarRemito();
+		this.cliente.facturarPedido(this);
 		this.update();
 		return us;
+	}
+
+
+
+	private void generarRemito() {
+		Remito r = new Remito();
+		r.setCliente(this.getCliente());
+		r.setDespachado(true);
+		r.save();		
 	}
 			
 	

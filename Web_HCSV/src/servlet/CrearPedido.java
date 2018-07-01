@@ -22,6 +22,11 @@ import exception.ProductoException;
 public class CrearPedido extends HttpServlet {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4956363269171493305L;
+
 	public CrearPedido() {
 		super();
 		// TODO Auto-generated constructor stub

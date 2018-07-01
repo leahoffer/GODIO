@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dao.AlmacenDAO;
+
 public class Remito {
 
 	private String nro;
@@ -56,6 +58,11 @@ public class Remito {
 
 	public void setDespachado(boolean despachado) {
 		this.despachado = despachado;
+	}
+
+	public void save() {
+		AlmacenDAO.getInstance().saveRemito(this);
+		
 	}
 	
 	
