@@ -44,6 +44,8 @@ public interface TDABusiness extends Remote {
 
 	public abstract List<PedidoDTO> listarPedidosADespachar() throws RemoteException;
 
+	public abstract void noautorizarPedido(int nroPedido) throws RemoteException;
+
 
 	
 			

@@ -223,6 +223,16 @@ public class Controller {
 	}
 
 
+
+	public void noautorizarPedido(int nroPedido) {
+		// TODO Auto-generated method stub
+		Pedido p = PedidoDAO.getInstance().findByNro(nroPedido);
+		p.setEstado(EstadoPedido.Rechazado);
+		p.update();
+		}
+	
+
+
 	
 	
 	

@@ -52,7 +52,7 @@ Released   : 20140322
 	</div>
 </div>
 <div class="wrapper">
-	<div id="banner" class="container"><img src="images/banner.jpg" width="1200" height="500" alt="" /></div>
+	<div id="banner" class="container"></div>
 	<div id="welcome" class="container">
     	
 <div class="title">
@@ -113,7 +113,8 @@ function loadDoc() {
       this.responseText;
     }
   };
-  xhttp.open("GET", "http://localhost:8080/Web_HCSV/mensajeautorizacion.txt", true);
+
+  xhttp.open("GET", "/Web_HCSV/NoAutorizar", true);
   xhttp.send();
 }
 </script>

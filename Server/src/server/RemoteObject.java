@@ -109,6 +109,12 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 		return controlador.listarPedidosPendientesDespacho();
 	}
 
+	@Override
+	public void noautorizarPedido(int nroPedido) {
+		// TODO Auto-generated method stub
+		controlador.noautorizarPedido(nroPedido);
+	}
+
 
 	
 	

@@ -96,12 +96,12 @@
 	<servlet>
 		<description>
 		</description>
-		<display-name>Autorizar2</display-name>
-		<servlet-name>Autorizar2</servlet-name>
-		<servlet-class>servlet.Autorizar2</servlet-class>
+		<display-name>NoAutorizar</display-name>
+		<servlet-name>NoAutorizar</servlet-name>
+		<servlet-class>servlet.NoAutorizar</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>Autorizar2</servlet-name>
-		<url-pattern>/Autorizar2</url-pattern>
+		<servlet-name>NoAutorizar</servlet-name>
+		<url-pattern>/NoAutorizar</url-pattern>
 	</servlet-mapping>
 </web-app>

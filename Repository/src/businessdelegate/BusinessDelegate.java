@@ -116,6 +116,11 @@ public class BusinessDelegate implements TDABusiness {
 		return ubicaciones;
 	}
 
+	public void noautorizarPedido(int nroPedido) throws RemoteException {
+		// TODO Auto-generated method stub
+		RemoteObject.noautorizarPedido(nroPedido);
+	}
+
 	
 
 }

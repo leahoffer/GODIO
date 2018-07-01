@@ -72,7 +72,7 @@ input[type=submit]:hover {
 	</div>
 </div>
 <div class="wrapper">
-	<div id="banner" class="container"><img src="images/banner.jpg" width="1200" height="500" alt="" /></div>
+	<div id="banner" class="container"></div>
 	<div id="welcome" class="container">
     	
 <div class="title">
