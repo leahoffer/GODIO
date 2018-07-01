@@ -142,6 +142,13 @@ public class Controller {
 			pdto.setEstado("Autorizado");
 		else
 			pdto.setEstado("Rechazado");
+		try {
+			c= ClienteDAO.getInstance().findByCuit(c.getCuit());
+		} catch (ClienteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pdto.setCliente(c.toDTO());
 		
 		return pdto;
 	}

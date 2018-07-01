@@ -98,11 +98,13 @@ public class Cliente {
 				resultado = resultado - mcc.getMonto();
 			}
 		}
+		this.getCuentaCorriente().setSaldo(resultado);
+		this.updateMe();
 		return resultado;			
 	}
 	
 	public boolean excedeLimite(float monto) {
-		if (this.obtenerSaldo() > monto)
+		if (this.obtenerSaldo() >= monto)
 			return false;
 		return true;
 	}

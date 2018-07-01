@@ -36,11 +36,13 @@ public interface TDABusiness extends Remote {
 
 	public abstract void completarOP(int nro) throws RemoteException;
 	
-	public abstract void despacharPedido(PedidoDTO pdto) throws RemoteException;
+	public abstract List<UbicacionDTO> despacharPedido(PedidoDTO pdto) throws RemoteException;
 
 	public abstract List<PedidoDTO> listarPedidosPendientes() throws RemoteException;
 
-	public abstract void despacharPedido(int nro) throws RemoteException;
+	public abstract List<UbicacionDTO> despacharPedido(int nro) throws RemoteException;
+
+	public abstract List<PedidoDTO> listarPedidosADespachar() throws RemoteException;
 
 
 	

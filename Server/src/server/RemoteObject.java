@@ -86,8 +86,9 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 	}
 
 	@Override
-	public void despacharPedido(PedidoDTO pdto) throws RemoteException {
-		controlador.despacharPedido(pdto.getNroPedido());
+	public List<UbicacionDTO> despacharPedido(PedidoDTO pdto) throws RemoteException {
+		List<UbicacionDTO> ubicaciones = controlador.despacharPedido(pdto.getNroPedido());
+		return ubicaciones;
 	}
 	
 	@Override
@@ -96,9 +97,16 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 	}
 
 	@Override
-	public void despacharPedido(int nro) throws RemoteException {
+	public List<UbicacionDTO> despacharPedido(int nro) throws RemoteException {
 		// TODO Auto-generated method stub
-		controlador.despacharPedido(nro);
+		List<UbicacionDTO> ubicaciones = controlador.despacharPedido(nro);
+		return ubicaciones;
+	}
+
+	@Override
+	public List<PedidoDTO> listarPedidosADespachar() throws RemoteException {
+		// TODO Auto-generated method stub
+		return controlador.listarPedidosPendientesDespacho();
 	}
 
 

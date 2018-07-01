@@ -99,16 +99,23 @@ public class BusinessDelegate implements TDABusiness {
 	}
 
 
-	public void despacharPedido(PedidoDTO pdto) throws RemoteException {
-		RemoteObject.despacharPedido(pdto);
+	public List<PedidoDTO> listarPedidosADespachar() throws RemoteException {
+		return RemoteObject.listarPedidosADespachar();
+	}
+
+	
+	public List<UbicacionDTO> despacharPedido(PedidoDTO pdto) throws RemoteException {
+		List<UbicacionDTO> ubicaciones = RemoteObject.despacharPedido(pdto);
+		return ubicaciones;
 		
 	}
 
-	public void despacharPedido(int nro) throws RemoteException {
+	public List<UbicacionDTO> despacharPedido(int nro) throws RemoteException {
 		// TODO Auto-generated method stub
-		RemoteObject.despacharPedido(nro);
+		List<UbicacionDTO> ubicaciones = RemoteObject.despacharPedido(nro);
+		return ubicaciones;
 	}
 
-
+	
 
 }

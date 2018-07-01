@@ -67,4 +67,16 @@
 		<servlet-name>Autorizar</servlet-name>
 		<url-pattern>/Autorizar</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>Despachar</display-name>
+		<servlet-name>Despachar</servlet-name>
+		<servlet-class>servlet.Despachar</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Despachar</servlet-name>
+		<url-pattern>/Despachar</url-pattern>
+	</servlet-mapping>
 </web-app>

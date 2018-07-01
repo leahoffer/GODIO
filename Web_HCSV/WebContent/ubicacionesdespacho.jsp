@@ -26,6 +26,15 @@ Released   : 20140322
 <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body>
+<%@ page import="java.util.*" %>
+			  <%@ page import="businessdelegate.BusinessDelegate" %>
+			  <%@ page import="dto.*" %>
+ <% 
+    
+			 List<UbicacionDTO> ubicaciones = (List<UbicacionDTO>) request.getSession().getAttribute("ubicaciones"); 
+
+
+				%> 
 <div id="header-wrapper">
 	<div id="header" class="container">
 		<div id="logo">
@@ -47,40 +56,32 @@ Released   : 20140322
 	<div id="welcome" class="container">
     	
 		<div class="title">
-	  <h2>Despacho</h2>
+	  <h2>Ubicaciones a remover mercadería</h2>
 		</div>
 		
 
 		<table class="blueTable">
 			<thead>
 				<tr>
-				<th>Cliente</th>
-				<th>Pedido</th>
 				<th></th>
+			
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
-				<td colspan="3">
+				<td colspan="1">
 				</td>
 				</tr>
 			</tfoot>
 			<tbody>
 			
-			  <%@ page import="java.util.*" %>
-			  <%@ page import="businessdelegate.BusinessDelegate" %>
-			  <%@ page import="dto.*" %>
+			  
 			  <%
-				List<PedidoDTO> pedidos= BusinessDelegate.getInstance().listarPedidosADespachar();
-			 	 for(PedidoDTO p: pedidos){ %>
+				
+			 	 for(UbicacionDTO u: ubicaciones){ %>
 				<tr>
-							<td>CUIT <%= p.getCliente().getCuit() %> - <%= p.getCliente().getRazon_social() %></td>
-							<td>NRO <%= p.getNroPedido() %> - DIR <%= p.getDir_entrega() %> - TOTAL <%= p.getTotal_bruto() %>$</td>
-							<td><form action="/Web_HCSV/Despachar">
-									<input type="hidden" name="nroPedido" value="<%= p.getNroPedido() %>"> 
-								    <input type="submit" id="boton" value="Despachar">
-								    
-								    </form></td>
+							<td>CALLE <%=u.getCalle() %> BLOQUE <%=u.getBloque() %> ESTANTERÍA <%=u.getEstanteria() %> ESTANTE <%=u.getEstante() %> POSICIÓN <%=u.getPosicion() %></td>
+							
 			 	 </tr>
 			 	    <% } %>
 			</tbody>
