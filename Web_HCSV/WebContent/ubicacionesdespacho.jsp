@@ -44,7 +44,7 @@ Released   : 20140322
 			<ul>
 				<li><a href="index.jsp" accesskey="1" title="">Home</a></li>
 				<li><a href="crearpedido.jsp" accesskey="2" title="">Nuevo Pedido</a></li>
-				<li><a href="autorizarpedido.jsp" accesskey="3" title="">Autorizacion</a></li>
+				<li><a href="autorizarpedido.jsp" accesskey="3" title="">Autorización</a></li>
 				<li class="active"><a href="despacharpedido.jsp" accesskey="4" title="">Despachar</a></li>
 				<li><a href="#" accesskey="5" title="">Orden de Compra</a></li>
 			</ul>
