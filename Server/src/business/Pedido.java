@@ -318,8 +318,17 @@ public class Pedido {
 
 	private void generarRemito() {
 		Remito r = new Remito();
+		List<ItemRemito> irs = new ArrayList<ItemRemito>();
 		r.setCliente(this.getCliente());
 		r.setDespachado(true);
+		for(DetallePedido dp : this.detalle)
+		{
+			ItemRemito ir = new ItemRemito();
+			ir.setCantidad(dp.getCantidad());
+			ir.setProducto(dp.getProducto());
+			irs.add(ir);
+		}
+		r.setItems(irs);
 		r.save();		
 	}
 			
