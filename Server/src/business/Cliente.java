@@ -112,8 +112,7 @@ public class Cliente {
 		this.updateMe();
 	}
 
-	public void agregarBonificacion(float monto, String descripcion)
-	{
+	public void agregarBonificacion(float monto, String descripcion){
 		
 	}
 	
@@ -146,6 +145,13 @@ public class Cliente {
 		this.Direccion = d;
 		this.r_inscripto = ri;
 		this.condicionEsp = ce;
+		this.updateMe();
+	}
+
+	public void facturarPedido(Pedido p) {
+		MovimientoCC mcc = new MovimientoCC(p.getFactura().getTotal(), false);
+		mcc.setFacturaAplicada(p.getFactura());
+		this.getCuentaCorriente().agregarMovimiento(mcc);
 		this.updateMe();
 	}
 	

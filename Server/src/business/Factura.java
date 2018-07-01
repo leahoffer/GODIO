@@ -16,19 +16,33 @@ public class Factura {
 	private float cancelado;
 	
 	
-	public Factura(int nro, TipoFactura tipo, Cliente cliente, float total, List<ItemFactura> items, float cancelado) {
-		super();
-		this.nro = nro;
-		this.tipo = tipo;
-		this.cliente = cliente;
-		this.total = total;
-		this.items = new ArrayList<ItemFactura>();
-		this.cancelado = cancelado;
-	}
+
 	public Factura() {
 		this.cliente = new Cliente();
 		this.items = new ArrayList<ItemFactura>();
 	}
+	
+	
+	public Factura(Pedido p) {
+		List<ItemFactura> ifas = new ArrayList<ItemFactura>();
+		this.cliente = p.getCliente();
+		if (p.getCliente().isR_inscripto())
+			this.setTipo(TipoFactura.A);
+		else
+			this.setTipo(TipoFactura.B);
+		for (DetallePedido dp : p.getDetalle())
+		{
+			ItemFactura ifa = new ItemFactura();
+			ifa.setCantidad(dp.getCantidad());
+			ifa.setProducto(dp.getProducto());
+			ifa.setSubtotal(ifa.getProducto().getPrecio()*ifa.getCantidad());
+			ifas.add(ifa);
+		}
+		this.setItems(ifas);
+		this.setTotal(this.calcularTotal());
+	}
+	
+	
 	public int getNro() {
 		return nro;
 	}

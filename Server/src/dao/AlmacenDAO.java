@@ -7,11 +7,15 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import business.ItemRemito;
 import business.MovimientoStock;
 import business.Producto;
+import business.Remito;
 import business.Reserva;
 import business.Ubicacion;
+import entity.ItemRemitoEntity;
 import entity.MovimientoStockEntity;
+import entity.RemitoEntity;
 import entity.ReservaEntity;
 import entity.UbicacionEntity;
 import entity.UbicacionId;
@@ -292,6 +296,42 @@ public class AlmacenDAO {
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public void saveRemito(Remito r) {
+		try
+		{
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			s.save(remitoToEntity(r));
+			s.beginTransaction().commit();
+			s.flush();
+			s.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+
+	private RemitoEntity remitoToEntity(Remito r) {
+		RemitoEntity re = new RemitoEntity();
+		List<ItemRemitoEntity> ires = new ArrayList<ItemRemitoEntity>();
+		re.setCliente(ClienteDAO.getInstance().clienteToEntity(r.getCliente()));
+		re.setDespachado(r.isDespachado());
+		java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
+		re.setFecha(sqlDate);
+		for (ItemRemito ir : r.getItems())
+		{
+			ItemRemitoEntity ire = new ItemRemitoEntity();
+			ire.setCantidad(ir.getCantidad());
+			ire.setProducto(ProductoDAO.getInstance().productoToEntity(ir.getProducto()));
+			ires.add(ire);
+		}
+		re.setItems(ires);
+		return re;
 	}
 	
 	

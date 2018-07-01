@@ -99,6 +99,10 @@ public class CuentaCorriente {
 		ccdto.setCondiciones(cdtos);
 		return ccdto;
 	}
+
+	public void agregarMovimiento(MovimientoCC mcc) {
+		this.movimientos.add(mcc);		
+	}
 	
 	
 	
