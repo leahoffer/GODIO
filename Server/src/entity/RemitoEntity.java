@@ -14,7 +14,7 @@ public class RemitoEntity {
 	@Id
 	@GeneratedValue
 	private int nro;
-	@OneToMany
+	@OneToMany (cascade=CascadeType.ALL)
 	private List<ItemRemitoEntity> items;
 	@OneToOne
 	private ClienteEntity cliente;

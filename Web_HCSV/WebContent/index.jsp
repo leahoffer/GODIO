@@ -34,10 +34,10 @@ Released   : 20140322
 		<div id="menu">
 			<ul>
 				<li class="active"><a href="index.jsp" accesskey="1" title="">Home</a></li>
-				<li><a href="nuevopedido.jsp" accesskey="2" title="">Nuevo Pedido</a></li>
+				<li><a href="crearpedido.jsp" accesskey="2" title="">Nuevo Pedido</a></li>
 				<li><a href="autorizarpedido.jsp" accesskey="3" title="">Autorizacion</a></li>
-				<li><a href="#" accesskey="4" title="">Careers</a></li>
-				<li><a href="#" accesskey="5" title="">Contact Us</a></li>
+				<li><a href="despacharpedido.jsp" accesskey="4" title="">Despachar</a></li>
+				<li><a href="#" accesskey="5" title="">Orden de Compra</a></li>
 			</ul>
 		</div>
 	</div>
@@ -47,7 +47,7 @@ Released   : 20140322
 	<div id="welcome" class="container">
     	
 		<div class="title">
-	  <h2>Autorización</h2>
+	  <h2>Líder en despacho de productos alimenticios</h2>
 		</div>
 		<%  %>
 	</div>

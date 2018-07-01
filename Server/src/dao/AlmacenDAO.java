@@ -170,8 +170,7 @@ public class AlmacenDAO {
 			s.beginTransaction();
 			s.save(movimientoStockToEntity(movimientoStock));
 			s.getTransaction().commit();
-			s.flush();
-			s.close();
+		
 			//UbicacionId uid = s.get(UbicacionId.class, )
 		}
 		catch (Exception e)
@@ -306,8 +305,6 @@ public class AlmacenDAO {
 			s.beginTransaction();
 			s.save(remitoToEntity(r));
 			s.beginTransaction().commit();
-			s.flush();
-			s.close();
 		}
 		catch (Exception e)
 		{

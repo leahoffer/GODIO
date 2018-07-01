@@ -15,10 +15,8 @@ public class CuentaCorrienteEntity {
 	protected float saldo;
 	protected float limite;
 	@OneToMany (cascade=CascadeType.ALL)
-	@JoinColumn (name = "nroCC")
 	protected List<MovimientoCCEntity> movimientos;
 	@OneToMany (cascade=CascadeType.ALL)
-	@JoinColumn (name = "nroCC")
 	protected List<CondicionEntity> condiciones;
 	
 	

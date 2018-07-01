@@ -6,9 +6,13 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import business.Factura;
+import business.ItemFactura;
 import business.MovimientoReserva;
 import business.OrdenPedido;
 import business.Producto;
+import entity.FacturaEntity;
+import entity.ItemFacturaEntity;
 import entity.MovimientoReservaEntity;
 import entity.OrdenPedidoEntity;
 import enumeration.EstadoOP;
@@ -199,5 +203,37 @@ public class ComprasDAO {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public void crearFactura(Factura factura) {
+		// TODO Auto-generated method stub
+		FacturaEntity fe = FacturaToEntity(factura);
+		SessionFactory sf = HibernateUtil.getSessionFactory();
+		Session s = sf.openSession();
+		s.beginTransaction();
+		s.save(fe);
+		s.getTransaction().commit();
+		s.flush();
+		s.close();
+	}
+
+	private FacturaEntity FacturaToEntity(Factura factura) {
+		// TODO Auto-generated method stub
+		FacturaEntity fe = new FacturaEntity();
+		fe.setNro(factura.getNro());
+		fe.setCliente(ClienteDAO.getInstance().clienteToEntity(factura.getCliente()));
+		fe.setTipo(factura.getTipo().toString());
+		fe.setTotal(factura.getTotal());
+		List<ItemFacturaEntity> itemse = new ArrayList<ItemFacturaEntity>();
+		for (ItemFactura i: factura.getItems())
+		{
+			ItemFacturaEntity ie  = new ItemFacturaEntity();
+			ie.setCantidad(i.getCantidad());
+			ie.setProducto(ProductoDAO.getInstance().productoToEntity(i.getProducto()));
+			ie.setSubtotal(i.getSubtotal());
+			itemse.add(ie);
+		}
+		fe.setItems(itemse);
+		return fe;
 	}
 }

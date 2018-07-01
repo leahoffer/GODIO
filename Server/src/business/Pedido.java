@@ -307,10 +307,11 @@ public class Pedido {
 		//buscarUbicacionesParaDespachar se va a encargar de crear los movimientos y de actualizar las ubicaciones que encuentre y devuelva
 		List<Ubicacion> us = Almacen.getInstance().buscarUbicacionesParaDespachar(this);
 		this.estado = EstadoPedido.Despachado;
-		this.factura = new Factura(this);
+		Factura f = new Factura(this);
+		f.saveOrUpdate();
 		this.generarRemito();
 		this.cliente.facturarPedido(this);
-		this.update();
+		this.saveOrUpdate();
 		return us;
 	}
 

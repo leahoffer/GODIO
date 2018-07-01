@@ -12,6 +12,7 @@ public class FacturaEntity {
 	@Id
 	@GeneratedValue
 	private int nro;
+	
 	private String tipo;
 		
 	@OneToOne (cascade=CascadeType.ALL)

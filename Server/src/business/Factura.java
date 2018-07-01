@@ -3,6 +3,7 @@ package business;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.ComprasDAO;
 import dto.FacturaDTO;
 import enumeration.TipoFactura;
 
@@ -100,6 +101,12 @@ public class Factura {
 			total = total + ifa.getSubtotal();
 		}
 		return total;
+	}
+
+
+	public void saveOrUpdate() {
+		// TODO Auto-generated method stub
+		ComprasDAO.getInstance().crearFactura(this);
 	}
 	
 	
