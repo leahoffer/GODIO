@@ -46,7 +46,7 @@ Released   : 20140322
 				<li><a href="crearpedido.jsp" accesskey="2" title="">Nuevo Pedido</a></li>
 				<li class="active"><a href="autorizarpedido.jsp" accesskey="3" title="">Autorizacion</a></li>
 				<li><a href="despacharpedido.jsp" accesskey="4" title="">Despachar</a></li>
-				<li><a href="#" accesskey="5" title="">Orden de Compra</a></li>
+				<li><a href="cerrarop.jsp" accesskey="5" title="">Orden de Compra</a></li>
 			</ul>
 		</div>
 	</div>
@@ -97,10 +97,10 @@ Released   : 20140322
 							{a=" no";} %>
 
 						<p>El total del pedido es de <%= pdto.getTotal_bruto() %>$. El cliente<%=a %> tiene suficiente credito para realizar el pedido.</p><br></br>
-						<a href="/Web_HCSV/Autorizar">Autorizar</a>						
+						<a href="#Si" onclick="loadDoc2()">Autorizar</a>						
 						<br></br>
 						
-						<a href="#" onclick="loadDoc()">No Autorizar</button>
+						<a href="#No" onclick="loadDoc()">No Autorizar</button>
 
 </div>
 
@@ -117,6 +117,19 @@ function loadDoc() {
   xhttp.open("GET", "/Web_HCSV/NoAutorizar", true);
   xhttp.send();
 }
+
+function loadDoc2() {
+	  var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	      document.getElementById("ajax").innerHTML =
+	      this.responseText;
+	    }
+	  };
+
+	  xhttp.open("GET", "/Web_HCSV/Autorizar", true);
+	  xhttp.send();
+	}
 </script>
 
 	</div>

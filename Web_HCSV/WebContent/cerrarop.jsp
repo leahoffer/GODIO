@@ -23,37 +23,8 @@ Released   : 20140322
 <link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
-
+<script src="jquery-3.3.1.min.js"></script>
 </head>
-
-<style>
-input[type=text], select {
-    width: 100%;
-    padding: 8px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
-    color: white;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-input[type=submit]:hover {
-    background-color: #45a049;
-}
-
-
-</style>
-
 <body>
 <div id="header-wrapper">
 	<div id="header" class="container">
@@ -62,11 +33,11 @@ input[type=submit]:hover {
 		</div>
 		<div id="menu">
 			<ul>
-				<li><a href="index.jsp" accesskey="1" title="">Home</a></li>
-				<li class="active"><a href="crearpedido.jsp" accesskey="2" title="">Nuevo Pedido</a></li>
+			<li><a href="index.jsp" accesskey="1" title="">Home</a></li>
+				<li><a href="crearpedido.jsp" accesskey="2" title="">Nuevo Pedido</a></li>
 				<li><a href="autorizarpedido.jsp" accesskey="3" title="">Autorizacion</a></li>
 				<li><a href="despacharpedido.jsp" accesskey="4" title="">Despachar</a></li>
-				<li><a href="cerrarop.jsp" accesskey="5" title="">Orden de Compra</a></li>
+				<li class="active"><a href="cerrarop.jsp" accesskey="5" title="">Orden de Compra</a></li>
 			</ul>
 		</div>
 	</div>
@@ -75,12 +46,59 @@ input[type=submit]:hover {
 	<div id="banner" class="container"></div>
 	<div id="welcome" class="container">
     	
-<div class="title">
-	  <h2>Solicitar un Pedido</h2>
+		<div class="title">
+	  <h2>Ordenes de Compra pendientes</h2>
 		</div>
-		<p> Pedido creado con éxito. </p>
+		
+
+		<table class="blueTable">
+			<thead>
+				<tr>
+				<th>Numero</th>
+				<th>Producto</th>
+				<th>Cantidad</th>
+				<th></th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+				<td colspan="4">
+				</td>
+				</tr>
+			</tfoot>
+			<tbody>
+			
+			  <%@ page import="java.util.*" %>
+			  <%@ page import="businessdelegate.BusinessDelegate" %>
+			  <%@ page import="dto.*" %>
+			  <%
+				List<OrdenPedidoDTO> ordenesPendientes= BusinessDelegate.getInstance().traerOrdenesPendientes();
+			 	 for(OrdenPedidoDTO o:ordenesPendientes){ %>
+				<tr>
+							<td><%= o.getNro() %></td>
+							<td><%= o.getProducto().getDescripcion() %></td>
+							<td><%= o.getCantidadPedida() %></td>
+							<td><form action="/Web_HCSV/CerrarOP">
+									<input type="hidden" name="nroOP" value="<%= o.getNro() %>"> 
+								    <input type="submit" id="boton" value="CerrarOP">
+								    
+								    </form></td>
+			 	 </tr>
+			 	    <% } %>
+			</tbody>
+		</table> 	 
+
+
+
+
+
+
+
+
+
+
+
 	</div>
-	
 <div id="copyright">
 	<p>&copy; Untitled. All rights reserved. | Photos by <a href="http://fotogrph.com/">Fotogrph</a> | Design by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
 </div>

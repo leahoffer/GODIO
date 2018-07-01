@@ -83,13 +83,13 @@
 		<servlet>
 		<description>
 		</description>
-		<display-name>ValidarCliente2</display-name>
-		<servlet-name>ValidarCliente2</servlet-name>
-		<servlet-class>servlet.ValidarCliente2</servlet-class>
+		<display-name>CerrarOP</display-name>
+		<servlet-name>CerrarOP</servlet-name>
+		<servlet-class>servlet.CerrarOP</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ValidarCliente2</servlet-name>
-		<url-pattern>/ValidarCliente2</url-pattern>
+		<servlet-name>CerrarOP</servlet-name>
+		<url-pattern>/CerrarOP</url-pattern>
 	</servlet-mapping>
 	
 	

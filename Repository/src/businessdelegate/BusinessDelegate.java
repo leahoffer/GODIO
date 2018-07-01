@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import dto.ClienteDTO;
+import dto.OrdenPedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
 import dto.UbicacionDTO;
@@ -121,6 +122,9 @@ public class BusinessDelegate implements TDABusiness {
 		RemoteObject.noautorizarPedido(nroPedido);
 	}
 
-	
+	public List<OrdenPedidoDTO> traerOrdenesPendientes() throws RemoteException
+	{
+		return RemoteObject.traerOrdenesPendientes();
+	}
 
 }

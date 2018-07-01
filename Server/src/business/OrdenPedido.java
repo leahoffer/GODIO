@@ -8,6 +8,7 @@ import controller.Almacen;
 import controller.Compras;
 import dao.AlmacenDAO;
 import dao.ComprasDAO;
+import dto.OrdenPedidoDTO;
 import enumeration.EstadoOP;
 import enumeration.EstadoPedido;
 
@@ -272,6 +273,18 @@ public class OrdenPedido {
 			pedido.setEstado(EstadoPedido.PendienteDespacho);
 			pedido.update();
 		}
+	}
+
+	public OrdenPedidoDTO toDTO() {
+		// TODO Auto-generated method stub
+		OrdenPedidoDTO odto = new OrdenPedidoDTO();
+		odto.setCantidadPedida(this.getCantidadPedida());
+		odto.setEstado(this.getEstado().toString());
+		odto.setNro(this.getNro());
+		odto.setPedidoOrigen(this.getPedidoOrigen().toDTO());
+		odto.setProducto(this.getProducto().toDTO());
+		
+		return odto;
 	}
 	
 	

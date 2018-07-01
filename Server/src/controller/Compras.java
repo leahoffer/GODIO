@@ -1,10 +1,13 @@
 package controller;
 
+import java.util.List;
+
 import business.DetallePedido;
 import business.OrdenPedido;
 import business.Pedido;
 import business.Producto;
 import dao.ComprasDAO;
+import dto.OrdenPedidoDTO;
 
 public class Compras {
 
@@ -49,5 +52,10 @@ public class Compras {
 	public void createOP(OrdenPedido op) {
 		ComprasDAO.getInstance().createOP(op);
 		
+	}
+
+	public List<OrdenPedidoDTO> traerOrdenesPendientes() {
+		// TODO Auto-generated method stub
+		return ComprasDAO.getInstance().mostrarOrdenesPendientes();
 	}
 }

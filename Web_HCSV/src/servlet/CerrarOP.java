@@ -1,8 +1,9 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,15 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import businessdelegate.BusinessDelegate;
 import dto.PedidoDTO;
+import dto.UbicacionDTO;
 
-public class Autorizar extends HttpServlet {
+public class CerrarOP extends HttpServlet {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6309898797894814391L;
 
-	public Autorizar() {
+	public CerrarOP() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -32,9 +34,8 @@ public class Autorizar extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-			PedidoDTO p=(PedidoDTO) req.getSession().getAttribute("pedido");
-			BusinessDelegate.getInstance().autorizarPedido(p.getNroPedido());
-			PrintWriter out = resp.getWriter();
-			out.println("Pedido Autorizado.");
+			
+			BusinessDelegate.getInstance().completarOP(Integer.parseInt(req.getParameter("nroOP")));
+			
 	}
 }

@@ -11,6 +11,7 @@ import business.ItemFactura;
 import business.MovimientoReserva;
 import business.OrdenPedido;
 import business.Producto;
+import dto.OrdenPedidoDTO;
 import entity.FacturaEntity;
 import entity.ItemFacturaEntity;
 import entity.MovimientoReservaEntity;
@@ -235,5 +236,29 @@ public class ComprasDAO {
 		}
 		fe.setItems(itemse);
 		return fe;
+	}
+
+	public List<OrdenPedidoDTO> mostrarOrdenesPendientes() {
+		// TODO Auto-generated method stub
+		try
+		{
+			List<OrdenPedidoDTO> resultado = new ArrayList<OrdenPedidoDTO>();
+			SessionFactory sf = HibernateUtil.getSessionFactory();
+			Session s = sf.openSession();
+			s.beginTransaction();
+			@SuppressWarnings("unchecked")
+			List<OrdenPedidoEntity> ordenes = (List<OrdenPedidoEntity>) s.createQuery("from OrdenPedidoEntity ope where ope.estado='Pendiente' or ope.estado='Reservada'").list();
+			for (OrdenPedidoEntity ope : ordenes)
+			{
+				resultado.add(ordenPedidoToNegocio(ope).toDTO());
+			}
+			
+			return resultado;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

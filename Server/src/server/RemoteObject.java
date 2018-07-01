@@ -8,6 +8,7 @@ import controller.Almacen;
 import controller.Compras;
 import controller.Controller;
 import dto.ClienteDTO;
+import dto.OrdenPedidoDTO;
 import dto.PedidoDTO;
 import dto.ProductoDTO;
 import dto.UbicacionDTO;
@@ -113,6 +114,12 @@ public class RemoteObject extends UnicastRemoteObject implements TDABusiness {
 	public void noautorizarPedido(int nroPedido) {
 		// TODO Auto-generated method stub
 		controlador.noautorizarPedido(nroPedido);
+	}
+
+	@Override
+	public List<OrdenPedidoDTO> traerOrdenesPendientes() throws RemoteException {
+		// TODO Auto-generated method stub
+		 return Compras.getInstance().traerOrdenesPendientes();
 	}
 
 
