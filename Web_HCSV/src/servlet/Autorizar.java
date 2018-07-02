@@ -35,6 +35,6 @@ public class Autorizar extends HttpServlet {
 			PedidoDTO p=(PedidoDTO) req.getSession().getAttribute("pedido");
 			BusinessDelegate.getInstance().autorizarPedido(p.getNroPedido());
 			PrintWriter out = resp.getWriter();
-			out.println("Pedido Autorizado.");
+			out.println("Pedido Autorizado correctamente.");
 	}
 }

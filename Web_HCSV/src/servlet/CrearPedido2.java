@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -72,18 +71,15 @@ public class CrearPedido extends HttpServlet {
 				
 			}
 			pedido.setDetalle(detalles);
-			if (pedido.getDetalle().isEmpty())
-			{ 
-				throw new Exception("El pedido no puede no tener objetos. Llene las cantidades.");
-			}
 			BusinessDelegate.getInstance().crearPedido(pedido);
-		
-		} catch (Exception e) {
+		} catch (ProductoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ClienteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			RequestDispatcher view = req.getRequestDispatcher("index.jsp");
-			view.forward(req, resp);
 		}
+		
 		RequestDispatcher view = req.getRequestDispatcher("pedidocreado.jsp");
 		view.forward(req, resp);
 	}
