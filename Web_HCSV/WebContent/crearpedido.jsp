@@ -26,9 +26,9 @@ Released   : 20140322
 
     
     <!-- BEGIN FOXYCART FILES -->
-    <script src="https://css-tricks.foxycart.com/files/foxycart_includes.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="https://css-tricks.foxycart.com/files/foxybox.css" type="text/css" media="screen" charset="utf-8" />
-    <link rel="stylesheet" href="https://css-tricks.foxycart.com/themes/standard/theme.foxybox.css" type="text/css" media="screen" charset="utf-8" />
+    <script src="js/foxycart_includes.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="css/foxybox.css" type="text/css" media="screen" charset="utf-8" />
+    <link rel="stylesheet" href="css/theme.foxybox.css" type="text/css" media="screen" charset="utf-8" />
     <!-- END FOXYCART FILES -->
 
     

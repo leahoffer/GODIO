@@ -1,0 +1,50 @@
+/* =====================================================
+    FOXYCART.COM
+
+    @theme      standard
+    @version    0.6.0
+    @for        foxycart.com/v/0.6.0/foxycart_includes.js
+                or: foxycart.com/v/0.6.0/raw/foxybox.js
+
+    @usage      These styles can be included in your main stylesheet, or you can just link to this file.
+
+    @support    forum.foxycart.com
+
+    @IMPORTANT  Before you attempt to use this file to customize this CSS file, please review:
+                http://wiki.foxycart.com/screencasts
+                Especially: http://wiki.foxycart.com/screencasts:customizing_your_checkout
+                We promise it will be worth it, even if you're a CSS expert.
+
+===================================================== */
+
+#fc_tb_closeAjaxWindowTop,
+#fc_tb_closeAjaxWindowBot {
+	margin:0px 0px;
+	padding:0px 10px;
+}
+#fc_tb_closeWindowButtonTop {
+	height:0px; overflow:hidden;
+	width:11px;
+	margin:0px 0px;
+	padding-top:24px;
+	float:left;
+	background-image:url(//cdn.foxycart.com/static/themes/standard/images/cart-close-x.png);
+	background-position:left top;
+}
+#fc_tb_closeWindowButtonBot {
+	height:0px; overflow:hidden;
+	width:156px;
+	margin:0px 0px;
+	padding-top:24px;
+	float:left;
+	background-image:url(//cdn.foxycart.com/static/themes/standard/images/cart-continue-shopping.png);
+	background-position:left top;
+}
+#fc_tb_closeAjaxWindowTop span {
+  display:none;
+}
+
+a#fc_tb_closeWindowButtonTop:hover,
+a#fc_tb_closeWindowButtonBot:hover {
+	background-position:left -24px;
+}
