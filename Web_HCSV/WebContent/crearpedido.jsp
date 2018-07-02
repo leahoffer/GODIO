@@ -90,7 +90,7 @@ input[type=submit]:hover {
 
  <form action="/Web_HCSV/CrearPedido">
     <label for="cuit">CUIT</label>
-    <input type="text" id="cuit" name="cuit" placeholder="Su número de CUIT" required  oninvalid="setCustomValidity('El CUIT no puede estar vacío.')">
+    <input type="text" id="cuit" name="cuit" placeholder="Su número de CUIT" required  oninvalid="setCustomValidity('El CUIT no puede estar vacío.')" onblur="validarNombre()">
 	<br></br>
 	
     <label for="direccion">Dirección de Entrega</label>
@@ -98,7 +98,11 @@ input[type=submit]:hover {
 <br></br>
  	<label for="aclaracion">Aclaraciones Especiales</label>
     <input type="text" id="aclaracion" name="aclaracion" placeholder="Aclaraciones sobre el pedido">
+      <br></br>
+   <label for="ctac">Cuenta Corriente</label>
+    <label id = "ctac"> </label>
   <br></br>
+  
   <br></br>
   
    <label for="detalles">DETALLES</label>
@@ -140,7 +144,34 @@ input[type=submit]:hover {
   </form>
 </div>
 </div>
-
+<script type="text/javascript">
+	
+	function validarNombre() {
+			
+		  var xhttp = new XMLHttpRequest();
+		  xhttp.onreadystatechange = function() {
+		    if (this.readyState == 4 && this.status == 200) {
+		    	
+		    	if (this.responseText == "1")
+		    	{
+                    alert("No existe el cliente");
+                    document.getElementById("ctac").innerHTML = "";
+		    
+		    	}
+		    	else
+		    	{
+		    		$("#output").removeClass(' alert-danger');
+		      document.getElementById("ctac").innerHTML =
+		      this.responseText;
+		    	}
+		    }
+		  };
+		  var url = "/Web_HCSV/obtenerCuentaCorriente?cuit=" + escape(document.getElementById("cuit").value);
+		  xhttp.open("GET",url , true);		 	    
+		  xhttp.send();
+		
+	}
+</script>
     	<div class="clear"></div>
     	
     
