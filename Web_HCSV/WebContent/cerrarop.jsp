@@ -50,7 +50,7 @@ Released   : 20140322
 	  <h2>Ordenes de Compra pendientes</h2>
 		</div>
 		
-
+<div class="ajax">
 		<table class="blueTable">
 			<thead>
 				<tr>
@@ -78,17 +78,29 @@ Released   : 20140322
 							<td><%= o.getNro() %></td>
 							<td><%= o.getProducto().getDescripcion() %></td>
 							<td><%= o.getCantidadPedida() %></td>
-							<td><form action="/Web_HCSV/CerrarOP">
-									<input type="hidden" name="nroOP" value="<%= o.getNro() %>"> 
-								    <input type="submit" id="boton" value="CerrarOP">
-								    
-								    </form></td>
+							<td><a href="#" id="campo" onclick="loadDoc(<%= o.getNro() %>)">Completar Orden</a></td>
 			 	 </tr>
 			 	    <% } %>
 			</tbody>
 		</table> 	 
+		<p id="elp"></p>
+</div>
+<script>
+function loadDoc(nro) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+	  											if (this.readyState == 4 && this.status == 200)
+	  											{
+      												document.getElementById("elp").innerHTML = "Orden completa! Actualice la página.";
+      												
+   												}
+  										};
 
+  xhttp.open("GET", "/Web_HCSV/CerrarOP?nroOP="+nro, true);
+  xhttp.send();
+}
 
+</script>
 
 
 
