@@ -104,4 +104,16 @@
 		<servlet-name>NoAutorizar</servlet-name>
 		<url-pattern>/NoAutorizar</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<description>
+		</description>
+		<display-name>obtenerCuentaCorriente</display-name>
+		<servlet-name>obtenerCuentaCorriente</servlet-name>
+		<servlet-class>servlet.obtenerCuentaCorriente</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>obtenerCuentaCorriente</servlet-name>
+		<url-pattern>/obtenerCuentaCorriente</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -36,7 +36,7 @@ public class obtenerCuentaCorriente extends HttpServlet {
 			ClienteDTO cliente = BusinessDelegate.getInstance().traerCliente(request.getParameter("cuit"));
 			response.setContentType("text/xml");
 			response.setHeader("Cache-Control", "no-cache");
-			response.getWriter().write(String.valueOf(cliente.getCuentaCorriente().getSaldo()));
+			response.getWriter().write("Saldo actual: "+String.valueOf(cliente.getCuentaCorriente().getSaldo()));
 	
 			
 		} catch (ClienteException e) {
