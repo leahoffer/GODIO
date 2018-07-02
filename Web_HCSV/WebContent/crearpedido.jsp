@@ -23,7 +23,7 @@ Released   : 20140322
 <link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
+
     
     <!-- BEGIN FOXYCART FILES -->
     <script src="https://css-tricks.foxycart.com/files/foxycart_includes.js" type="text/javascript" charset="utf-8"></script>
@@ -107,9 +107,9 @@ input[type=submit]:hover {
     	         <th>Codigo de Barras</th> 
     	         <th>Cantidad Deseada</th>
     	         <th>X</th>
-    	         <th>Precio por unidad</th>
+    	         <th>Precio/unidad</th>
     	         <th>=</th>
-    	         <th style="text-align: right; padding-right: 30px;">Subtotal</th> 
+    	         <th style="text-align: center; padding-right: 30px;">Subtotal</th> 
     	    </tr>
    <%@ page import="java.util.*" %>
    <%@ page import="businessdelegate.BusinessDelegate" %>
@@ -120,10 +120,10 @@ input[type=submit]:hover {
 	  <%  for(ProductoDTO p: productos){ %>
             <tr class="odd">
                 <td class="product-title"><%=p.getCodBarras() %></td>
-                <td class="num-pallets"><input type="text" class="num-pallets-input" id="cantidad<%=p.getCodBarras()%>" name="cantidad<%=p.getCodBarras()%>"></input></td>
-                <td class="times">X</td>
-                <td class="price-per-pallet">$<span><%=p.getPrecio() %></span></td>
-                <td class="equals">=</td>
+                <td class="num-pallets"><input type="text" class="num-pallets-input" id="cantidad<%=p.getCodBarras()%>" name="cantidad<%=p.getCodBarras()%>" ></input></td>
+                <td class="times" style="width: 100px;">X</td>
+                <td class="price-per-pallet" style="width: 250px;">$<span><%=p.getPrecio() %></span></td>
+                <td class="equals" style="width: 100px;">=</td>
                 <td class="row-total"><input type="text" class="row-total-input" id="sparkle-row-total" disabled="disabled"></input></td>
             </tr>
       <% } %>

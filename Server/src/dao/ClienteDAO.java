@@ -136,6 +136,8 @@ public class ClienteDAO {
 			Session s = sf.openSession();
 			s.beginTransaction();
 			ClienteEntity cliente = (ClienteEntity)s.createQuery("from ClienteEntity where cuit = ?").setString(0, cuit).uniqueResult();
+			if (cliente==null)
+				throw new ClienteException("El cliente no existe");
 			return clienteToNegocio(cliente);
 		}
 		catch (Exception e)

@@ -25,11 +25,13 @@ Released   : 20140322
 <!--[if IE 6]><link href="default_ie6.css" rel="stylesheet" type="text/css" /><![endif]-->
 <script src="jquery-3.3.1.min.js"></script>
 </head>
+
 <body>
 <div id="header-wrapper">
 	<div id="header" class="container">
 		<div id="logo">
 			<h1><a href="#">Das Verrückte Lagerhaus</a></h1>
+			
 		</div>
 		<div id="menu">
 			<ul>
