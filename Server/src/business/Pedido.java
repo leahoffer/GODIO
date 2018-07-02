@@ -309,6 +309,7 @@ public class Pedido {
 		this.estado = EstadoPedido.Despachado;
 		Factura f = new Factura(this);
 		f.saveOrUpdate();
+		this.setFactura(f);
 		this.generarRemito();
 		this.cliente.facturarPedido(this);
 		this.saveOrUpdate();

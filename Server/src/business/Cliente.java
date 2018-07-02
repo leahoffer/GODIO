@@ -154,6 +154,7 @@ public class Cliente {
 		MovimientoCC mcc = new MovimientoCC(p.getFactura().getTotal(), false);
 		mcc.setFacturaAplicada(p.getFactura());
 		this.getCuentaCorriente().agregarMovimiento(mcc);
+		this.getCuentaCorriente().setSaldo(this.obtenerSaldo());
 		this.saveOrUpdate();
 	}
 	
